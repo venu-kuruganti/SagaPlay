@@ -25,7 +25,7 @@ Personal Movie and TV Series tracking app built with .NET Microservices, Angular
 - PostgreSQL store persistent data
 - CI/CD pipeline deploys to Azure
 
-*(Diagram coming soon)*
+![SagaPlay Architecture](SagaPlay Design.png)
 
 ---
 
