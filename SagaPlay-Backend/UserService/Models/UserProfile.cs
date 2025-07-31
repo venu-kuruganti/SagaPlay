@@ -1,8 +1,17 @@
-﻿namespace UserService.Models
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace UserService.Models
 {
     public class UserProfile
     {
-        public Guid Id { get; set; }
+        public Guid UserProfileId { get; set; }
+
+        //Foreign Key to Users
+        public Guid UserId { get; set; }
+
+        //Navigation property
+        public User User { get; set; }
+
         public string FirstName { get; set; }
 
         public string LastName { get; set; }      

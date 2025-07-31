@@ -1,10 +1,18 @@
-﻿using System.Diagnostics.Contracts;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Diagnostics.Contracts;
 
 namespace UserService.Models
 {
+   
     public class UserPreferences
     {
-        public  Guid Id { get; set; }
+        public Guid UserPreferencesId { get; set; }
+
+        //Foreign Key
+        public Guid UserId { get; set; }
+
+        //Navigation Property
+        public User User { get; set; }
 
         public string Theme { get; set; }
 
