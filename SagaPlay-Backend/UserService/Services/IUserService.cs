@@ -4,16 +4,16 @@ namespace UserService.Services
 {
     public interface IUserService
     {
-        public bool Login(string username, string password);
+        public Task<bool> Login(string username, string password);
 
-        public bool Register(string username, string password);
+        public Task<bool> Register(string username, string password);
 
-        public UserProfile GetProfile(Guid UserId);
+        public Task<UserProfile> GetProfile(Guid UserId);
 
-        public bool UpdateProfile(UserProfile userProfile);
+        public Task<UserProfile> UpdateProfile(UserProfile userProfile);
 
-        public UserPreferences GetPreferences(Guid UserId);
+        public Task<UserPreferences> GetPreferences(Guid UserId);
 
-        public bool SetPreferences(UserPreferences preferences);
+        public Task<UserPreferences> SetPreferences(UserPreferences preferences);
     }
 }

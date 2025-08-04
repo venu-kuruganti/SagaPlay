@@ -13,7 +13,9 @@ namespace UserService.Models
 
         public string UserName { get; set; }
 
-        public string PasswordHash { get; set; } //Salted Password.
+        public byte[] PasswordHash { get; set; } //Salted Password.
+
+        public byte[] PasswordSalt { get; set; } //To unsalt the password and compare it.
 
         public DateTime CreatedDate { get; set; }
 

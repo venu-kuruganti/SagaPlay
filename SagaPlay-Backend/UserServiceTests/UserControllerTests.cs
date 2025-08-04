@@ -27,14 +27,14 @@ namespace UserServiceTests
 
         [Theory]
         [InlineData("VenuK", "Silver")]
-        public void Login_WithProperCredentials_ReturnsOK(string username, string password)
+        public async Task Login_WithProperCredentials_ReturnsOK(string username, string password)
         {
             //Arrange
-            mockUserService.Setup(s => s.Login("VenuK", "Silver")).Returns(true);
+            mockUserService.Setup(s => s.Login("VenuK", "Silver")).ReturnsAsync(true);
             controller = new UserController(mockUserService.Object);
 
             //Act
-            var result = controller.Login(username, password);
+            var result = await controller.Login(username, password);
 
             //Assert
             result.Should().BeOfType<OkObjectResult>();
@@ -42,14 +42,14 @@ namespace UserServiceTests
 
         [Theory]
         [InlineData("Ghifa", "PASSword$1")]
-        public void Login_WithImproperProperCredentials_ReturnsOK(string username, string password)
+        public async Task Login_WithImproperProperCredentials_ReturnsOK(string username, string password)
         {
             //Arrange
-            mockUserService.Setup(s => s.Login("Ghifa", "PASSword$1")).Returns(false);
+            mockUserService.Setup(s => s.Login("Ghifa", "PASSword$1")).ReturnsAsync(false);
             controller = new UserController(mockUserService.Object);
 
             //Act
-            var result = controller.Login(username, password);
+            var result = await controller.Login(username, password);
 
             //Assert
             result.Should().BeOfType<UnauthorizedObjectResult>();
@@ -57,14 +57,14 @@ namespace UserServiceTests
 
         [Theory]
         [InlineData("TestUser", "Pwd1")]
-        public void CallingRegisterUser_WithValidData_ReturnsOK(string username, string password)
+        public async Task CallingRegisterUser_WithValidData_ReturnsOK(string username, string password)
         {
             //Arrange
-            mockUserService.Setup(s => s.Register("TestUser", "Pwd1")).Returns(true);
+            mockUserService.Setup(s => s.Register("TestUser", "Pwd1")).ReturnsAsync(true);
             controller = new UserController(mockUserService.Object);
 
             //Act
-            var result = controller.Register(username, password);
+            var result = await controller.Register(username, password);
 
             //Assert
             result.Should().BeOfType<OkObjectResult>();
@@ -73,13 +73,13 @@ namespace UserServiceTests
         [Theory]
         [InlineData("TestUser", "")]
         [InlineData("", "Whoopsie!")]
-        public void CallingRegisterUser_WithInvalidData_ReturnsBadRequest(string username, string password)
+        public async Task CallingRegisterUser_WithInvalidData_ReturnsBadRequest(string username, string password)
         {
             //Arrange
             controller = new UserController(mockUserService.Object);
 
             //Act
-            var result = controller.Register(username, password);
+            var result = await controller.Register(username, password);
 
             //Assert
             result.Should().BeOfType<BadRequestObjectResult>(); //Controller should catch invalid input and not send it to the service.
@@ -88,14 +88,14 @@ namespace UserServiceTests
 
         [Theory]
         [InlineData("Venu", "Silver")]
-        public void CallingRegisterUser_WithExistingUserName_ReturnsConflictResult(string username, string password)
+        public async Task CallingRegisterUser_WithExistingUserName_ReturnsConflictResult(string username, string password)
         {
             //Arrange
-            mockUserService.Setup(s => s.Register("Venu", "Silver")).Returns(false);
+            mockUserService.Setup(s => s.Register("Venu", "Silver")).ReturnsAsync(false);
             controller = new UserController(mockUserService.Object);
 
             //Act
-            var result = controller.Register(username, password);
+            var result = await controller.Register(username, password);
 
             //Assert
             result.Should().BeOfType<ConflictObjectResult>();
@@ -108,7 +108,7 @@ namespace UserServiceTests
 
         [Theory]
         [InlineData("Venu", "Kuruganti", "venu@yahoo.com", "01/05/1982", "Just another guy who loves movies", "India", "7678039054", "www.picurl.com")]
-        public void CallingUpdateProfile_WithProperData_ReturnsOk(string firstname, string lastname, string emailaddress, string dob, string bio, string country, string phone, string profilepicurl)
+        public async Task CallingUpdateProfile_WithProperData_ReturnsOk(string firstname, string lastname, string emailaddress, string dob, string bio, string country, string phone, string profilepicurl)
         {
             //Arrange
             UserProfile profile = new UserProfile
@@ -126,15 +126,15 @@ namespace UserServiceTests
             controller = new UserController(mockUserService.Object);
 
             //Act
-            var result = controller.UpdateProfile(profile);
+            var result = await controller.UpdateProfile(profile);
 
             //Assert
-            result.Should().BeOfType<OkResult>(); //Since updating is done, no information in body is being returned.
+            result.Should().BeOfType<OkObjectResult>(); 
         }
 
         [Theory]
         [InlineData("Venu", "Kuruganti", "venu78236784jwuisdfh", "01/05/1982", "Just another guy who loves movies", "", "7678039054", "")]
-        public void CallingUpdateProfile_WithImproperData_ReturnsBadRequest(string firstname, string lastname, string emailaddress, string dob, string bio, string country, string phone, string profilepicurl)
+        public async Task CallingUpdateProfile_WithImproperData_ReturnsBadRequest(string firstname, string lastname, string emailaddress, string dob, string bio, string country, string phone, string profilepicurl)
         {
             
             //Arrange
@@ -153,7 +153,7 @@ namespace UserServiceTests
             controller = new UserController(mockUserService.Object);
 
             //Act           
-            var result = controller.UpdateProfile(profile);
+            var result = await controller.UpdateProfile(profile);
 
             //Assert
             result.Should().BeOfType<BadRequestObjectResult>(); //Controller should catch missing required fields.
@@ -161,14 +161,14 @@ namespace UserServiceTests
 
         [Theory]
         [InlineData("00000000-0000-0000-0000-000000000001")]
-        public void CallingGetProfile_WithValidUserId_ReturnsUserProfileObject(Guid id)
+        public async Task CallingGetProfile_WithValidUserId_ReturnsUserProfileObject(Guid id)
         {
             //Arrange
-            mockUserService.Setup(s => s.GetProfile(id)).Returns(new UserProfile { Id = id});
+            mockUserService.Setup(s => s.GetProfile(id)).ReturnsAsync(new UserProfile { UserId = id});
             controller = new UserController(mockUserService.Object);
 
             //Act
-            var result = controller.GetProfile(id);
+            var result = await controller.GetProfile(id);
 
             //Assert
             result.Should().BeOfType<OkObjectResult>();
@@ -177,44 +177,44 @@ namespace UserServiceTests
 
             UserProfile profile = okResult.Value as UserProfile;
 
-            profile!.Id.Should().Be("00000000-0000-0000-0000-000000000001");
+            profile!.UserId.Should().Be("00000000-0000-0000-0000-000000000001");
         }
 
         [Theory]
         [InlineData("00000000-0000-0000-0000-000000000000")]
-        public void CallingGetProfile_WithEmptyUserId_ReturnsEmptyUserProfileObject(Guid id)
+        public async Task CallingGetProfile_WithEmptyUserId_ReturnsEmptyUserProfileObject(Guid id)
         {
             //Arrange
-            mockUserService.Setup(s => s.GetProfile(Guid.Empty)).Returns(new UserProfile());
+            mockUserService.Setup(s => s.GetProfile(Guid.Empty)).ReturnsAsync(new UserProfile());
             controller = new UserController(mockUserService.Object);
 
             //Act
-            var result = controller.GetProfile(id);
+            var result = await controller.GetProfile(id);
 
             //Assert
             result.Should().BeOfType<OkObjectResult>();
             var okResult = result as OkObjectResult;
             UserProfile profile = okResult.Value as UserProfile;
 
-            profile!.Id.Should().Be("00000000-0000-0000-0000-000000000000");
+            profile!.UserId.Should().Be("00000000-0000-0000-0000-000000000000");
             profile!.FirstName.Should().BeNullOrEmpty();
             profile!.LastName.Should().BeNullOrEmpty();
         }
 
         [Theory]
         [InlineData("00000000-0000-0000-0000-000000000001")]
-        public void CallingGetPreferences_WithValidUserId_ReturnsUserPreferencesObject(Guid id)
+        public async Task CallingGetPreferences_WithValidUserId_ReturnsUserPreferencesObject(Guid id)
         {
             //Arrange
             UserPreferences temp = new UserPreferences();
-            temp.Id = id;
+            temp.UserId = id;
             temp.Theme = "Light";
 
-            mockUserService.Setup(s => s.GetPreferences(id)).Returns(temp);
+            mockUserService.Setup(s => s.GetPreferences(id)).ReturnsAsync(temp);
             controller = new UserController(mockUserService.Object);
             
             //Act
-            var result = controller.GetPreferences(id);
+            var result = await controller.GetPreferences(id);
 
             //Assert
             result.Should().BeOfType<OkObjectResult>();
@@ -222,23 +222,23 @@ namespace UserServiceTests
             var okResult = result! as OkObjectResult;
 
             UserPreferences userPreferences = okResult!.Value as UserPreferences;
-            userPreferences!.Id = id;
+            userPreferences!.UserId = id;
             userPreferences!.Theme.Should().Be("Light"); //Default theme
         }
 
         [Theory]
         [InlineData("00000000-0000-0000-0000-000000000000")]
-        public void CallingGetPreferences_WithEmptyUserId_ReturnsEmptyUserPreferencesObject(Guid id)
+        public async Task CallingGetPreferences_WithEmptyUserId_ReturnsEmptyUserPreferencesObjectAsync(Guid id)
         {
             //Arrange
             UserPreferences temp = new UserPreferences();
-            temp.Id = Guid.Empty;            
+            temp.UserId = Guid.Empty;            
 
-            mockUserService.Setup(s => s.GetPreferences(id)).Returns(temp);
+            mockUserService.Setup(s => s.GetPreferences(id)).ReturnsAsync(temp);
             controller = new UserController(mockUserService.Object);
 
             //Act
-            var result = controller.GetPreferences(id);
+            var result = await controller.GetPreferences(id);
 
             //Assert
             result.Should().BeOfType<OkObjectResult>();
@@ -250,20 +250,20 @@ namespace UserServiceTests
 
         [Theory]
         [InlineData("00000000-0000-0000-0000-000000000001", "DarkTheme")]
-        public void CallingUpdatePreferences_WithAnyData_ReturnsOkResult(Guid Id, string theme)
+        public async Task CallingUpdatePreferences_WithAnyData_ReturnsOkResult(Guid Id, string theme)
         {
             //Arrange
             UserPreferences preferences = new UserPreferences();
-            preferences.Id = Id;
+            preferences.UserId = Id;
             preferences.Theme = theme;
-            mockUserService.Setup(s => s.SetPreferences(preferences)).Returns(true);
+            mockUserService.Setup(s => s.SetPreferences(preferences)).ReturnsAsync(preferences);
             controller = new UserController(mockUserService.Object);
 
             //Act
-            var result = controller.UpdatePreferences(preferences);
+            var result = await controller.UpdatePreferences(preferences);
 
             //Assert
-            result.Should().BeOfType<OkResult>(); //Not returning anything in body.
+            result.Should().BeOfType<OkObjectResult>(); 
         }
 
 

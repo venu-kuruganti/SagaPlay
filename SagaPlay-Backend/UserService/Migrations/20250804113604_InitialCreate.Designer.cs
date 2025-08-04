@@ -12,8 +12,8 @@ using UserService.Database;
 namespace UserService.Migrations
 {
     [DbContext(typeof(UserContext))]
-    [Migration("20250731164545_UpdatedMigration1")]
-    partial class UpdatedMigration1
+    [Migration("20250804113604_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,9 +37,13 @@ namespace UserService.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("boolean");
 
-                    b.Property<string>("PasswordHash")
+                    b.Property<byte[]>("PasswordHash")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("bytea");
+
+                    b.Property<byte[]>("PasswordSalt")
+                        .IsRequired()
+                        .HasColumnType("bytea");
 
                     b.Property<string>("UserName")
                         .IsRequired()

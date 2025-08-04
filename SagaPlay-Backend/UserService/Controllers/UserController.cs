@@ -1,22 +1,26 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 using UserService.Models;
 using UserService.Services;
 
 namespace UserService.Controllers
 {
-    public class UserController : Controller
+    [ApiController]
+    [Route("[controller]")]
+    public class UserController : ControllerBase
     {
-        private IUserService userService;
+        private readonly IUserService _userService;
 
         public UserController(IUserService userService)
         {
-            this.userService = userService;
+            _userService = userService;
         }
 
-        public IActionResult Login([FromBody] string username, string password)
+        [HttpPost("login")]
+        public async Task<IActionResult> Login(string username, string password)
         {
             //If username and password are correct, send back Ok. Else error.
-            if (!String.IsNullOrEmpty(username) && !String.IsNullOrEmpty(password) && this.userService.Login(username, password))
+            if (!String.IsNullOrEmpty(username) && !String.IsNullOrEmpty(password) && await _userService.Login(username, password))
             {
                 return Ok("Token");
             }
@@ -26,7 +30,8 @@ namespace UserService.Controllers
             }
         }
 
-        public IActionResult Register([FromBody] string username, string password)
+        [HttpPost("register")]
+        public async Task<IActionResult> Register(string username, string password)
         {
             if (String.IsNullOrEmpty(username) || String.IsNullOrEmpty(password))
             {
@@ -34,7 +39,7 @@ namespace UserService.Controllers
             }
 
             //Create new user in database
-            var success = userService.Register(username, password);
+            var success = await _userService.Register(username, password);
 
             if (success)
             {
@@ -47,17 +52,19 @@ namespace UserService.Controllers
            
         }
 
-        public IActionResult GetProfile(Guid id)
+        [HttpGet("Profile")]
+        public async Task<IActionResult> GetProfile(Guid id)
         {
             UserProfile profile = new UserProfile();
 
             //Get actual profile here
-            profile = userService.GetProfile(id);
+            profile = await _userService.GetProfile(id);
 
             return Ok(profile);
         }
 
-        public IActionResult UpdateProfile([FromBody] UserProfile profile)
+        [HttpPatch("UpdateProfile")]
+        public async Task<IActionResult> UpdateProfile([FromBody] UserProfile profile)
         {
             if (!profile.EmailAddress.Contains('@'))
             {
@@ -65,26 +72,29 @@ namespace UserService.Controllers
             }
             else
             {
-                userService.UpdateProfile(profile);
+                var updatedUserProfile = await _userService.UpdateProfile(profile);
 
-                return Ok();
+                return Ok(updatedUserProfile);
             }
         }
 
-        public IActionResult GetPreferences(Guid Id)
+        [HttpGet("Preferences")]
+        public async Task<IActionResult> GetPreferences(Guid Id)
         {
             UserPreferences preferences = new UserPreferences();
 
-            preferences = userService.GetPreferences(Id);
+            preferences = await _userService.GetPreferences(Id);
 
             return Ok(preferences);
         }
 
-        public IActionResult UpdatePreferences(UserPreferences newPreferences)
+        [HttpPatch("UpdatePreferences")]
+        public async Task<IActionResult> UpdatePreferences([FromBody] UserPreferences newPreferences)
         {
-            if (newPreferences != null && userService.SetPreferences(newPreferences))
-            {                
-                return Ok();
+            if (newPreferences != null )
+            {
+                UserPreferences newUserPreferences = await _userService.SetPreferences(newPreferences);
+                return Ok(newUserPreferences);
             }
             else
             {
