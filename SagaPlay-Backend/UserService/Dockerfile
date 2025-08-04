@@ -7,6 +7,12 @@ WORKDIR /app
 EXPOSE 8080
 EXPOSE 8081
 
+# Copy HTTPS certificate into the container
+COPY ./.aspnet/https /https/
+
+#Set environment variables to tell Kestrel where the cert is and the password.
+ENV ASPNETCORE_Kestrel__Certificates__Default__Password="Silver1982!"
+ENV ASPNETCORE_Kestrel__Certificates__Default__Path=/https/userservice.pfx
 
 # This stage is used to build the service project
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
