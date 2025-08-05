@@ -27,14 +27,24 @@ namespace UserService.Services
         public async Task<bool> Login(string username, string password)
         {
            User user = await _repository.GetUserbyUserNameAsync(username);
+            bool passwordsMatch = true;
+
             byte[] computedHash = new byte[0];
             if (user!=null)
             {   
                 var hmac = new HMACSHA512(user.PasswordSalt);
-                computedHash  = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));                
+                computedHash  = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
+                for (int i = 0; i < computedHash.Length; i++)
+                {
+                    if (computedHash[i] != user.PasswordHash[i])
+                    {
+                        passwordsMatch = false;
+                        break;
+                    }
+                }
             }
 
-            if (user==null || user!.PasswordHash != computedHash)
+            if (user==null || !passwordsMatch)
             {
                 return false;
             }
