@@ -6,16 +6,16 @@ namespace CatalogService.Services
     {
         Task<List<ContentItem>> GetAllContentItemsAsync();
         Task<ContentItem> GetContentByIdAsync(int id);
-        Task<ContentItem> GetContentByTitleAsync(string title);
+        Task<List<ContentItem>> GetContentByTitleAsync(string title);
         Task<List<ContentItem>> GetContentByGenreAsync(string genre);
         Task<List<ContentItem>> GetContentByDirectorAsync(string director);
         Task<List<ContentItem>> GetContentByOneOrMoreCastMembersAsync(List<CastMember> castMembers);
-        Task<List<ContentItem>> GetContentByReleaseDate(DateTime releasedate);
-        Task<bool> AddNewContent(ContentItem item);
-        Task<bool> AddNewCastMember(CastMember member);
-        Task<bool> UpdateContent(ContentItem item);
-        Task<bool> UpdateCastMember(CastMember member);
-        Task<bool> DeleteContent(ContentItem item);
+        Task<List<ContentItem>> GetContentByReleaseDateAsync(DateTime releasedate);
+        Task<bool> AddNewContentAsync(ContentItem item);
+        Task<bool> AddNewCastMemberAsync(CastMember member);
+        Task<bool> UpdateContentAsync(ContentItem item);
+        Task<bool> UpdateCastMemberAsync(CastMember member);
+        Task<bool> DeleteContentAsync(ContentItem item);
 
     }
 }

@@ -1,6 +1,9 @@
 ﻿using CatalogService.Models;
 using CatalogService.Repository;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Primitives;
+using System.Reflection.Metadata;
+using System.Threading.Tasks;
 
 namespace CatalogService.Services
 {
@@ -12,121 +15,105 @@ namespace CatalogService.Services
             _repository = repository;
         }
 
-        public Task<bool> AddNewCastMember(CastMember member)
+        public async Task<bool> AddNewCastMemberAsync(CastMember member)
         {
-            throw new NotImplementedException();
+            return await _repository.CreateNewCastMember(member);
         }
 
-        public Task<bool> AddNewContent(ContentItem item)
+        public async Task<bool> AddNewContentAsync(ContentItem item)
         {
-            throw new NotImplementedException();
+            return await _repository.AddNewContentItem(item);
         }
 
-        public Task<bool> DeleteContent(ContentItem item)
+        public async Task<bool> DeleteContentAsync(ContentItem item)
         {
-            throw new NotImplementedException();
+            return await _repository.DeleteContentItem(item);
         }
 
-        public Task<List<ContentItem>> GetAllContentItemsAsync()
+        public async Task<List<ContentItem>> GetAllContentItemsAsync()
         {
-            throw new NotImplementedException();
+            return await _repository.GetAll();
         }
 
-        public async Task<List<ContentItem>> GetByDirector(string director)
+        private async Task<List<ContentItem>> GetContentBasedOnParam(string title="", 
+            string director = "", 
+            string genre = "",
+            List<CastMember>? castMembers = null,
+            string releaseDate = "")
         {
-            throw new NotImplementedException();
-            //return await _context.ContentItems.Where(c => c.Director == director).ToListAsync();
+            List<ContentItem> items = await GetAllContentItemsAsync();
+           
+
+            if (!string.IsNullOrEmpty(title))
+            {
+                return items.Where(c => c.Title.Contains(title)).ToList(); //Searching for Lord of The Rings returns all three movies.
+            }
+
+            if (!string.IsNullOrEmpty(director))
+            {
+                return items.Where(c => c.Director.ToLower() == director.ToLower()).ToList(); //One director can have directed more than one movie!
+            }
+
+            if (!string.IsNullOrEmpty(genre))
+            {
+                return items.Where(c => c.Genre == genre).ToList();
+            }
+
+            if (castMembers != null)
+            {
+                var matchingItems = items.Where(i => i.MainCast.Any(c => castMembers.Contains(c)));
+                return matchingItems.ToList(); //This is obvious why I'm returning a list. Tom Cruise was in HOW MANY movies again?
+            }
+
+            if (!string.IsNullOrEmpty(releaseDate))
+            {
+                return items.Where(c => c.ReleaseDate == DateTime.Parse(releaseDate)).ToList();
+            }            
+
+            return items;
         }
 
-        public Task<List<ContentItem>> GetByDirectorAsync(string director)
+      
+
+        public async Task<List<ContentItem>> GetContentByDirectorAsync(string director)
         {
-            throw new NotImplementedException();
+            return await GetContentBasedOnParam(director: director);
         }
 
-        public async Task<List<ContentItem>> GetByGenre(string genre)
+        public async Task<List<ContentItem>> GetContentByGenreAsync(string genre)
         {
-            throw new NotImplementedException();
-            // return await _context.ContentItems.Where(c => c.Genre == genre).ToListAsync();
+            return await GetContentBasedOnParam(genre: genre);
         }
 
-        public Task<List<ContentItem>> GetByGenreAsync(string genre)
+        public async Task<ContentItem> GetContentByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var items = await GetAllContentItemsAsync();
+            return items.Where(c => c.Id == id).FirstOrDefault();
         }
 
-        public async Task<ContentItem> GetById(int id)
+        public async Task<List<ContentItem>> GetContentByOneOrMoreCastMembersAsync(List<CastMember> castMembers)
         {
-            throw new NotImplementedException();
-            // return await _context.ContentItems.Where(c => c.Id == id).FirstOrDefaultAsync();
+            return await GetContentBasedOnParam(castMembers: castMembers);
         }
 
-        public Task<ContentItem> GetByIdAsync(int id)
+        public async Task<List<ContentItem>> GetContentByReleaseDateAsync(DateTime releasedate)
         {
-            throw new NotImplementedException();
+            return await GetContentBasedOnParam(releaseDate: releasedate.ToString());
         }
 
-        public async Task<List<ContentItem>> GetByOneOrMoreCastMembers(List<CastMember> castMembers)
+        public async Task<List<ContentItem>> GetContentByTitleAsync(string title)
         {
-            throw new NotImplementedException();
-            //List<ContentItem> items = await GetAll();
-            //var matchingItems = items.Where(i => i.MainCast.Any(c => castMembers.Contains(c)));
-            //return matchingItems.ToList();
+            return await GetContentBasedOnParam(title: title);
         }
 
-        public Task<List<ContentItem>> GetByOneOrMoreCastMembersAsync(List<CastMember> castMembers)
+        public async Task<bool> UpdateCastMemberAsync(CastMember member)
         {
-            throw new NotImplementedException();
+            return await _repository.UpdateCastMember(member);
         }
 
-        public async Task<ContentItem> GetByTitle(string title)
+        public async Task<bool> UpdateContentAsync(ContentItem item)
         {
-            throw new NotImplementedException();
-            // return await _context.ContentItems.Where(c => c.Title == title).FirstOrDefaultAsync();
-        }
-
-        public Task<ContentItem> GetByTitleAsync(string title)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<List<ContentItem>> GetContentByDirectorAsync(string director)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<List<ContentItem>> GetContentByGenreAsync(string genre)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<ContentItem> GetContentByIdAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<List<ContentItem>> GetContentByOneOrMoreCastMembersAsync(List<CastMember> castMembers)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<List<ContentItem>> GetContentByReleaseDate(DateTime releasedate)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<ContentItem> GetContentByTitleAsync(string title)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> UpdateCastMember(CastMember member)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> UpdateContent(ContentItem item)
-        {
-            throw new NotImplementedException();
+            return await _repository.UpdateContentItem(item);
         }
     }
 }
