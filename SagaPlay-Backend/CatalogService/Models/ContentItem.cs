@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace CatalogService.Models
 {
@@ -21,7 +22,7 @@ namespace CatalogService.Models
 
         public string PosterURL { get; set; }
 
-        //Navigation properties
+        //Navigation properties       
         public ICollection<CastMember> MainCast { get; set; }
 
     }

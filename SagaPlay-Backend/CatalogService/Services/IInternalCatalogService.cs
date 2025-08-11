@@ -15,7 +15,10 @@ namespace CatalogService.Services
         Task<bool> AddNewCastMemberAsync(CastMember member);
         Task<bool> UpdateContentAsync(ContentItem item);
         Task<bool> UpdateCastMemberAsync(CastMember member);
-        Task<bool> DeleteContentAsync(ContentItem item);
+        Task<bool> DeleteContentAsync(int itemId);
+        Task<bool> DeleteCastMemberAsync(CastMember member);
+
+        Task<List<CastMember>> GetCastMembers();
 
     }
 }

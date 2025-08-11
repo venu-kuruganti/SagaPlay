@@ -1,4 +1,6 @@
-﻿namespace CatalogService.Models
+﻿using System.Text.Json.Serialization;
+
+namespace CatalogService.Models
 {
     public class CastMember
     {
@@ -10,6 +12,7 @@
 
 
         //Navigation properties
+        [JsonIgnore]
         public ICollection<ContentItem> ContentItems { get; set; }
 
 

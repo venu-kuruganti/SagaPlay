@@ -12,5 +12,7 @@ namespace CatalogService.Repository
         Task<bool> CreateNewCastMember(CastMember member);
         Task<bool> UpdateCastMember(CastMember member);
         Task<bool> DeleteCastMember(CastMember member);
+
+        Task<List<CastMember>> GetCastMembers();
     }
 }

@@ -1,0 +1,22 @@
+version: '3.9'
+
+services:
+  userservice:
+    environment:
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=${CERT_PASSWORD}
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/devcert.pfx
+    volumes:
+      - ${USERPROFILE}\.aspnet\https:/https:ro
+    ports:
+      - "5000:8080"
+      - "5001:8081"
+
+  catalogservice:
+    environment:
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=${CERT_PASSWORD}
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/devcert.pfx
+    volumes:
+      - ${USERPROFILE}\.aspnet\https:/https:ro
+    ports:
+      - "6000:8080"
+      - "6001:8081"

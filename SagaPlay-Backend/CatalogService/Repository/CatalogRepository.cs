@@ -59,9 +59,17 @@ namespace CatalogService.Repository
 
         public async Task<List<ContentItem>> GetAll()
         {
-            return await _context.ContentItems.ToListAsync();
+            return await _context.ContentItems
+                .Include(c=>c.MainCast)
+                .ToListAsync();
         }
-       
+
+        public async Task<List<CastMember>> GetCastMembers()
+        {
+            return await _context.CastMembers
+                .Include(a=>a.ContentItems)
+                .ToListAsync();
+        }
 
         public async Task<bool> UpdateCastMember(CastMember member)
         {
