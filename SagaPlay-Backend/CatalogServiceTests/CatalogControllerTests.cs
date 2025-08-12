@@ -15,7 +15,7 @@ namespace CatalogServiceTests
     public class CatalogControllerTests
     {
         private readonly Mock<IInternalCatalogService> _catalogServiceMock;
-        private CatalogController _controller;
+        private CatalogController? _controller;
         public CatalogControllerTests()
         {
             _catalogServiceMock = new Mock<IInternalCatalogService>();

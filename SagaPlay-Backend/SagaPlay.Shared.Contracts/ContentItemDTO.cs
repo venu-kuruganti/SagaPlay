@@ -1,7 +1,8 @@
-﻿namespace CatalogService.DTOs
+﻿namespace SagaPlay.Shared.Contracts
 {
     public class ContentItemDTO
     {
+        public int Id { get; set; }
         public string Title { get; set; }
 
         public string PlotSummary { get; set; }

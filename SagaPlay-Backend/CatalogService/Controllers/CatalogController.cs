@@ -1,4 +1,5 @@
 ﻿using CatalogService.DTOs;
+using SagaPlay.Shared.Contracts;
 using CatalogService.Models;
 using CatalogService.Services;
 using Microsoft.AspNetCore.Http;
@@ -20,6 +21,19 @@ namespace CatalogService.Controllers
         public async Task<IActionResult> GetAll()
         {
             var items = await _catalogService.GetAllContentItemsAsync();
+
+            // Map from EF Entity to DTO
+            var dtoList = items.Select(c => new ContentItemDTO
+            {
+                Id = c.Id,
+                Title = c.Title,
+                PlotSummary = c.PlotSummary,
+                ReleaseDate = c.ReleaseDate,
+                Genre = c.Genre,
+                Director = c.Director,
+                Rating = c.Rating,
+                PosterURL = c.PosterURL                
+            }).ToList();
 
             return Ok(items);
         }
