@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatalogService", "CatalogSe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatalogServiceTests", "..\CatalogServiceTests\CatalogServiceTests.csproj", "{19D2B2B3-EC78-4877-B7D0-F177ED41C1D5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SagaPlay.Shared.Contracts", "..\SagaPlay.Shared.Contracts\SagaPlay.Shared.Contracts.csproj", "{43EDD3F9-44B7-D0C3-30F0-140A8CE6CA43}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{19D2B2B3-EC78-4877-B7D0-F177ED41C1D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{19D2B2B3-EC78-4877-B7D0-F177ED41C1D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{19D2B2B3-EC78-4877-B7D0-F177ED41C1D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43EDD3F9-44B7-D0C3-30F0-140A8CE6CA43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43EDD3F9-44B7-D0C3-30F0-140A8CE6CA43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43EDD3F9-44B7-D0C3-30F0-140A8CE6CA43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43EDD3F9-44B7-D0C3-30F0-140A8CE6CA43}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

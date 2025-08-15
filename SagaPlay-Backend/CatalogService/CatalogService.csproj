@@ -21,9 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="SagaPlay.Shared.Contracts">
-      <HintPath>..\SagaPlay.Shared.Contracts\bin\Release\net8.0\SagaPlay.Shared.Contracts.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\SagaPlay.Shared.Contracts\SagaPlay.Shared.Contracts.csproj" />
   </ItemGroup>
 
 </Project>

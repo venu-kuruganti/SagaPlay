@@ -18,9 +18,9 @@ ENV ASPNETCORE_Kestrel__Certificates__Default__Path=/https/userservice.pfx
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["UserService.csproj", "."]
+COPY ["UserService/UserService.csproj", "."]
 RUN dotnet restore "./UserService.csproj"
-COPY . .
+COPY UserService/. .
 WORKDIR "/src/."
 RUN dotnet build "./UserService.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
