@@ -1,9 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35931.197 d17.13
+VisualStudioVersion = 17.13.35931.197
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecommendationService", "RecommendationService.csproj", "{B20AE882-78CF-445D-A284-99A81073A134}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecommendationService.Tests", "..\RecommendationService.Tests\RecommendationService.Tests.csproj", "{C786A493-1F51-4880-916C-C72A1BEBFE3D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SagaPlay.Shared.Contracts", "..\SagaPlay.Shared.Contracts\SagaPlay.Shared.Contracts.csproj", "{43EDD3F9-44B7-D0C3-30F0-140A8CE6CA43}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{B20AE882-78CF-445D-A284-99A81073A134}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B20AE882-78CF-445D-A284-99A81073A134}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B20AE882-78CF-445D-A284-99A81073A134}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C786A493-1F51-4880-916C-C72A1BEBFE3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C786A493-1F51-4880-916C-C72A1BEBFE3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C786A493-1F51-4880-916C-C72A1BEBFE3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C786A493-1F51-4880-916C-C72A1BEBFE3D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43EDD3F9-44B7-D0C3-30F0-140A8CE6CA43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43EDD3F9-44B7-D0C3-30F0-140A8CE6CA43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43EDD3F9-44B7-D0C3-30F0-140A8CE6CA43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43EDD3F9-44B7-D0C3-30F0-140A8CE6CA43}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

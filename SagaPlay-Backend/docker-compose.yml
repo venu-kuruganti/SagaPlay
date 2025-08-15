@@ -1,0 +1,72 @@
+version: '3.9'
+
+networks:
+  sagaplay-network:
+    driver: bridge
+
+services:
+  user-service:
+    build:
+      context: .
+      dockerfile: UserService/Dockerfile
+    container_name: user-service
+    environment:
+      # Internal + external URLs
+      - ASPNETCORE_URLS=https://+:8081;http://+:8080
+      # Dev cert
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/devcert.pfx
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=${CERT_PASSWORD}
+    volumes:
+      - ${USERPROFILE}\.aspnet\https:/https:ro
+    ports:
+      - "5000:8080"  # HTTP
+      - "5001:8081"  # HTTPS
+    networks:
+      - sagaplay-network
+
+  catalog-service:
+    build:
+      context: .
+      dockerfile: CatalogService/Dockerfile
+    container_name: catalog-service
+    environment:
+      - ASPNETCORE_URLS=https://+:8081;http://+:8080
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/devcert.pfx
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=${CERT_PASSWORD}
+    volumes:
+      - ${USERPROFILE}\.aspnet\https:/https:ro
+    ports:
+      - "6000:8080"  # HTTP
+      - "6001:8081"  # HTTPS
+    networks:
+      - sagaplay-network
+
+  recommendation-service:
+    build:
+      context: .
+      dockerfile: RecommendationService/Dockerfile
+    container_name: recommendation-service   
+    depends_on:
+      - catalog-service
+    environment:
+      - ASPNETCORE_URLS=https://+:8081;http://+:8080
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/devcert.pfx
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=${CERT_PASSWORD}
+      # Internal service call (HTTP to avoid TLS trust issues in dev)
+      - CatalogService__BaseUrl=http://catalog-service:8080
+    volumes:
+      - ${USERPROFILE}\.aspnet\https:/https:ro
+    ports:
+      - "7000:8080"  # HTTP
+      - "7001:8081"  # HTTPS
+    networks:
+      - sagaplay-network
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"    # RabbitMQ main port
+      - "15672:15672"  # Management UI
+    networks:
+      - sagaplay-network
