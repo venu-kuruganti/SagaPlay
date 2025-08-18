@@ -1,9 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35931.197 d17.13
+VisualStudioVersion = 17.13.35931.197
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WatchlistService", "WatchlistService.csproj", "{1FD055F2-2E61-419F-953D-365A0E5D4E31}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SagaPlay.Shared.Contracts", "..\SagaPlay.Shared.Contracts\SagaPlay.Shared.Contracts.csproj", "{43EDD3F9-44B7-D0C3-30F0-140A8CE6CA43}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WatchListService.Tests", "..\WatchListService.Tests\WatchListService.Tests.csproj", "{2C84ABCE-DD5C-408E-A552-07792446245D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{1FD055F2-2E61-419F-953D-365A0E5D4E31}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1FD055F2-2E61-419F-953D-365A0E5D4E31}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1FD055F2-2E61-419F-953D-365A0E5D4E31}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43EDD3F9-44B7-D0C3-30F0-140A8CE6CA43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43EDD3F9-44B7-D0C3-30F0-140A8CE6CA43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43EDD3F9-44B7-D0C3-30F0-140A8CE6CA43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43EDD3F9-44B7-D0C3-30F0-140A8CE6CA43}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C84ABCE-DD5C-408E-A552-07792446245D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C84ABCE-DD5C-408E-A552-07792446245D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C84ABCE-DD5C-408E-A552-07792446245D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C84ABCE-DD5C-408E-A552-07792446245D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

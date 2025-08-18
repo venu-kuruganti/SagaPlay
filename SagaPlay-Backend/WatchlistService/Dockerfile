@@ -12,7 +12,8 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["WatchlistService.csproj", "."]
+COPY ["WatchListService/WatchlistService.csproj", "./WatchListService"]
+COPY ["SagaPlay.Shared.Contracts/SagaPlay.Shared.Contracts", "./Sagaplay"]
 RUN dotnet restore "./WatchlistService.csproj"
 COPY . .
 WORKDIR "/src/."
