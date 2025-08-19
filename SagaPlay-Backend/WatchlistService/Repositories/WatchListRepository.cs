@@ -17,7 +17,7 @@ namespace WatchlistService.Repositories
         {
             try
             {
-                _watchListContext.WatchLists.Add(watchlist);
+                await _watchListContext.WatchLists.AddAsync(watchlist);
                 return await _watchListContext.SaveChangesAsync() > 0;
             }
             catch (Exception ex)
@@ -41,28 +41,35 @@ namespace WatchlistService.Repositories
             }
         }
 
-        public async Task<bool> DeleteWatchList(WatchList watchlist)
+        public async Task<bool> DeleteWatchList(Guid UserId)
         {
             try
             {
-                _watchListContext.WatchLists.Remove(watchlist);
-                return await _watchListContext.SaveChangesAsync() > 0;
+                return await _watchListContext.WatchLists.Where(i => i.UserId == UserId).ExecuteDeleteAsync() > 0;                
             }
             catch (Exception ex)
             {
-
                 throw new ApplicationException(string.Format("Exception occured in database : {0}", ex.Message)); 
             }
         }
 
         public async Task<List<WatchList>> GetAllWatchListsAsync()
         {
-            return await _watchListContext.WatchLists.ToListAsync();
+            return await _watchListContext.WatchLists
+                .Include(l=>l.WatchListItems)
+                .ToListAsync();
         }
 
         public async Task<WatchList>? GetWatchlistByUserIdAsync(Guid userId)
         {
-            return await _watchListContext.WatchLists.Where(l => l.UserId == userId).FirstOrDefaultAsync();
+            return await _watchListContext.WatchLists
+                .Include(l=>l.WatchListItems)
+                .Where(l => l.UserId == userId).FirstOrDefaultAsync();
+        }
+
+        public async Task<WatchListItem> GetWatchListItem(int itemId)
+        {
+            return await _watchListContext.WatchListItems.Where(i => i.Id == itemId).FirstOrDefaultAsync();
         }
 
         public async Task<bool> UpdateWatchList(WatchList watchlist)
@@ -94,5 +101,7 @@ namespace WatchlistService.Repositories
                 throw new ApplicationException(string.Format("Error occurred saving to database : {0}", ex.Message)); ;
             }
         }
+
+        
     }
 }
