@@ -1,9 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35931.197 d17.13
+VisualStudioVersion = 17.13.35931.197
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotificationService", "NotificationService.csproj", "{E179931A-DDC9-4F25-B3EA-C4A3981F0165}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SagaPlay.Shared.Contracts", "..\SagaPlay.Shared.Contracts\SagaPlay.Shared.Contracts.csproj", "{43EDD3F9-44B7-D0C3-30F0-140A8CE6CA43}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotificationService.Tests", "..\NotificationService.Tests\NotificationService.Tests.csproj", "{2153CA5F-CFA1-4365-9BC2-A716CD60C97E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{E179931A-DDC9-4F25-B3EA-C4A3981F0165}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E179931A-DDC9-4F25-B3EA-C4A3981F0165}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E179931A-DDC9-4F25-B3EA-C4A3981F0165}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43EDD3F9-44B7-D0C3-30F0-140A8CE6CA43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43EDD3F9-44B7-D0C3-30F0-140A8CE6CA43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43EDD3F9-44B7-D0C3-30F0-140A8CE6CA43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43EDD3F9-44B7-D0C3-30F0-140A8CE6CA43}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2153CA5F-CFA1-4365-9BC2-A716CD60C97E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2153CA5F-CFA1-4365-9BC2-A716CD60C97E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2153CA5F-CFA1-4365-9BC2-A716CD60C97E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2153CA5F-CFA1-4365-9BC2-A716CD60C97E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
