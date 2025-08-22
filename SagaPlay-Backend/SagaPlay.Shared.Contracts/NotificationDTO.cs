@@ -2,7 +2,7 @@
 {
     public class NotificationDTO
     {
-        public Guid UserId { get; set; } //Push and toast targeting
+        public Guid? UserId { get; set; } //Push and toast targeting. Making it nullable so that broadcast can happen.
         public string To { get; set; } //For email notification
         public string Subject { get; set; }        //For email
         public string Message { get; set; }     //For push and email notification

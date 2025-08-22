@@ -17,9 +17,26 @@ builder.Services.AddMailKit(config =>
     config.UseMailKit(builder.Configuration.GetSection("EmailSettings").Get<MailKitOptions>());
 });
 
+builder.Services.AddSignalR();
+
 builder.Services.AddScoped<INotifyService, EmailNotifyService>();
 builder.Services.AddScoped<INotifyService, PushNotifyService>();
 builder.Services.AddScoped<INotificationDispatcher, NotificationDispatcher>();
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials()
+            .SetIsOriginAllowed(_ => true); // permissive for dev
+    });
+});
+
+
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -31,8 +48,12 @@ var app = builder.Build();
 
 //app.UseHttpsRedirection();
 
-app.UseAuthorization();
+//app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseCors();
+
+app.MapHub<NotificationHub>("/hubs/notification");
 
 app.Run();
