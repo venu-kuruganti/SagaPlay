@@ -12,16 +12,20 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["NotificationService.csproj", "."]
+COPY ["NotificationService/NotificationService.csproj", "."]
+COPY ["SagaPlay.Shared.Contracts/SagaPlay.Shared.Contracts.csproj", "SagaPlay.Shared.Contracts/"]
+
 RUN dotnet restore "./NotificationService.csproj"
+
 COPY . .
+
 WORKDIR "/src/."
-RUN dotnet build "./NotificationService.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "./NotificationService/NotificationService.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # This stage is used to publish the service project to be copied to the final stage
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./NotificationService.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./NotificationService/NotificationService.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 # This stage is used in production or when running from VS in regular mode (Default when not using the Debug configuration)
 FROM base AS final

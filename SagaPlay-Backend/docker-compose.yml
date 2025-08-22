@@ -66,17 +66,11 @@ watchlist-service:
     build:
       context: .
       dockerfile: WatchListService/Dockerfile
-    container_name: watchlist-service   
-    depends_on:
-      - catalog-service
-      - user-service
+    container_name: watchlist-service       
     environment:
       - ASPNETCORE_URLS=https://+:8081;http://+:8080
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/devcert.pfx
       - ASPNETCORE_Kestrel__Certificates__Default__Password=${CERT_PASSWORD}
-      # Internal service call (HTTP to avoid TLS trust issues in dev)
-      - CatalogService__BaseUrl=http://catalog-service:8080
-      - WatchListService__BaseUrl=http://watchlist-service:8080
     volumes:
       - ${USERPROFILE}\.aspnet\https:/https:ro
     ports:
@@ -85,7 +79,24 @@ watchlist-service:
     networks:
       - sagaplay-network
 
-  rabbitmq:
+notification-service:
+    build:
+      context: .
+      dockerfile: NotificationService/Dockerfile
+    container_name: notification-service       
+    environment:
+      - ASPNETCORE_URLS=https://+:8081;http://+:8080
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/devcert.pfx
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=${CERT_PASSWORD}     
+    volumes:
+      - ${USERPROFILE}\.aspnet\https:/https:ro
+    ports:
+      - "9000:8080"  # HTTP
+      - "9001:8081"  # HTTPS
+    networks:
+      - sagaplay-network
+      
+rabbitmq:
     image: rabbitmq:3-management
     container_name: rabbitmq
     ports:
