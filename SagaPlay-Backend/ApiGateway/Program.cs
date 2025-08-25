@@ -1,25 +1,34 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Ocelot.DependencyInjection;
+using Ocelot.Middleware;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+builder.Configuration.AddJsonFile("ocelot.json", optional: false, reloadOnChange: true);
 
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services
+    .AddAuthentication("Okta")
+    .AddJwtBearer("Okta", options =>
+    {
+        // Your Okta domain (the one ending with auth0.com or okta.com)
+        options.Authority = "https://dev-sagaplay.eu.auth0.com/";
+
+        // The "Audience" is the API Identifier you set in Okta
+        // (when you configure your API in the Okta dashboard)
+        options.Audience = "https://sagaplay/api"; // replace with yours
+    });
+
+builder.Services.AddOcelot(builder.Configuration);
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
-app.UseHttpsRedirection();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllers();
+await app.UseOcelot();
+
 
 app.Run();
+
+public partial class Program { }
