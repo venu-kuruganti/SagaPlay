@@ -12,15 +12,9 @@ services:
     container_name: user-service
     environment:
       # Internal + external URLs
-      - ASPNETCORE_URLS=https://+:8081;http://+:8080
-      # Dev cert
-      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/devcert.pfx
-      - ASPNETCORE_Kestrel__Certificates__Default__Password=${CERT_PASSWORD}
-    volumes:
-      - ${USERPROFILE}\.aspnet\https:/https:ro
+      - ASPNETCORE_URLS=http://+:8080       
     ports:
-      - "5000:8080"  # HTTP
-      - "5001:8081"  # HTTPS
+      - "5000:8080"  # HTTP      
     networks:
       - sagaplay-network
 
@@ -30,14 +24,9 @@ services:
       dockerfile: CatalogService/Dockerfile
     container_name: catalog-service
     environment:
-      - ASPNETCORE_URLS=https://+:8081;http://+:8080
-      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/devcert.pfx
-      - ASPNETCORE_Kestrel__Certificates__Default__Password=${CERT_PASSWORD}
-    volumes:
-      - ${USERPROFILE}\.aspnet\https:/https:ro
+      - ASPNETCORE_URLS=http://+:8080       
     ports:
-      - "6000:8080"  # HTTP
-      - "6001:8081"  # HTTPS
+      - "6000:8080"  # HTTP      
     networks:
       - sagaplay-network
 
@@ -49,54 +38,52 @@ services:
     depends_on:
       - catalog-service
     environment:
-      - ASPNETCORE_URLS=https://+:8081;http://+:8080
-      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/devcert.pfx
-      - ASPNETCORE_Kestrel__Certificates__Default__Password=${CERT_PASSWORD}
+      - ASPNETCORE_URLS=http://+:8080      
       # Internal service call (HTTP to avoid TLS trust issues in dev)
       - CatalogService__BaseUrl=http://catalog-service:8080
-    volumes:
-      - ${USERPROFILE}\.aspnet\https:/https:ro
+   
     ports:
-      - "7000:8080"  # HTTP
-      - "7001:8081"  # HTTPS
+      - "7000:8080"  # HTTP      
     networks:
       - sagaplay-network
 
-watchlist-service:
+  watchlist-service:
     build:
       context: .
       dockerfile: WatchListService/Dockerfile
     container_name: watchlist-service       
     environment:
-      - ASPNETCORE_URLS=https://+:8081;http://+:8080
-      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/devcert.pfx
-      - ASPNETCORE_Kestrel__Certificates__Default__Password=${CERT_PASSWORD}
-    volumes:
-      - ${USERPROFILE}\.aspnet\https:/https:ro
+      - ASPNETCORE_URLS=http://+:8080        
     ports:
-      - "8000:8080"  # HTTP
-      - "8001:8081"  # HTTPS
+      - "8000:8080"  # HTTP      
     networks:
       - sagaplay-network
 
-notification-service:
+  notification-service:
     build:
       context: .
       dockerfile: NotificationService/Dockerfile
     container_name: notification-service       
     environment:
-      - ASPNETCORE_URLS=https://+:8081;http://+:8080
-      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/devcert.pfx
-      - ASPNETCORE_Kestrel__Certificates__Default__Password=${CERT_PASSWORD}     
-    volumes:
-      - ${USERPROFILE}\.aspnet\https:/https:ro
+      - ASPNETCORE_URLS=http://+:8080        
     ports:
-      - "9000:8080"  # HTTP
-      - "9001:8081"  # HTTPS
+      - "9000:8080"  # HTTP      
+    networks:
+      - sagaplay-network
+
+  apigateway-service:
+    build: 
+      context: .
+      dockerfile: ApiGateway/Dockerfile
+    container_name: apigateway-service
+    environment:
+      - ASPNETCORE_URLS=http://+:8080        
+    ports:
+      - "4000:8080"  # HTTP      
     networks:
       - sagaplay-network
       
-rabbitmq:
+  rabbitmq:
     image: rabbitmq:3-management
     container_name: rabbitmq
     ports:

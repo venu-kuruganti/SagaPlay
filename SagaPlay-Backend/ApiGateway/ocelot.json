@@ -1,0 +1,100 @@
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/api/user-service/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "user-service",
+          "Port": 8080
+        }
+      ],
+      "UpstreamPathTemplate": "/userservice/{everything}",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Okta",
+        "AllowedScopes": []
+      },
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/user-service/register",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "user-service",
+          "Port": 8080
+        }
+      ],
+      "UpstreamPathTemplate": "/userservice/register",
+      "UpstreamHttpMethod": [ "POST" ]
+      // 👇 no AuthenticationOptions here
+    },
+    {
+      "DownstreamPathTemplate": "/api/catalog-service/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "catalog-service",
+          "Port": 8080
+        }
+      ],
+      "UpstreamPathTemplate": "/catalogservice/{everything}",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Okta",
+        "AllowedScopes": []
+      },
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/recommendation-service/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "recommendation-service",
+          "Port": 8080
+        }
+      ],
+      "UpstreamPathTemplate": "/recommendationservice/{everything}",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Okta",
+        "AllowedScopes": []
+      },
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/watchlist-service/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "watchlist-service",
+          "Port": 8080
+        }
+      ],
+      "UpstreamPathTemplate": "/watchlistservice/{everything}",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Okta",
+        "AllowedScopes": []
+      },
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/notification-service/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "notification-service",
+          "Port": 8080
+        }
+      ],
+      "UpstreamPathTemplate": "/notificationservice/{everything}",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Okta",
+        "AllowedScopes": []
+      },
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "http://localhost:4000"
+  }
+}
