@@ -1,0 +1,59 @@
+nav {
+    background-color: #16324F;
+
+}
+
+.nav-link {
+    color: #FFD166;
+    font-family: 'Nunito';
+    font-weight: 300;
+    /*Slightly bolder but not as much as the brand*/
+    letter-spacing: 2px;
+    /*slightly airy*/
+    text-transform: capitalize;
+    background: none;
+    /* transparent button look */
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: transform 0.2s ease, color 0.2s ease, text-shadow 0.2s ease;
+}
+
+.nav-link:hover{
+    color :#FFA630;
+    font-weight: bold;
+    text-shadow:
+        0 0 5px rgba(255, 255, 255, 0.6),
+        0 0 10px rgba(255, 215, 0, 0.4),
+        0 0 20px rgba(255, 215, 0, 0.2);
+}
+
+.navbar-brand {
+    font-family: 'Cinzel Decorative', sans-serif;
+    /* clean, modern */
+    font-weight: 700;
+    /* bold but not chunky */
+    letter-spacing: 3px;
+    /* airy spacing */
+    font-size: 1.5rem;
+    /* big enough to stand out */
+    text-transform: uppercase;
+    /* gives strength */
+    color: #FFD700;
+    /* gold accent */
+    background: none;
+    /* transparent button look */
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: transform 0.2s ease, color 0.2s ease, text-shadow 0.2s ease;
+}
+
+.navbar-brand:hover {
+    color: #FFC300;
+    /* slightly warmer gold on hover */
+    text-shadow:
+        0 0 5px rgba(255, 255, 255, 0.6),
+        0 0 10px rgba(255, 215, 0, 0.4),
+        0 0 20px rgba(255, 215, 0, 0.2);
+}
