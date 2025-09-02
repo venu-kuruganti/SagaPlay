@@ -12,10 +12,7 @@ namespace UserService.Models
         public Guid Id { get; set; }
 
         public string UserName { get; set; }
-
-        public byte[] PasswordHash { get; set; } //Salted Password.
-
-        public byte[] PasswordSalt { get; set; } //To unsalt the password and compare it.
+       
 
         public DateTime CreatedDate { get; set; }
 

@@ -4,12 +4,16 @@ import { CatalogComponent } from './features/catalog/catalog.component';
 import { WatchlistComponent } from './features/watchlist/watchlist.component';
 import { UserProfileComponent } from './features/user-profile/user-profile.component';
 import { AboutComponent } from './features/about/about.component';
+import { RegisterComponent } from './features/auth/register/register.component';
+import { LoginComponent } from './features/auth/login/login.component';
 
 export const routes: Routes = [
-    {path:'', component:HomeComponent},
-    {path:'catalog', component:CatalogComponent},
-    {path:'watchlist', component:WatchlistComponent},
-    {path:'userprofile', component:UserProfileComponent},
-    {path:'about', component:AboutComponent},
-    {path:'**', pathMatch:'full', component:HomeComponent}
+    { path: '', component: HomeComponent },
+    { path: 'catalog', component: CatalogComponent },
+    { path: 'watchlist', component: WatchlistComponent },
+    { path: 'userprofile', component: UserProfileComponent },
+    { path: 'about', component: AboutComponent },
+    { path: 'register', component: RegisterComponent },
+    { path: 'login', component: LoginComponent },
+    { path: '**', pathMatch: 'full', component: HomeComponent }
 ];

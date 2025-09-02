@@ -1,12 +1,11 @@
-﻿using UserService.Models;
+﻿using UserService.DTOs;
+using UserService.Models;
 
 namespace UserService.Services
 {
     public interface IUserService
-    {
-        public Task<bool> Login(string username, string password);
-
-        public Task<bool> Register(string username, string password);
+    {       
+        public Task<string> Register(RegisterDTO registerDTO);
 
         public Task<UserProfile> GetProfile(Guid UserId);
 

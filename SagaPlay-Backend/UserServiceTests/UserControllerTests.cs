@@ -11,6 +11,7 @@ using UserService.Models;
 using Xunit;
 using UserService.Services;
 using Moq;
+using UserService.DTOs;
 
 namespace UserServiceTests
 {
@@ -30,11 +31,12 @@ namespace UserServiceTests
         public async Task Login_WithProperCredentials_ReturnsOK(string username, string password)
         {
             //Arrange
-            mockUserService.Setup(s => s.Login("VenuK", "Silver")).ReturnsAsync(true);
+            mockUserService.Setup(s => s.Login("VenuK", "Silver")).ReturnsAsync("abcdefghijukwopidfjweiofj");
             controller = new UserController(mockUserService.Object);
+            LoginDTO loginDTO = new LoginDTO { Username = username, Password = password };
 
             //Act
-            var result = await controller.Login(username, password);
+            var result = await controller.Login(loginDTO);
 
             //Assert
             result.Should().BeOfType<OkObjectResult>();
@@ -45,11 +47,11 @@ namespace UserServiceTests
         public async Task Login_WithImproperProperCredentials_ReturnsOK(string username, string password)
         {
             //Arrange
-            mockUserService.Setup(s => s.Login("Ghifa", "PASSword$1")).ReturnsAsync(false);
+            mockUserService.Setup(s => s.Login("Ghifa", "PASSword$1")).ReturnsAsync(string.Empty);
             controller = new UserController(mockUserService.Object);
-
+            LoginDTO loginDTO = new LoginDTO { Username = username, Password = password };
             //Act
-            var result = await controller.Login(username, password);
+            var result = await controller.Login(loginDTO);
 
             //Assert
             result.Should().BeOfType<UnauthorizedObjectResult>();
@@ -60,11 +62,12 @@ namespace UserServiceTests
         public async Task CallingRegisterUser_WithValidData_ReturnsOK(string username, string password)
         {
             //Arrange
-            mockUserService.Setup(s => s.Register("TestUser", "Pwd1")).ReturnsAsync(true);
+            mockUserService.Setup(s => s.Register("TestUser", "Pwd1")).ReturnsAsync("true");
             controller = new UserController(mockUserService.Object);
+            RegisterDTO registerDTO = new RegisterDTO { UserName = username, Password = password };
 
             //Act
-            var result = await controller.Register(username, password);
+            var result = await controller.Register(registerDTO);
 
             //Assert
             result.Should().BeOfType<OkObjectResult>();
@@ -77,9 +80,10 @@ namespace UserServiceTests
         {
             //Arrange
             controller = new UserController(mockUserService.Object);
+            RegisterDTO registerDTO = new RegisterDTO { UserName = username, Password = password };
 
             //Act
-            var result = await controller.Register(username, password);
+            var result = await controller.Register(registerDTO);
 
             //Assert
             result.Should().BeOfType<BadRequestObjectResult>(); //Controller should catch invalid input and not send it to the service.
@@ -91,11 +95,12 @@ namespace UserServiceTests
         public async Task CallingRegisterUser_WithExistingUserName_ReturnsConflictResult(string username, string password)
         {
             //Arrange
-            mockUserService.Setup(s => s.Register("Venu", "Silver")).ReturnsAsync(false);
+            mockUserService.Setup(s => s.Register("Venu", "Silver")).ReturnsAsync(string.Empty);
             controller = new UserController(mockUserService.Object);
+            RegisterDTO registerDTO = new RegisterDTO { UserName = username, Password = password };
 
             //Act
-            var result = await controller.Register(username, password);
+            var result = await controller.Register(registerDTO);
 
             //Assert
             result.Should().BeOfType<ConflictObjectResult>();

@@ -1,6 +1,10 @@
-﻿using System.Security.Cryptography;
+﻿using RestSharp;
+using RestSharp.Extensions;
+using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
+using UserService.DTOs;
 using UserService.Models;
 using UserService.Repositories;
 
@@ -22,49 +26,49 @@ namespace UserService.Services
         public async Task<UserProfile> GetProfile(Guid UserId)
         {
            return await _repository.GetUserProfileByUserIdAsync(UserId);
-        }
+        }        
+        
 
-        public async Task<bool> Login(string username, string password)
+        public async Task<string> Register(RegisterDTO registerDTO)
         {
-           User user = await _repository.GetUserbyUserNameAsync(username);
-            bool passwordsMatch = true;
+            string accessToken = await GetAccessTokenForUserCreation();
 
-            byte[] computedHash = new byte[0];
-            if (user!=null)
-            {   
-                var hmac = new HMACSHA512(user.PasswordSalt);
-                computedHash  = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
-                for (int i = 0; i < computedHash.Length; i++)
-                {
-                    if (computedHash[i] != user.PasswordHash[i])
-                    {
-                        passwordsMatch = false;
-                        break;
-                    }
-                }
-            }
+            //Replacing with Okta Auth0 call. User details will be stored in Okta.
+             var client = new RestClient("https://dev-sagaplay.eu.auth0.com/api/v2/users");
+             var request = new RestRequest();
+            request.Method = Method.Post;
+            request.AddHeader("content-type", "application/json");
+            request.AddHeader("Authorization", "Bearer " + accessToken);
 
-            if (user==null || !passwordsMatch)
+            var body = new
             {
-                return false;
+                connection = "Username-Password-Authentication",
+                email = registerDTO.UserEmail,   // use email here, not "username",
+                username = registerDTO.UserName,
+                password = registerDTO.Password
+            };
+
+            request.AddJsonBody(body);
+
+            var response = await client.ExecuteAsync(request);
+
+            if (response.StatusCode == System.Net.HttpStatusCode.Created)
+            {
+                //Add user in database so that userpreferences and userprofile can be created later.
+                User user = new User
+                {
+                    UserName = registerDTO.UserName                    
+                };
+
+                await _repository.AddUserAsync(user);
+
+                return "Created";
+               
             }
             else
             {
-                return true;
+                return string.Empty;
             }
-
-        }
-
-        public async Task<bool> Register(string username, string password)
-        {
-            var hmac = new HMACSHA512();
-            
-            User user = new User { 
-                UserName = username, 
-                PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password)), 
-                PasswordSalt=hmac.Key };
-
-            return await _repository.AddUserAsync(user);
         }
 
         public async Task<UserPreferences> SetPreferences(UserPreferences preferences)
@@ -76,6 +80,28 @@ namespace UserService.Services
         public async Task<UserProfile> UpdateProfile(UserProfile userProfile)
         {
            return await _repository.UpdateUserProfileAsync(userProfile);
+        }
+
+        private async Task<string> GetAccessTokenForUserCreation()
+        {
+            var client = new RestClient("https://dev-sagaplay.eu.auth0.com/oauth/token");
+            var request = new RestRequest();
+            request.Method = Method.Post;
+            request.AddHeader("content-type", "application/json");
+            request.AddStringBody(@"{
+              ""client_id"": ""8yYC8t63VjfR8wGmPfeCc2UE86FcvLoF"",
+              ""client_secret"": ""m6_Zyscv5d2GkPMZB65LlkKvQmsCeY6x-71BjxPNpPXAad8J7dEjz0aK_QJnHkC3"",
+              ""audience"": ""https://dev-sagaplay.eu.auth0.com/api/v2/"",
+              ""grant_type"": ""client_credentials""
+            }", DataFormat.Json);
+
+            var response = await client.ExecuteAsync(request);
+
+            var jsonResponse = response.Content;
+            var AuthTokenResponse = JsonSerializer.Deserialize<Auth0TokenResponse>(jsonResponse);
+
+            return AuthTokenResponse.AccessToken;
+
         }
     }
 }

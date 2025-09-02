@@ -1,0 +1,48 @@
+<div class="paper-modern">
+    <div class="text-center">
+        <h3>New User</h3>
+    </div>
+    <form [formGroup]="registerForm" (submit)="onSubmit()" class="form">
+    
+
+        <div class="row p-1 mt-2">
+            <label for="txtEmail" class="form-label">Email</label>
+            <input type="email" id="txtEmail" class="form-control" placeholder="Enter Email Address" formControlName="userEmail">
+            @if (registerForm.get('userEmail')?.invalid && registerForm.get('userEmail')?.touched) {
+                <div class="text-danger">
+                    Please enter valid email address.
+                </div>
+            }
+        </div>        
+
+        <div class="row p-1 mt-2">
+            <label for="txtLogin" class="form-label">Username</label>
+            <input type="text" id="txtLogin" class="form-control" placeholder="Enter your preferred user name" formControlName="userName">
+            @if (registerForm.get('userName')?.invalid && registerForm.get('userName')?.touched) {
+                <div class="text-danger">
+                    Please enter valid username.
+                </div>
+            }
+        </div>
+
+        <div class="row p-1 mt-2">
+            <label for="txtPassword" class="form-label">Password</label>
+            <input type="password" id="txtPassword" class="form-control" placeholder="Enter Password" formControlName="password">
+            @if (registerForm.get('password')?.invalid && registerForm.get('password')?.touched) {
+                <div class="text-danger">
+                    Please enter valid password.
+                </div>
+            }
+        </div>     
+
+        <div class="row mt-4">
+            <div class="clearfix justify-content-center align-items-center d-flex">
+                <button type="reset" class="btn-secondary">Clear</button>
+                <button class="btn btn-link" routerLink="/login">Back to Login</button>
+                <button type="submit" class="btn-primary">Register</button>
+            </div>
+        </div>
+
+    </form>
+
+</div>
