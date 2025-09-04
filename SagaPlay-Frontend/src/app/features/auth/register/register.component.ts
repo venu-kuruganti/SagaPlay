@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router, RouterLink } from "@angular/router";
 import { RegisterDTO } from './registration';
-import { FormBuilder, Validators, ReactiveFormsModule} from '@angular/forms';
+import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { AuthenticationService } from '../../../core/authentication.service';
+import { AuthService } from '@auth0/auth0-angular';
 @Component({
   selector: 'app-register',
   standalone: true,
@@ -25,9 +26,8 @@ export class RegisterComponent {
       const dto: RegisterDTO = this.registerForm.value as RegisterDTO;
       this.authService.register(dto).subscribe({
         next: (result: any) => {
-         console.log(result);          
-          if(result.message==="Created"){
-            this.thisRouter.navigate(['/login']);//Navigate home
+          if (result.message === "Created") {
+            this.thisRouter.navigate(['/home']);//Navigate home
           }
         },
         error: (err) => {
@@ -39,4 +39,9 @@ export class RegisterComponent {
     }//if
 
   }//onSubmit
+
+  private authenticationService = inject(AuthService);
+  onBackToLogin() {
+    this.authenticationService.loginWithRedirect();
+  }
 }

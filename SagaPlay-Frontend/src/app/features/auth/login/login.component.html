@@ -2,15 +2,15 @@
     <div class="text-center">
         <h3>Login</h3>
     </div>
-    <form class="form">
+    <form class="form login-form" (ngSubmit)="onLogin()">
         <div class="row p-1 mt-2">
             <label for="txtLogin" class="form-label">Username</label>
-            <input type="text" id="txtLogin" class="form-control" placeholder="User name">
+            <input type="text" [(ngModel)]="username" name="username" id="txtLogin" class="form-control" placeholder="User name">
         </div>
 
         <div class="row p-1 mt-2">
             <label for="txtPassword" class="form-label">Password</label>
-            <input type="password" id="txtPassword" class="form-control" placeholder="Password">
+            <input type="password" name="password" [(ngModel)]="password" id="txtPassword" class="form-control" placeholder="Password">
         </div>
 
         <div class="row mt-4">

@@ -6,14 +6,14 @@ import { UserProfileComponent } from './features/user-profile/user-profile.compo
 import { AboutComponent } from './features/about/about.component';
 import { RegisterComponent } from './features/auth/register/register.component';
 import { LoginComponent } from './features/auth/login/login.component';
+import { authGuard } from './core/auth.guard';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent },
-    { path: 'catalog', component: CatalogComponent },
-    { path: 'watchlist', component: WatchlistComponent },
-    { path: 'userprofile', component: UserProfileComponent },
-    { path: 'about', component: AboutComponent },
-    { path: 'register', component: RegisterComponent },
-    { path: 'login', component: LoginComponent },
+    { path: 'catalog', component: CatalogComponent, canActivate: [authGuard] },
+    { path: 'watchlist', component: WatchlistComponent, canActivate: [authGuard] },
+    { path: 'userprofile', component: UserProfileComponent, canActivate: [authGuard] },
+    { path: 'about', component: AboutComponent }, //Since this page just talks a bit about myself, no need for an auth guard.
+    { path: 'register', component: RegisterComponent }, //Register and login don't need auth guards    
     { path: '**', pathMatch: 'full', component: HomeComponent }
 ];
