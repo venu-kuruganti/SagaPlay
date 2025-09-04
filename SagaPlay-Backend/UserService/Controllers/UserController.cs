@@ -1,12 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using UserService.DTOs;
 using UserService.Models;
 using UserService.Services;
 
 namespace UserService.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
@@ -14,36 +15,22 @@ namespace UserService.Controllers
         public UserController(IUserService userService)
         {
             _userService = userService;
-        }
-
-        [HttpPost("login")]
-        public async Task<IActionResult> Login(string username, string password)
-        {
-            //If username and password are correct, send back Ok. Else error.
-            if (!String.IsNullOrEmpty(username) && !String.IsNullOrEmpty(password) && await _userService.Login(username, password))
-            {
-                return Ok("Token");
-            }
-            else
-            {
-                return Unauthorized("Username or password don't match!");
-            }
-        }
+        }       
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register(string username, string password)
+        public async Task<IActionResult> Register([FromBody]RegisterDTO registrationDetails)
         {
-            if (String.IsNullOrEmpty(username) || String.IsNullOrEmpty(password))
+            if (String.IsNullOrEmpty(registrationDetails.UserEmail) || String.IsNullOrEmpty(registrationDetails.Password) || String.IsNullOrEmpty(registrationDetails.UserName))
             {
                 return BadRequest("Missing fields!");
             }
 
             //Create new user in database
-            var success = await _userService.Register(username, password);
+            var result = await _userService.Register(registrationDetails);
 
-            if (success)
+            if (!string.IsNullOrEmpty(result))
             {
-                return Ok("Token");
+                return Ok(new { message = result });
             }
             else
             {

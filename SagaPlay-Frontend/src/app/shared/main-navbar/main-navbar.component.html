@@ -1,24 +1,48 @@
 <nav class="navbar navbar-expand-lg">
-  <div class="container-fluid">
+  <div class="container-fluid clearfix">
     <a class="navbar-brand" href="#" routerLink="/Home">SagaPlay</a>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" href="#" routerLink="/Home">Home</a>
+          <a class="nav-link" href="#" routerLink="/Home">
+            <i class="bi bi-house-door-fill">Home</i>
+          </a>
+        </li>
+        @if(isLoggedIn){
+        <li class="nav-item">
+          <a class="nav-link" href="#" routerLink="/userprofile">
+            <i class="bi bi-person-square">User Profile</i>
+          </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#" routerLink="/userprofile">Profile</a>
+          <a class="nav-link" href="#" routerLink="/catalog">
+            <i class="bi bi-journals">Catalog</i>
+          </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#" routerLink="/catalog">Catalog</a>
+          <a class="nav-link" href="#" routerLink="/watchlist"> <i class="bi bi-list-check">Watchlist</i></a>
         </li>
+        }
         <li class="nav-item">
-          <a class="nav-link" href="#" routerLink="/watchlist">Watchlist</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#" routerLink="/about">About</a>
+          <a class="nav-link" href="#" routerLink="/about"> <i class="bi bi-person-square">About</i></a>
         </li>
       </ul>
+    </div>
+    <div class="float-end">
+      @if(!isLoggedIn)
+      {
+      <button class="btn" data-bs-toggle="tooltip" data-bs-placement="top" title="Login" (click)="onLogin()">
+        <i class="bi bi-box-arrow-in-right">Login</i>
+      </button>
+      <button class="btn" data-bs-toggle="tooltip" data-bs-placement="top" title="Register" routerLink="/register">
+        <i class="bi bi-person-fill-add">Register</i>
+      </button>
+      }
+      @else {
+      <button class="btn" data-bs-toggle="tooltip" data-bs-placement="top" title="Logout" (click)="onLogout()">
+        <i class="bi bi-box-arrow-right">Logout</i>
+      </button>
+      }
     </div>
   </div>
 </nav>
