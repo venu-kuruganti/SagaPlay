@@ -14,7 +14,7 @@ import { AuthService } from '@auth0/auth0-angular';
 export class AppComponent {
   private authStateService = inject(AuthstateService);
   private authService = inject(AuthService);
-  title = 'SagaPlay-Frontend';
+  title = 'Saga Play';
   public static isLoggedin:boolean = false; //global flag
 
   constructor(){
