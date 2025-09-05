@@ -1,0 +1,27 @@
+.about-website {    
+    width: 50%;
+    border: 2px solid #4EC3A7;    
+    border-radius: 8%;    
+    box-shadow: 5px 5px #C37F4E;
+}
+
+.about-me {    
+    width: 50%;    
+    border: 2px solid #4EC3A7;
+    border-radius: 8%;
+    box-shadow: 5px 5px #C37F4E;
+}
+
+.linkedin-button {
+    width: 200px;
+    text-align: center;
+}
+
+.list-group-flush {
+    width: 75%;
+}
+
+.list-group-item {
+    background-color: #C37F4E;
+    color: white;
+}
