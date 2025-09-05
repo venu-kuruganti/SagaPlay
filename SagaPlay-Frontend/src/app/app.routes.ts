@@ -5,7 +5,6 @@ import { WatchlistComponent } from './features/watchlist/watchlist.component';
 import { UserProfileComponent } from './features/user-profile/user-profile.component';
 import { AboutComponent } from './features/about/about.component';
 import { RegisterComponent } from './features/auth/register/register.component';
-import { LoginComponent } from './features/auth/login/login.component';
 import { authGuard } from './core/auth.guard';
 
 export const routes: Routes = [
