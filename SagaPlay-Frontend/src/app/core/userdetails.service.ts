@@ -11,6 +11,7 @@ export class UserdetailsService {
 
   private httpClient: HttpClient = inject(HttpClient);
   private baseUrl: string = "https://localhost:4000/userservice/";
+  private userId:string = "";
 
   getUserProfile(userId: string): Observable<User> {
 
@@ -26,6 +27,15 @@ export class UserdetailsService {
     const preferences$ = this.httpClient.patch<UserPreferences>(`${this.baseUrl}/UpdatePreferences`, updatedUser.Preferences);
 
     return forkJoin({ Profile: profile$, Preferences: preferences$ });
+  }
+
+  getUserIdByUserName(username:string):string{
+   
+    this.httpClient.get<string>(`${this.baseUrl}/UserId?username=${username}`).subscribe(result=>{
+      this.userId = result;
+     })
+
+     return this.userId;
   }
 
   constructor() { }

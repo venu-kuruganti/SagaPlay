@@ -22,11 +22,12 @@ export class RegisterComponent {
   constructor(private fb: FormBuilder, private authService: AuthenticationService, private thisRouter: Router) { }
 
   onSubmit() {
+    const emptyGuidValue = '00000000-0000-0000-0000-000000000000';
     if (this.registerForm.valid) {
       const dto: RegisterDTO = this.registerForm.value as RegisterDTO;
       this.authService.register(dto).subscribe({
         next: (result: any) => {
-          if (result.message === "Created") {
+          if (result.message != emptyGuidValue) {
             this.thisRouter.navigate(['/home']);//Navigate home
           }
         },

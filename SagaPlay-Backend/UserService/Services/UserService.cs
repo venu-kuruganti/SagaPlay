@@ -26,10 +26,15 @@ namespace UserService.Services
         public async Task<UserProfile> GetProfile(Guid UserId)
         {
            return await _repository.GetUserProfileByUserIdAsync(UserId);
-        }        
-        
+        }
 
-        public async Task<string> Register(RegisterDTO registerDTO)
+        public async Task<Guid> GetUserId(string username)
+        {
+            var user = await _repository.GetUserbyUserNameAsync(username);
+            return user.Id;
+        }
+
+        public async Task<Guid> Register(RegisterDTO registerDTO)
         {
             string accessToken = await GetAccessTokenForUserCreation();
 
@@ -60,14 +65,15 @@ namespace UserService.Services
                     UserName = registerDTO.UserName                    
                 };
 
-                await _repository.AddUserAsync(user);
+                Guid userId = await _repository.AddUserAsync(user);             
+     
 
-                return "Created";
+                return userId;
                
             }
             else
             {
-                return string.Empty;
+                return Guid.Empty;
             }
         }
 

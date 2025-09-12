@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from './user-profile';
 import { UserdetailsService } from '../../core/userdetails.service';
+import { AuthService } from '@auth0/auth0-angular';
 
 @Component({
   selector: 'app-user-profile',
@@ -18,11 +19,18 @@ export class UserProfileComponent {
 
   private fb: FormBuilder = inject(FormBuilder);
   private userDetailsService = inject(UserdetailsService);
+  private auth0Service = inject(AuthService);
+
 
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
-    this.loadUser();
+    
+    this.auth0Service.user$.subscribe(user=>{
+      console.log('User Profile ', user);
+      console.log('User Id(sub) : ', user?.sub);
+    })
+  //  this.loadUser();
   }
 
   constructor() {
@@ -83,7 +91,7 @@ export class UserProfileComponent {
 
   cancel() {
     this.isEditing = false;
-    this.loadUser();//Reload user from backend
+    //this.loadUser();//Reload user from backend
   }
 
   get profileControls() {

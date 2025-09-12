@@ -28,15 +28,32 @@ namespace UserService.Controllers
             //Create new user in database
             var result = await _userService.Register(registrationDetails);
 
-            if (!string.IsNullOrEmpty(result))
+            if (result != Guid.Empty)
             {
-                return Ok(new { message = result });
+                Response.Cookies.Append("UserId", result.ToString(), new CookieOptions
+                {
+                    HttpOnly = true,
+                    Secure = true,
+                    SameSite = SameSiteMode.Strict
+                });
+                return Ok(new { message = result.ToString() });
             }
             else
             {
                 return Conflict("Username already exists");
             }
            
+        }
+
+        [HttpGet("UserId")]
+        public async Task<IActionResult> GetUserIdOnUserName(string username)
+        {
+            var id = await _userService.GetUserId(username);
+
+            if (id != Guid.Empty)
+                return Ok(id.ToString());
+            else
+                return NotFound();
         }
 
         [HttpGet("Profile")]

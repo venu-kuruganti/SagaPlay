@@ -23,4 +23,5 @@ export class AppComponent {
       AppComponent.isLoggedin = state;
     })
   }
+
 }

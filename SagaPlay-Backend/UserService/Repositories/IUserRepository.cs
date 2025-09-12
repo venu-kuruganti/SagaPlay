@@ -12,7 +12,7 @@ namespace UserService.Repositories
 
         Task<UserPreferences> GetUserPreferencesByUserIdAsync(Guid id);
 
-        Task<bool> AddUserAsync(User user);
+        Task<Guid> AddUserAsync(User user);
 
         Task<User> UpdateUserAsync(User user);
 
