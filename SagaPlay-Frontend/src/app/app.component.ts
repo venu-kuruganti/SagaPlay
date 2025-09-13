@@ -21,7 +21,9 @@ export class AppComponent {
     this.authService.isAuthenticated$.subscribe(state=>{
       this.authStateService.setLoggedIn(state);
       AppComponent.isLoggedin = state;
-    })
+    })    
   }
+
+  
 
 }

@@ -1,5 +1,5 @@
-import { Component, inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, inject, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { User } from './user-profile';
 import { UserdetailsService } from '../../core/userdetails.service';
 import { AuthService } from '@auth0/auth0-angular';
@@ -7,15 +7,17 @@ import { AuthService } from '@auth0/auth0-angular';
 @Component({
   selector: 'app-user-profile',
   standalone: true,
-  imports: [],
+  imports: [ReactiveFormsModule],
   templateUrl: './user-profile.component.html',
   styleUrl: './user-profile.component.css'
 })
-export class UserProfileComponent {
+export class UserProfileComponent implements OnInit {
 
   userProfileForm!: FormGroup;
   currentUser!: User;
   isEditing: boolean = false;
+  userName: string = "";
+
 
   private fb: FormBuilder = inject(FormBuilder);
   private userDetailsService = inject(UserdetailsService);
@@ -24,13 +26,9 @@ export class UserProfileComponent {
 
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
-    
-    this.auth0Service.user$.subscribe(user=>{
-      console.log('User Profile ', user);
-      console.log('User Id(sub) : ', user?.sub);
-    })
-  //  this.loadUser();
+    //Add 'implements OnInit' to the class.    
+    console.log("initializer");
+    this.loadUser(localStorage.getItem('userId')!);
   }
 
   constructor() {
@@ -39,31 +37,58 @@ export class UserProfileComponent {
 
   private loadUser(userId: string) {
 
+   
+
     //Get data from the service and initialize currentuser with it.
-    this.userDetailsService.getUserProfile(userId).subscribe(data => {
-      this.currentUser = data;
+    this.userDetailsService.getUserProfile(userId).subscribe({
+      next: (result) => {
+        console.log("Successfully retrieved user profile");
+        console.log('result', result);
+
+        // ✅ Store result in currentUser so template bindings work
+   this.currentUser = {
+      Profile: {
+        FirstName: result.Profile.FirstName,
+        LastName: result.Profile.LastName,
+        EmailAddress: result.Profile.EmailAddress,
+        DateOfBirth: result.Profile.DateOfBirth,
+        Bio: result.Profile.Bio,
+        ProfilePicURL: result.Profile.ProfilePicURL,
+        Country: result.Profile.Country,
+        PhoneNumber: result.Profile.PhoneNumber
+      },
+      Preferences: result.Preferences
+    };
+
+    console.log('currentUser', this.currentUser);
+
+        //Initialize the form
+        this.userProfileForm = this.fb.group({
+          userProfile: this.fb.group({
+            firstname: [result.Profile.FirstName ?? "", [Validators.required, Validators.minLength(2)]],
+            lastname: [result.Profile.LastName ?? "", [Validators.required, Validators.minLength(2)]],
+            emailaddress: [result.Profile.EmailAddress ?? "", [Validators.required, Validators.email]],
+            dateofbirth: [result.Profile.DateOfBirth ?? ""],
+            bio: [result.Profile.Bio ?? ""],
+            profilepicurl: [result.Profile.ProfilePicURL ?? ""],
+            country: [result.Profile.Country ?? ""],
+            phonenumber: [result.Profile.PhoneNumber ?? ""]
+          }), //End of profile group
+          userPreferences: this.fb.group({
+            theme: [result.Preferences?.Theme || 'light'],
+            language: [result.Preferences?.Language ?? ""],
+            notificationsettings: [result.Preferences?.NotificationSettings ?? ""],
+            playbackquality: [result.Preferences?.PlayBackQuality ?? ""],
+            receivenewsletter: [result.Preferences?.ReceiveNewsLetter ?? true]
+          })//end of preferences group      
+        })//End of entire form
+      },
+      error: (err) => {
+        console.error("Some error happened : ", err);
+      }
     });
 
-    //Initialize the form
-    this.userProfileForm = this.fb.group({
-      userProfile: this.fb.group({
-        firstname: [this.currentUser.Profile.FirstName, [Validators.required, Validators.minLength(2)]],
-        lastname: [this.currentUser.Profile.LastName, [Validators.required, Validators.minLength(2)]],
-        emailaddress: [this.currentUser.Profile.EmailAddress, [Validators.required, Validators.email]],
-        dateofbirth: [this.currentUser.Profile.DateOfBirth],
-        bio: [this.currentUser.Profile.Bio],
-        profilepicurl: [this.currentUser.Profile.ProfilePicURL],
-        country: [this.currentUser.Profile.Country],
-        phonenumber: [this.currentUser.Profile.PhoneNumber]
-      }), //End of profile group
-      userPreferences: this.fb.group({
-        theme: [this.currentUser.Preferences.Theme || 'light'],
-        language: [this.currentUser.Preferences.Language],
-        notificationsettings: [this.currentUser.Preferences.NotificationSettings],
-        playbackquality: [this.currentUser.Preferences.PlayBackQuality],
-        receivenewsletter: [this.currentUser.Preferences.ReceiveNewsLetter ?? true]
-      })//end of preferences group      
-    })//End of entire form
+
   }//End of function loadUser
 
   edit() {
@@ -95,7 +120,7 @@ export class UserProfileComponent {
   }
 
   get profileControls() {
-    return (this.userProfileForm.get('profile') as FormGroup).controls;
+    return this.userProfileForm.controls as { [key: string]: FormControl };
   }
 
 }

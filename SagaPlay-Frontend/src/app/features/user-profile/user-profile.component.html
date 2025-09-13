@@ -1,1 +1,30 @@
-<p>user-profile works!</p>
+<div class="user-profile">
+    @if (currentUser) {
+    <!--Profile section-->
+    <h2>User Profile</h2>
+    <div>
+        <label for="txtFirstName">First Name:</label>
+        @if (!isEditing) {
+        <span>{{ currentUser.Profile.FirstName }}</span>
+        }
+        @else {
+        <input type="text" id="txtFirstName" [formControl]="profileControls['firstname']" />
+            @if (profileControls['firstname'].invalid && profileControls['firstname'].touched) {
+            <small class="error">Enter a valid First Name</small>
+            }
+        }
+    </div>
+     <div>
+        <label for="txtEmail">Email Address:</label>
+        @if (!isEditing) {
+        <span>{{ currentUser.Profile.EmailAddress }}</span>
+        }
+        @else {
+        <input type="text" id="txtEmail" [formControl]="profileControls['emailaddress']" />
+            @if (profileControls['emailaddress'].invalid && profileControls['emailaddress'].touched) {
+            <small class="error">Enter a valid Email Address</small>
+            }
+        }
+    </div>
+}
+</div>

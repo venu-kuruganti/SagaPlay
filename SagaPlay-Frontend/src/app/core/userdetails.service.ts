@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { forkJoin, Observable } from 'rxjs';
+import { forkJoin, map, Observable } from 'rxjs';
 import { User, UserProfile, UserPreferences } from '../features/user-profile/user-profile';
 
 
@@ -10,8 +10,9 @@ import { User, UserProfile, UserPreferences } from '../features/user-profile/use
 export class UserdetailsService {
 
   private httpClient: HttpClient = inject(HttpClient);
-  private baseUrl: string = "https://localhost:4000/userservice/";
-  private userId:string = "";
+  //private baseUrl: string = "https://localhost:4000/userservice";
+  private baseUrl: string = "http://localhost:32768/api/user";
+  private userId: string = "";
 
   getUserProfile(userId: string): Observable<User> {
 
@@ -29,13 +30,8 @@ export class UserdetailsService {
     return forkJoin({ Profile: profile$, Preferences: preferences$ });
   }
 
-  getUserIdByUserName(username:string):string{
-   
-    this.httpClient.get<string>(`${this.baseUrl}/UserId?username=${username}`).subscribe(result=>{
-      this.userId = result;
-     })
-
-     return this.userId;
+  getUserIdByUserName(username: string): Observable<string> {
+    return this.httpClient.get<{ userId: string }>(`${this.baseUrl}/UserId?username=${username}`).pipe(map(response => response.userId));
   }
 
   constructor() { }

@@ -65,7 +65,23 @@ namespace UserService.Services
                     UserName = registerDTO.UserName                    
                 };
 
-                Guid userId = await _repository.AddUserAsync(user);             
+                Guid userId = await _repository.AddUserAsync(user);
+
+                UserProfile userProfile = new UserProfile
+                {
+                    FirstName = string.Empty,
+                    LastName = string.Empty,
+                    Bio = string.Empty,
+                    Country= string.Empty,
+                    DateofBirth = DateTime.MinValue,
+                    PhoneNumber= string.Empty,
+                    ProfilePictureUrl= string.Empty,                    
+                    EmailAddress = registerDTO.UserEmail,
+                    UserId = userId,
+                    User = user                    
+                };
+
+                await _repository.AddUserProfileAsync(userProfile);
      
 
                 return userId;

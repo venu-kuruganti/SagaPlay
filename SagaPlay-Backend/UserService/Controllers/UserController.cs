@@ -30,12 +30,7 @@ namespace UserService.Controllers
 
             if (result != Guid.Empty)
             {
-                Response.Cookies.Append("UserId", result.ToString(), new CookieOptions
-                {
-                    HttpOnly = true,
-                    Secure = true,
-                    SameSite = SameSiteMode.Strict
-                });
+               
                 return Ok(new { message = result.ToString() });
             }
             else
@@ -51,7 +46,7 @@ namespace UserService.Controllers
             var id = await _userService.GetUserId(username);
 
             if (id != Guid.Empty)
-                return Ok(id.ToString());
+                return Ok(new { UserId = id });
             else
                 return NotFound();
         }
