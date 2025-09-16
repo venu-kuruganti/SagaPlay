@@ -99,18 +99,18 @@ export class UserProfileComponent implements OnInit {
             firstname: [this.currentUser.Profile.FirstName ?? "", [Validators.required, Validators.minLength(2)]],
             lastname: [this.currentUser.Profile.LastName ?? "", [Validators.required, Validators.minLength(2)]],
             emailaddress: [this.currentUser.Profile.EmailAddress ?? "", [Validators.required, Validators.email]],
-            dateofbirth: [this.currentUser.Profile.DateOfBirth],
+            dateofbirth: [this.currentUser.Profile.DateOfBirth ?? "01/01/1900"],
             bio: [this.currentUser.Profile.Bio ?? ""],
-            profilepictureurl: [''],
-            country: [''],
-            phonenumber: ['']
+            profilepictureurl: [this.currentUser.Profile.ProfilePictureUrl ?? ""],
+            country: [this.currentUser.Profile.Country ?? ""],
+            phonenumber: [this.currentUser.Profile.PhoneNumber ?? ""]
           }), //End of profile group
           userPreferences: this.fb.group({
-            theme: ['Light'],
-            language: [''],
-            notificationsettings: [''],
-            playbackqualitysettings: [''],
-            receivenewsletter: [false]
+            theme: [this.currentUser.Preferences.Theme ?? "Light"],
+            language: [this.currentUser.Preferences.Language ?? "English"],
+            notificationsettings: [this.currentUser.Preferences.NotificationSettings ?? ""],
+            playbackqualitysettings: [this.currentUser.Preferences.PlayBackQualitySettings ?? "SD"],
+            receivenewsletter: [this.currentUser.Preferences.ReceiveNewsLetter ?? false]
           })//end of preferences group      
         })//End of entire form
       },

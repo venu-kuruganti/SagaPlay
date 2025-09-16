@@ -1,110 +1,109 @@
-<div class="user-profile">
+<div class="user border border-primary border-1 rounded w-75 m-3">
 @if(currentUser && currentUser.Profile && currentUser.Preferences)
 {
     <form [formGroup]="userProfileForm">
 
         <!--Profile section-->
-        <h2>User Profile</h2>
-        <div formGroupName="userProfile">
-            <div>
-                <label for="txtFirstName">First Name:</label>
+        <div class="section-title">User Profile</div>
+        <div formGroupName="userProfile" class="user-profile">
+            <div class=mb-3>
+                <label class="form-label" for="txtFirstName">First Name:</label>
                 @if (!isEditing) {
-                <span>{{ currentUser.Profile.FirstName }}</span>
+                <span class="form-label">{{ currentUser.Profile.FirstName }}</span>
                 }
                 @else {
-                <input type="text" id="txtFirstName" formControlName='firstname' />
+                <input type="text" id="txtFirstName" formControlName='firstname' class="form-control" />
                 @if (firstname?.invalid && firstname?.touched) {
                 <small class="error">Enter a valid First Name</small>
                 }
                 }
             </div>
-            <div>
-                <label for="txtLastName">Last Name:</label>
+            <div class=mb-3>
+                <label class="form-label" for="txtLastName">Last Name:</label>
                 @if (!isEditing) {
-                <span>{{ currentUser.Profile.LastName }}</span>
+                <span class="form-label">{{ currentUser.Profile.LastName }}</span>
                 }
                 @else {
-                <input type="text" id="txtLastName" formControlName="lastname" />
+                <input type="text" id="txtLastName" formControlName="lastname" class="form-control" />
                 @if (lastname?.invalid && lastname?.touched) {
                 <small class="error">Enter a valid Last Name</small>
                 }
                 }
             </div>
-            <div>
-                <label for="txtEmail">Email Address:</label>
+            <div class=mb-3>
+                <label class="form-label" for="txtEmail">Email Address:</label>
                 @if (!isEditing) {
-                <span>{{ currentUser.Profile.EmailAddress }}</span>
+                <span class="form-label">{{ currentUser.Profile.EmailAddress }}</span>
                 }
                 @else {
-                <input type="text" id="txtEmail" formControlName="emailaddress" />
+                <input type="text" id="txtEmail" formControlName="emailaddress" class="form-control"/>
                 @if (emailaddress?.invalid && emailaddress?.touched) {
                 <small class="error">Enter a valid Email Address</small>
                 }
                 }
             </div>
-            <div>
-                <label for="txtBio">Bio:</label>
+            <div class=mb-3>
+                <label class="form-label" for="txtBio">Bio:</label>
                 @if (!isEditing) {
-                <span>{{ currentUser.Profile.Bio }}</span>
+                <span class="form-label">{{ currentUser.Profile.Bio }}</span>
                 }
                 @else {
-                <textarea id="txtBio" formControlName="bio">
+                <textarea id="txtBio" formControlName="bio" class="form-control">
 
                 </textarea>
                 }
             </div>
-            <div>
-                <label for="txtDOB">Date of Birth:</label>
+            <div class=mb-3>
+                <label class="form-label" for="txtDOB">Date of Birth:</label>
                 @if (!isEditing) {
-                <span>{{ currentUser.Profile.DateOfBirth }}</span>
+                <span class="form-label">{{ currentUser.Profile.DateOfBirth }}</span>
                 }
                 @else {
-                <input type="date" id="txtDOB" formControlName="dateofbirth" />
+                <input type="date" id="txtDOB" class="form-control" formControlName="dateofbirth" />
                 }
             </div>
-            <div>
-                <label for="txtProfilePicUrl">Profile Picture:</label>
+            <div class=mb-3>
+                <label class="form-label" for="txtProfilePicUrl">Profile Picture:</label>
                 @if (!isEditing) {
-                <span>{{ currentUser.Profile.ProfilePictureUrl }}</span>
+                <span class="form-label">{{ currentUser.Profile.ProfilePictureUrl }}</span>
                 }
                 @else {
-                <input type="text" id="txtProfilePicUrl" formControlName="profilepictureurl" />
+                <input type="text" id="txtProfilePicUrl" class="form-control" formControlName="profilepictureurl" />
                 }
             </div>
-            <div>
-                <label for="txtCountry">Country:</label>
+            <div class=mb-3>
+                <label class="form-label" for="txtCountry">Country:</label>
                 @if (!isEditing) {
-                <span>{{ currentUser.Profile.Country }}</span>
+                <span class="form-label">{{ currentUser.Profile.Country }}</span>
                 }
                 @else {
-                <input type="text" id="txtCountry" formControlName="country" />
+                <input type="text" id="txtCountry" class="form-control" formControlName="country" />
 
                 }
             </div>
-            <div>
-                <label for="txtPhoneNumber">Phone Number:</label>
+            <div class=mb-3>
+                <label class="form-label" for="txtPhoneNumber">Phone Number:</label>
                 @if (!isEditing) {
-                <span>{{ currentUser.Profile.PhoneNumber }}</span>
+                <span class="form-label">{{ currentUser.Profile.PhoneNumber }}</span>
                 }
                 @else {
-                <input type="text" id="txtPhoneNumber" formControlName="phonenumber" />
+                <input type="text" id="txtPhoneNumber" class="form-control" formControlName="phonenumber" />
 
                 }
             </div>
         </div>
-        <h2>Preferences</h2>
+        <div class="section-title">Preferences</div>
         <!--User Preferences-->
-        <div formGroupName="userPreferences">
-           
-            <div>
-                <label for="drpThemes">Theme : </label>
+        <div formGroupName="userPreferences" class="user-preferences">           
+            <div class=mb-3>
+                <label class="form-label" for="drpThemes">Theme : </label>
                 @if (!isEditing) {
-                <span>
+                <span class="form-label">
                     {{currentUser.Preferences.Theme || "Light"}}
                 </span>
                 }
                 @else {
-                <select name="theme" id="drpThemes" formControlName="theme">
+                <select class="form-select" name="theme" id="drpThemes" formControlName="theme">
                     @for (theme of themes; track $index) {
                     <option [value]="theme">{{theme}}</option>
                     }
@@ -112,14 +111,14 @@
                 </select>
                 }
             </div>
-            <div>
-                <label for="drpLanguages">Language:</label>
+            <div class=mb-3>
+                <label class="form-label" for="drpLanguages">Language:</label>
                 @if (!isEditing) {
-                <span>{{ currentUser.Preferences.Language }}</span>
+                <span class="form-label">{{ currentUser.Preferences.Language }}</span>
                 }
                 @else {
 
-                <select name="language" id="drpLanguages" formControlName="language">
+                <select class="form-select" name="language" id="drpLanguages" formControlName="language">
                     @for (lang of languages; track $index) {
                     <option [value]="lang">{{lang}}</option>
                     }
@@ -127,37 +126,37 @@
 
                 }
             </div>
-            <div>
-                <label for="drpPBQuality">Playback Quality:</label>
+            <div class=mb-3>
+                <label class="form-label" for="drpPBQuality">Playback Quality:</label>
                 @if (!isEditing) {
-                <span>{{ currentUser.Preferences.PlayBackQualitySettings }}</span>
+                <span class="form-label">{{ currentUser.Preferences.PlayBackQualitySettings }}</span>
                 }
                 @else {
 
-                <select name="playbackquality" id="drpPBQuality" formControlName="playbackqualitysettings">
+                <select class="form-select" name="playbackquality" id="drpPBQuality" formControlName="playbackqualitysettings">
                     @for (quality of qualities; track $index) {
                     <option [value]="quality">{{quality}}</option>
                     }
                 </select>
                 }
             </div>
-            <div>
-                <label for="drpNotification">Notification Settings:</label>
+            <div class=mb-3>
+                <label class="form-label" for="drpNotification">Notification Settings:</label>
                 @if (!isEditing) {
-                <span>{{ currentUser.Preferences.NotificationSettings}}</span>
+                <span class="form-label">{{ currentUser.Preferences.NotificationSettings}}</span>
                 }
                 @else {
-                <select name="notifications" id="drpNotificationSettings" formControlName="notificationsettings">
+                <select class="form-select" name="notifications" id="drpNotificationSettings" formControlName="notificationsettings">
                     @for (notification of notifications; track $index) {
                     <option [value]="notification">{{notification}}</option>
                     }
                 </select>
                 }
             </div>
-            <div>
-                <label for="receivenewsletter">Receive Newsletter:</label>
+            <div class=mb-3>
+                <label class="form-label" for="receivenewsletter">Receive Newsletter:</label>
                 @if (!isEditing) {
-                <span>
+                <span class="form-label">
                     @if (currentUser.Preferences.ReceiveNewsLetter) {
                     Subscribed
                     }
@@ -167,21 +166,20 @@
                 </span>
                 }
                 @else {
-                <input type="checkbox" formControlName="receivenewsletter"
+                <input type="checkbox" class="form-check-input" formControlName="receivenewsletter"
                     [value]="currentUser.Preferences.ReceiveNewsLetter">
                 }
 
             </div>
-
         </div>
         <!-- Actions -->
-        <div class="actions">
+        <div class="actions clearfix">
             @if (!isEditing) {
-            <button (click)="edit()">Edit</button>
+            <button class="float-start" (click)="edit()">Edit</button>
             }
             @else {
-            <button (click)="save()">Save</button>
-            <button (click)="cancel()">Cancel</button>
+            <button class="float-start" (click)="save()">Save</button>
+            <button class="float-end" (click)="cancel()">Cancel</button>
             }
 
         </div>
