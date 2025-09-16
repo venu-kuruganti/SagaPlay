@@ -82,6 +82,19 @@ namespace UserService.Services
                 };
 
                 await _repository.AddUserProfileAsync(userProfile);
+
+                UserPreferences userPreferences = new UserPreferences
+                {
+                    Theme = "Light",
+                    Language = "English",
+                    NotificationSettings = "Email",
+                    PlaybackQualitySettings = "SD",
+                    ReceiveNewsLetter = false,
+                    User = user,
+                    UserId = userId
+                };
+
+                await _repository.AddUserPreferencesAsync(userPreferences);
      
 
                 return userId;

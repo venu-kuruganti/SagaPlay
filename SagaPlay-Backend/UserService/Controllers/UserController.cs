@@ -58,12 +58,24 @@ namespace UserService.Controllers
 
             //Get actual profile here
             profile = await _userService.GetProfile(id);
+            ProfileDTO profileDTO = new ProfileDTO
+            {
+                UserId = profile.UserId,
+                FirstName = profile.FirstName,
+                LastName = profile.LastName,
+                EmailAddress = profile.EmailAddress,
+                ProfilePictureUrl = profile.ProfilePictureUrl,
+                Bio = profile.Bio,
+                DateofBirth = DateTime.Parse(profile.DateofBirth.ToString()),
+                Country = profile.Country,
+                PhoneNumber = profile.PhoneNumber
+            };
 
-            return Ok(profile);
+            return Ok(profileDTO);
         }
 
         [HttpPatch("UpdateProfile")]
-        public async Task<IActionResult> UpdateProfile([FromBody] UserProfile profile)
+        public async Task<IActionResult> UpdateProfile([FromBody] ProfileDTO profile)
         {
             if (!profile.EmailAddress.Contains('@'))
             {
@@ -71,9 +83,26 @@ namespace UserService.Controllers
             }
             else
             {
-                var updatedUserProfile = await _userService.UpdateProfile(profile);
+                UserProfile userProfile = await _userService.GetProfile(profile.UserId);//Get actual profile here
 
-                return Ok(updatedUserProfile);
+                if (userProfile == null)
+                {
+                    userProfile = new UserProfile();
+                    userProfile.UserId = profile.UserId;
+                }
+
+                userProfile.FirstName = profile.FirstName;
+                userProfile.LastName = profile.LastName;
+                userProfile.EmailAddress = profile.EmailAddress;
+                userProfile.Bio = profile.Bio;
+                userProfile.ProfilePictureUrl = profile.ProfilePictureUrl;
+                userProfile.PhoneNumber = profile.PhoneNumber;
+                userProfile.Country = profile.Country;
+                userProfile.DateofBirth =  profile.DateofBirth.ToUniversalTime();               
+
+                var updatedUserProfile = await _userService.UpdateProfile(userProfile);
+
+                return Ok(profile);
             }
         }
 
@@ -84,16 +113,40 @@ namespace UserService.Controllers
 
             preferences = await _userService.GetPreferences(Id);
 
-            return Ok(preferences);
+            PreferencesDTO preferencesDTO = new PreferencesDTO
+            {
+                UserId = preferences.UserId,
+                Theme = preferences.Theme,
+                Language = preferences.Language,
+                NotificationSettings = preferences.NotificationSettings,
+                PlaybackQualitySettings = preferences.PlaybackQualitySettings,
+                ReceiveNewsLetter = preferences.ReceiveNewsLetter
+            };
+
+            return Ok(preferencesDTO);
         }
 
         [HttpPatch("UpdatePreferences")]
-        public async Task<IActionResult> UpdatePreferences([FromBody] UserPreferences newPreferences)
+        public async Task<IActionResult> UpdatePreferences([FromBody] PreferencesDTO newPreferences)
         {
             if (newPreferences != null )
             {
-                UserPreferences newUserPreferences = await _userService.SetPreferences(newPreferences);
-                return Ok(newUserPreferences);
+                UserPreferences preferences  = await _userService.GetPreferences(newPreferences.UserId);
+
+                if (preferences == null)
+                {
+                    preferences = new UserPreferences();
+                    preferences.UserId = newPreferences.UserId;
+                }
+
+                preferences.Theme = newPreferences.Theme;
+                preferences.ReceiveNewsLetter = newPreferences.ReceiveNewsLetter;
+                preferences.PlaybackQualitySettings = newPreferences.PlaybackQualitySettings;
+                preferences.Language = newPreferences.Language;
+                preferences.NotificationSettings = newPreferences.NotificationSettings;
+
+                await _userService.SetPreferences(preferences);
+                return Ok(newPreferences);
             }
             else
             {

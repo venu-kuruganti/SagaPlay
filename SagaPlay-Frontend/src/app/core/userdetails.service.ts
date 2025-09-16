@@ -16,6 +16,7 @@ export class UserdetailsService {
 
   getUserProfile(userId: string): Observable<User> {
 
+    
     const profile$ = this.httpClient.get<UserProfile>(`${this.baseUrl}/Profile?id=${userId}`);
     const preferences$ = this.httpClient.get<UserPreferences>((`${this.baseUrl}/Preferences?id=${userId}`));
 
