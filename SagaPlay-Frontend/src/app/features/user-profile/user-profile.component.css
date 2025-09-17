@@ -1,7 +1,6 @@
 .user {
-    text-align: justify;
-    padding: 25px;
-    font-family: 'Source Sans 3';
+    font-family: 'Source Sans 3';     
+    text-align: justify;  
 }
 
 .form-label {
@@ -9,8 +8,15 @@
     margin-right: 50px;
 }
 
+.user-data {
+    font-size: 18px;
+    font-weight: bold;
+    color:black;
+}
+
 .form-select {
     height: 50px;
+    width: 250px;
     background-color: #E8B7C0;
     color: black;
 }
@@ -19,7 +25,7 @@
     width: 250px;
     height: 50px;
     background-color: #E8B7C0;
-    color:black;
+    color: black;
 }
 
 select>option {

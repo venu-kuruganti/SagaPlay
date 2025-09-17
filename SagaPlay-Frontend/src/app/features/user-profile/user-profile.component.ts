@@ -127,7 +127,7 @@ export class UserProfileComponent implements OnInit {
   }
 
   save() {
-    debugger;
+    
     if (this.userProfileForm.valid) {
 
       const updatedUser: User = {
@@ -142,6 +142,7 @@ export class UserProfileComponent implements OnInit {
       //Update the user by calling the service here.
       this.userDetailsService.updateUserProfile(updatedUser).subscribe(data => {
         this.currentUser = data;
+        this.isEditing = false;
       });
 
     }//end of if

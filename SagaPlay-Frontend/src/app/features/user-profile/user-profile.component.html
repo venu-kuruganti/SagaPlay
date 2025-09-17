@@ -1,4 +1,4 @@
-<div class="user border border-primary border-1 rounded w-75 m-3">
+<div class="user border border-primary border-1 rounded w-75 m-2 p-2">
 @if(currentUser && currentUser.Profile && currentUser.Preferences)
 {
     <form [formGroup]="userProfileForm">
@@ -9,7 +9,7 @@
             <div class=mb-3>
                 <label class="form-label" for="txtFirstName">First Name:</label>
                 @if (!isEditing) {
-                <span class="form-label">{{ currentUser.Profile.FirstName }}</span>
+                <span class="user-data">{{ currentUser.Profile.FirstName }}</span>
                 }
                 @else {
                 <input type="text" id="txtFirstName" formControlName='firstname' class="form-control" />
@@ -21,7 +21,7 @@
             <div class=mb-3>
                 <label class="form-label" for="txtLastName">Last Name:</label>
                 @if (!isEditing) {
-                <span class="form-label">{{ currentUser.Profile.LastName }}</span>
+                <span class="user-data">{{ currentUser.Profile.LastName }}</span>
                 }
                 @else {
                 <input type="text" id="txtLastName" formControlName="lastname" class="form-control" />
@@ -33,19 +33,19 @@
             <div class=mb-3>
                 <label class="form-label" for="txtEmail">Email Address:</label>
                 @if (!isEditing) {
-                <span class="form-label">{{ currentUser.Profile.EmailAddress }}</span>
+                <span class="user-data">{{ currentUser.Profile.EmailAddress }}</span>
                 }
                 @else {
                 <input type="text" id="txtEmail" formControlName="emailaddress" class="form-control"/>
                 @if (emailaddress?.invalid && emailaddress?.touched) {
                 <small class="error">Enter a valid Email Address</small>
-                }
+                }               
                 }
             </div>
             <div class=mb-3>
                 <label class="form-label" for="txtBio">Bio:</label>
                 @if (!isEditing) {
-                <span class="form-label">{{ currentUser.Profile.Bio }}</span>
+                <span class="user-data">{{ currentUser.Profile.Bio }}</span>
                 }
                 @else {
                 <textarea id="txtBio" formControlName="bio" class="form-control">
@@ -56,7 +56,7 @@
             <div class=mb-3>
                 <label class="form-label" for="txtDOB">Date of Birth:</label>
                 @if (!isEditing) {
-                <span class="form-label">{{ currentUser.Profile.DateOfBirth }}</span>
+                <span class="user-data">{{ currentUser.Profile.DateOfBirth }}</span>
                 }
                 @else {
                 <input type="date" id="txtDOB" class="form-control" formControlName="dateofbirth" />
@@ -65,7 +65,7 @@
             <div class=mb-3>
                 <label class="form-label" for="txtProfilePicUrl">Profile Picture:</label>
                 @if (!isEditing) {
-                <span class="form-label">{{ currentUser.Profile.ProfilePictureUrl }}</span>
+                <span class="user-data">{{ currentUser.Profile.ProfilePictureUrl }}</span>
                 }
                 @else {
                 <input type="text" id="txtProfilePicUrl" class="form-control" formControlName="profilepictureurl" />
@@ -74,7 +74,7 @@
             <div class=mb-3>
                 <label class="form-label" for="txtCountry">Country:</label>
                 @if (!isEditing) {
-                <span class="form-label">{{ currentUser.Profile.Country }}</span>
+                <span class="user-data">{{ currentUser.Profile.Country }}</span>
                 }
                 @else {
                 <input type="text" id="txtCountry" class="form-control" formControlName="country" />
@@ -84,7 +84,7 @@
             <div class=mb-3>
                 <label class="form-label" for="txtPhoneNumber">Phone Number:</label>
                 @if (!isEditing) {
-                <span class="form-label">{{ currentUser.Profile.PhoneNumber }}</span>
+                <span class="user-data">{{ currentUser.Profile.PhoneNumber }}</span>
                 }
                 @else {
                 <input type="text" id="txtPhoneNumber" class="form-control" formControlName="phonenumber" />
@@ -98,7 +98,7 @@
             <div class=mb-3>
                 <label class="form-label" for="drpThemes">Theme : </label>
                 @if (!isEditing) {
-                <span class="form-label">
+                <span class="user-data">
                     {{currentUser.Preferences.Theme || "Light"}}
                 </span>
                 }
@@ -114,7 +114,7 @@
             <div class=mb-3>
                 <label class="form-label" for="drpLanguages">Language:</label>
                 @if (!isEditing) {
-                <span class="form-label">{{ currentUser.Preferences.Language }}</span>
+                <span class="user-data">{{ currentUser.Preferences.Language }}</span>
                 }
                 @else {
 
@@ -129,7 +129,7 @@
             <div class=mb-3>
                 <label class="form-label" for="drpPBQuality">Playback Quality:</label>
                 @if (!isEditing) {
-                <span class="form-label">{{ currentUser.Preferences.PlayBackQualitySettings }}</span>
+                <span class="user-data">{{ currentUser.Preferences.PlayBackQualitySettings }}</span>
                 }
                 @else {
 
@@ -143,7 +143,7 @@
             <div class=mb-3>
                 <label class="form-label" for="drpNotification">Notification Settings:</label>
                 @if (!isEditing) {
-                <span class="form-label">{{ currentUser.Preferences.NotificationSettings}}</span>
+                <span class="user-data">{{ currentUser.Preferences.NotificationSettings}}</span>
                 }
                 @else {
                 <select class="form-select" name="notifications" id="drpNotificationSettings" formControlName="notificationsettings">
@@ -156,7 +156,7 @@
             <div class=mb-3>
                 <label class="form-label" for="receivenewsletter">Receive Newsletter:</label>
                 @if (!isEditing) {
-                <span class="form-label">
+                <span class="user-data">
                     @if (currentUser.Preferences.ReceiveNewsLetter) {
                     Subscribed
                     }
