@@ -14,7 +14,7 @@ namespace UserService.Repositories
             _context = context;
         }
 
-        public async Task<bool> AddUserAsync(User user)
+        public async Task<Guid> AddUserAsync(User user)
         {
             try
             {
@@ -24,11 +24,11 @@ namespace UserService.Repositories
                 await _context.Users.AddAsync(user);
                 await _context.SaveChangesAsync();
 
-                return true;
+                return _context.Users.Where(u => u.UserName == user.UserName).FirstOrDefault().Id;
             }
             catch
             {
-                return false;
+                return Guid.Empty;
             }            
         }
 

@@ -13,20 +13,23 @@ import { AuthService } from '@auth0/auth0-angular';
 })
 export class RegisterComponent {
 
+ 
   registerForm = this.fb.group({
     userName: ['', Validators.required],
     userEmail: ['', [Validators.required, Validators.email]],
     password: ['', Validators.required]
   });
 
-  constructor(private fb: FormBuilder, private authService: AuthenticationService, private thisRouter: Router) { }
+  constructor(private fb: FormBuilder,  private authService: AuthenticationService, private thisRouter: Router) { }
 
   onSubmit() {
+    const emptyGuidValue = '00000000-0000-0000-0000-000000000000';
     if (this.registerForm.valid) {
       const dto: RegisterDTO = this.registerForm.value as RegisterDTO;
       this.authService.register(dto).subscribe({
         next: (result: any) => {
-          if (result.message === "Created") {
+          if (result.message != emptyGuidValue) {
+            localStorage.setItem('userId', result.message); // or sessionStorage.setItem
             this.thisRouter.navigate(['/home']);//Navigate home
           }
         },

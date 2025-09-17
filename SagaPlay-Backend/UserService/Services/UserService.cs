@@ -26,10 +26,15 @@ namespace UserService.Services
         public async Task<UserProfile> GetProfile(Guid UserId)
         {
            return await _repository.GetUserProfileByUserIdAsync(UserId);
-        }        
-        
+        }
 
-        public async Task<string> Register(RegisterDTO registerDTO)
+        public async Task<Guid> GetUserId(string username)
+        {
+            var user = await _repository.GetUserbyUserNameAsync(username);
+            return user.Id;
+        }
+
+        public async Task<Guid> Register(RegisterDTO registerDTO)
         {
             string accessToken = await GetAccessTokenForUserCreation();
 
@@ -60,14 +65,44 @@ namespace UserService.Services
                     UserName = registerDTO.UserName                    
                 };
 
-                await _repository.AddUserAsync(user);
+                Guid userId = await _repository.AddUserAsync(user);
 
-                return "Created";
+                UserProfile userProfile = new UserProfile
+                {
+                    FirstName = string.Empty,
+                    LastName = string.Empty,
+                    Bio = string.Empty,
+                    Country= string.Empty,
+                    DateofBirth = DateTime.MinValue,
+                    PhoneNumber= string.Empty,
+                    ProfilePictureUrl= string.Empty,                    
+                    EmailAddress = registerDTO.UserEmail,
+                    UserId = userId,
+                    User = user                    
+                };
+
+                await _repository.AddUserProfileAsync(userProfile);
+
+                UserPreferences userPreferences = new UserPreferences
+                {
+                    Theme = "Light",
+                    Language = "English",
+                    NotificationSettings = "Email",
+                    PlaybackQualitySettings = "SD",
+                    ReceiveNewsLetter = false,
+                    User = user,
+                    UserId = userId
+                };
+
+                await _repository.AddUserPreferencesAsync(userPreferences);
+     
+
+                return userId;
                
             }
             else
             {
-                return string.Empty;
+                return Guid.Empty;
             }
         }
 

@@ -5,7 +5,9 @@ namespace UserService.Services
 {
     public interface IUserService
     {       
-        public Task<string> Register(RegisterDTO registerDTO);
+        public Task<Guid> Register(RegisterDTO registerDTO);
+
+        public Task<Guid> GetUserId(string username);
 
         public Task<UserProfile> GetProfile(Guid UserId);
 
