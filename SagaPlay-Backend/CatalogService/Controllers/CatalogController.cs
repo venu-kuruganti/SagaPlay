@@ -17,7 +17,7 @@ namespace CatalogService.Controllers
             _catalogService = catalogService;
         }
 
-        [HttpGet("Content")]       
+        [HttpGet]       
         public async Task<IActionResult> GetAll()
         {
             var items = await _catalogService.GetAllContentItemsAsync();
@@ -38,14 +38,14 @@ namespace CatalogService.Controllers
             return Ok(items);
         }
 
-        [HttpGet("AllCastPeople")]
+        [HttpGet("Cast")]
         public async Task<IActionResult> GetAllCastPeople()
         {
             var members = await _catalogService.GetCastMembers();
             return Ok(members);
         }
 
-        [HttpGet("GetById")]
+        [HttpGet("{id:int}")]
         public async Task<IActionResult> GetById(int id)
         {
             ContentItem item = new ContentItem();
@@ -55,7 +55,7 @@ namespace CatalogService.Controllers
             return Ok(item);
         }
 
-        [HttpGet("GetByTitle")]
+        [HttpGet("GetByTitle/{title}" )]
         public async Task<IActionResult> GetByTitle(string title)
         {
             List<ContentItem> items = new List<ContentItem>();
@@ -66,7 +66,7 @@ namespace CatalogService.Controllers
         }
 
 
-        [HttpGet("GetByDirector")]
+        [HttpGet("GetByDirector/{director}")]
         public async Task<IActionResult> GetByDirector(string director)
         {
             List<ContentItem> items = new List<ContentItem>();
@@ -76,7 +76,7 @@ namespace CatalogService.Controllers
             return Ok(items);
         }
 
-        [HttpGet("GetByGenre")]
+        [HttpGet("GetByGenre/{genre}")]
         public async Task<IActionResult> GetByGenre(string genre)
         {
             List<ContentItem> items = new List<ContentItem>();
@@ -86,12 +86,12 @@ namespace CatalogService.Controllers
             return Ok(items);
         }
 
-        [HttpGet("GetByReleaseDate")]
+        [HttpGet("GetByReleaseDate/{releaseDate}")]
         public async Task<IActionResult> GetByReleaseDate(string releaseDate)
         {
             List<ContentItem> items = new List<ContentItem>();
 
-            items = await _catalogService.GetContentByReleaseDateAsync(DateTime.Parse(releaseDate));
+            items = await _catalogService.GetContentByReleaseDateAsync(DateTime.Parse(releaseDate).ToUniversalTime());
 
             return Ok(items);
         }
@@ -122,7 +122,7 @@ namespace CatalogService.Controllers
                 MainCast = castMembers,
                 PosterURL = itemDTO.PosterURL,
                 Rating = itemDTO.Rating,
-                ReleaseDate = itemDTO.ReleaseDate
+                ReleaseDate = itemDTO.ReleaseDate.ToUniversalTime()
                 
             };
 

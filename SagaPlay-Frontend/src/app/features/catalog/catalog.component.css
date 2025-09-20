@@ -1,0 +1,11 @@
+.card{
+    width:500px;
+    height:auto;
+    border-style: outset;
+    border-width: 1px;
+    border-color: silver;    
+}
+
+.main-view{
+    align-items: stretch;
+}
