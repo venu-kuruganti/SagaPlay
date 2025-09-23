@@ -9,3 +9,10 @@
 .main-view{
     align-items: stretch;
 }
+
+.highlight-title{
+    background-color: magenta;
+    color:white;
+    font-size: 25px;
+    text-align: center;
+}

@@ -1,9 +1,9 @@
-﻿using CatalogService.DTOs;
-using SagaPlay.Shared.Contracts;
+﻿using SagaPlay.Shared.Contracts;
 using CatalogService.Models;
 using CatalogService.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
 namespace CatalogService.Controllers
 {
@@ -23,26 +23,39 @@ namespace CatalogService.Controllers
             var items = await _catalogService.GetAllContentItemsAsync();
 
             // Map from EF Entity to DTO
-            var dtoList = items.Select(c => new ContentItemDTO
+            var dtoList = items.Select( c => new ContentItemDTO
             {
                 Id = c.Id,
                 Title = c.Title,
                 PlotSummary = c.PlotSummary,
-                ReleaseDate = c.ReleaseDate,
+                ReleaseDate = c.ReleaseDate.ToString("dd/MM/yyyy"),
                 Genre = c.Genre,
                 Director = c.Director,
                 Rating = c.Rating,
-                PosterURL = c.PosterURL                
+                PosterURL = c.PosterURL,
+                MainCast = c.MainCast.Select(s=> new CastMemberDTO
+                {
+                    Id = s.Id,
+                    Gender = s.Gender,
+                    Name = s.Name
+                }).ToList()
+
             }).ToList();
 
-            return Ok(items);
+            return Ok(dtoList);
         }
 
         [HttpGet("Cast")]
         public async Task<IActionResult> GetAllCastPeople()
         {
             var members = await _catalogService.GetCastMembers();
-            return Ok(members);
+            var membersDTO = members.Select(m => new CastMemberDTO
+            {
+                Name = m.Name,
+                Gender = m.Gender
+            });
+
+            return Ok(membersDTO);
         }
 
         [HttpGet("{id:int}")]
@@ -52,7 +65,26 @@ namespace CatalogService.Controllers
 
             item = await _catalogService.GetContentByIdAsync(id);
 
-            return Ok(item);
+            ContentItemDTO contentItemDTO = new ContentItemDTO
+            {
+                Id = item.Id,
+                Title = item.Title,
+                Director = item.Director,
+                Genre = item.Genre,
+                PlotSummary = item.PlotSummary,
+                PosterURL = item.PosterURL,
+                Rating = item.Rating,
+                ReleaseDate = item.ReleaseDate.ToString("dd/MM/yyyy"),
+                MainCast = item.MainCast.Select(s => new CastMemberDTO
+                {
+                    Id = s.Id,
+                    Gender = s.Gender,
+                    Name = s.Name
+                }).ToList()
+
+            };
+
+            return Ok(contentItemDTO);
         }
 
         [HttpGet("GetByTitle/{title}" )]
@@ -62,7 +94,26 @@ namespace CatalogService.Controllers
 
             items = await _catalogService.GetContentByTitleAsync(title);
 
-            return Ok(items);
+            // Map from EF Entity to DTO
+            var dtoList = items.Select(c => new ContentItemDTO
+            {
+                Id = c.Id,
+                Title = c.Title,
+                PlotSummary = c.PlotSummary,
+                ReleaseDate = c.ReleaseDate.ToString("dd/MM/yyyy"),
+                Genre = c.Genre,
+                Director = c.Director,
+                Rating = c.Rating,
+                PosterURL = c.PosterURL,
+                MainCast = c.MainCast.Select(s => new CastMemberDTO
+                {
+                    Id = s.Id,
+                    Gender = s.Gender,
+                    Name = s.Name
+                }).ToList()
+            }).ToList();
+
+            return Ok(dtoList);
         }
 
 
@@ -73,7 +124,26 @@ namespace CatalogService.Controllers
 
             items = await _catalogService.GetContentByDirectorAsync(director);
 
-            return Ok(items);
+            // Map from EF Entity to DTO
+            var dtoList = items.Select(c => new ContentItemDTO
+            {
+                Id = c.Id,
+                Title = c.Title,
+                PlotSummary = c.PlotSummary,
+                ReleaseDate = c.ReleaseDate.ToString("dd/MM/yyyy"),
+                Genre = c.Genre,
+                Director = c.Director,
+                Rating = c.Rating,
+                PosterURL = c.PosterURL,
+                MainCast = c.MainCast.Select(s => new CastMemberDTO
+                {
+                    Id = s.Id,
+                    Gender = s.Gender,
+                    Name = s.Name
+                }).ToList()
+            }).ToList();
+
+            return Ok(dtoList);
         }
 
         [HttpGet("GetByGenre/{genre}")]
@@ -83,7 +153,26 @@ namespace CatalogService.Controllers
 
             items = await _catalogService.GetContentByGenreAsync(genre);
 
-            return Ok(items);
+            // Map from EF Entity to DTO
+            var dtoList = items.Select(c => new ContentItemDTO
+            {
+                Id = c.Id,
+                Title = c.Title,
+                PlotSummary = c.PlotSummary,
+                ReleaseDate = c.ReleaseDate.ToString("dd/MM/yyyy"),
+                Genre = c.Genre,
+                Director = c.Director,
+                Rating = c.Rating,
+                PosterURL = c.PosterURL,
+                MainCast = c.MainCast.Select(s => new CastMemberDTO
+                {
+                    Id = s.Id,
+                    Gender = s.Gender,
+                    Name = s.Name
+                }).ToList()
+            }).ToList();
+
+            return Ok(dtoList);
         }
 
         [HttpGet("GetByReleaseDate/{releaseDate}")]
@@ -93,7 +182,26 @@ namespace CatalogService.Controllers
 
             items = await _catalogService.GetContentByReleaseDateAsync(DateTime.Parse(releaseDate).ToUniversalTime());
 
-            return Ok(items);
+            // Map from EF Entity to DTO
+            var dtoList = items.Select(c => new ContentItemDTO
+            {
+                Id = c.Id,
+                Title = c.Title,
+                PlotSummary = c.PlotSummary,
+                ReleaseDate = c.ReleaseDate.ToString("dd/MM/yyyy"),
+                Genre = c.Genre,
+                Director = c.Director,
+                Rating = c.Rating,
+                PosterURL = c.PosterURL,
+                MainCast = c.MainCast.Select(s => new CastMemberDTO
+                {
+                    Id = s.Id,
+                    Gender = s.Gender,
+                    Name = s.Name
+                }).ToList()
+            }).ToList();
+
+            return Ok(dtoList);
         }
 
         [HttpGet("GetByCastMember")]
@@ -103,7 +211,26 @@ namespace CatalogService.Controllers
             castMembers = castMembers.Where(c => castMembersDTO.Any(a => a.Name == c.Name)).ToList();
             var items = await _catalogService.GetContentByOneOrMoreCastMembersAsync(castMembers);
 
-            return Ok(items);
+            // Map from EF Entity to DTO
+            var dtoList = items.Select(c => new ContentItemDTO
+            {
+                Id = c.Id,
+                Title = c.Title,
+                PlotSummary = c.PlotSummary,
+                ReleaseDate = c.ReleaseDate.ToString("dd/MM/yyyy"),
+                Genre = c.Genre,
+                Director = c.Director,
+                Rating = c.Rating,
+                PosterURL = c.PosterURL,
+                MainCast = c.MainCast.Select(s => new CastMemberDTO
+                {
+                    Id = s.Id,
+                    Gender = s.Gender,
+                    Name = s.Name
+                }).ToList()
+            }).ToList();
+
+            return Ok(dtoList);            
         }
 
         [HttpPost("CreateContent")]
@@ -111,7 +238,7 @@ namespace CatalogService.Controllers
         {
             List<CastMember> castMembers = await _catalogService.GetCastMembers();
 
-            castMembers = castMembers.Where(c => itemDTO.MainCastIds.Any(i=>c.Id == i)).ToList();
+            castMembers = castMembers.Where(c => itemDTO.MainCast.Any(i => i.Id == c.Id)).ToList();
 
             ContentItem item = new ContentItem
             {
@@ -122,8 +249,7 @@ namespace CatalogService.Controllers
                 MainCast = castMembers,
                 PosterURL = itemDTO.PosterURL,
                 Rating = itemDTO.Rating,
-                ReleaseDate = itemDTO.ReleaseDate.ToUniversalTime()
-                
+                ReleaseDate = DateTime.Parse(itemDTO.ReleaseDate).ToUniversalTime()                
             };
 
             var result = await _catalogService.AddNewContentAsync(item);
@@ -136,7 +262,7 @@ namespace CatalogService.Controllers
         public async Task<IActionResult> CreateCastMember([FromBody] CastMemberDTO memberDTO)
         {
             CastMember member = new CastMember
-            {
+            {                
                 Name = memberDTO.Name,
                 Gender = memberDTO.Gender
             };
@@ -162,8 +288,12 @@ namespace CatalogService.Controllers
         }
 
         [HttpPost("UpdateContent")]
-        public async Task<IActionResult> UpdateContent([FromBody] ContentItem item)
+        public async Task<IActionResult> UpdateContent([FromBody] ContentItemDTO itemDTO)
         {
+            ContentItem item = await _catalogService.GetContentByIdAsync(itemDTO.Id);
+
+            //TODO : Write mapping here.
+
             var result = await _catalogService.UpdateContentAsync(item);
             return Ok(result);
         }
@@ -172,6 +302,7 @@ namespace CatalogService.Controllers
         [HttpPost("UpdateCastMember")]
         public async Task<IActionResult> UpdateCastMember([FromBody] CastMember member)
         {
+            //TODO : Write mapping here
             var result = await _catalogService.UpdateCastMemberAsync(member);
             return Ok(result);
         }

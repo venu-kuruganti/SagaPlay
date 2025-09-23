@@ -1,13 +1,13 @@
 export interface ContentItem{
-    id: number;
-    title: string;
-    plotSummary: string;
-    releaseDate: string;
-    genre: string;
-    director: string;
-    rating: string;
-    posterURL: string;
-    mainCast: CastMemberDTO[];
+    Id: number;
+    Title: string;
+    PlotSummary: string;
+    ReleaseDate: string;
+    Genre: string;
+    Director: string;
+    Rating: string;
+    PosterURL: string;
+    MainCast: CastMemberDTO[];
 }
 
 interface CastMemberDTO{    

@@ -1,10 +1,13 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace CatalogService.DTOs
+namespace SagaPlay.Shared.Contracts
 {
     public class CastMemberDTO
     {
+        [JsonPropertyName("Id")]
+        public int Id { get; set; }
+
         [JsonPropertyName("Name")]
         public string Name { get; set; }
 

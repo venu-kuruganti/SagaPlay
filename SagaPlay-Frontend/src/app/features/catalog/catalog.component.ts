@@ -17,7 +17,9 @@ export class CatalogComponent {
   public GetAllContent(){
     this.catalogService.getAllContent().subscribe({
       next:(result:any)=>{
-        this.items = result;
+        console.log("result : ", result)
+        this.items = result;        
+        console.log("items : ", this.items);
       }
     })
   }

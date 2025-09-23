@@ -1,15 +1,35 @@
+<div class="container-fluid highlight-title text-uppercase mb-2 p-3">Catalog</div>
 <div class="container-fluid p-3 main-view">
-
-    <h3 class="text-uppercase">Catalog</h3>
-
 
     <div class="row">
         @for (item of items; track $index) {
 
-        <div class="card mx-2 my-2">
-            <img src="{{item.posterURL}}" class="card-img-top" width="500" height="auto" alt="">
-            <div class="card-body">
-                <h5 class="card-title">{{item.title}} </h5>               
+        <div class="col">
+            <div class="card mx-2 my-2">
+                <img src="{{item.PosterURL}}" class="card-img-top" alt="">
+                <div class="card-body">
+                    <p class="card-title">{{item.Title}} </p>
+                    <p> Release Date : {{item.ReleaseDate}} </p>
+                    <p> MPAA Rating : {{item.Rating}}</p>
+                    <p> Directed By: {{item.Director}} </p>
+                    <p> Genre : {{ item.Genre }}</p>
+                    <hr>
+                    <div>
+                        {{item.PlotSummary}}
+                    </div>
+                    <hr>
+                    <div>
+                        <h5>Main Cast</h5>
+                        <ul class="list-group list-group-flush">
+                            @for (actor of item.MainCast; track $index) {
+                            <li class="list-group-item">
+                                {{actor.Name}} 
+                            </li>
+                            }                           
+                        </ul>
+                    </div>
+
+                </div>
             </div>
         </div>
 
