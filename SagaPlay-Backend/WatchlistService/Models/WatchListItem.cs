@@ -12,7 +12,7 @@
         public StatusEnum WatchStatus { get; set; }
 
         //Navigation Properties        
-        public Guid UserId { get; set; } //FK, because one watchlist item can only be in one Watchlist per user.
-        public WatchList WatchList { get; set; }
+        public int WatchListId { get; set; } //FK
+        public WatchList? WatchList { get; set; }
     }
 }

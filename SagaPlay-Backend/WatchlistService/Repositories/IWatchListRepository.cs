@@ -6,7 +6,7 @@ namespace WatchlistService.Repositories
     {
         Task<List<WatchList>> GetAllWatchListsAsync();
 
-        Task<WatchList>? GetWatchlistByUserIdAsync(Guid userId);
+        Task<WatchList?> GetWatchlistByUserIdAsync(Guid userId);
 
         Task<bool> CreateWatchList(WatchList watchlist);
 

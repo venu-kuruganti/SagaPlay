@@ -31,7 +31,7 @@ namespace WatchlistService.Repositories
         {
             try
             {
-                _watchListContext.WatchListItems.Add(item);
+                await _watchListContext.WatchListItems.AddAsync(item);
                 return await _watchListContext.SaveChangesAsync() > 0;
             }
             catch (Exception ex)
@@ -60,11 +60,18 @@ namespace WatchlistService.Repositories
                 .ToListAsync();
         }
 
-        public async Task<WatchList>? GetWatchlistByUserIdAsync(Guid userId)
+        public async Task<WatchList?> GetWatchlistByUserIdAsync(Guid userId)
         {
-            return await _watchListContext.WatchLists
-                .Include(l=>l.WatchListItems)
-                .Where(l => l.UserId == userId).FirstOrDefaultAsync();
+            if (_watchListContext.WatchLists == null || _watchListContext.WatchLists.Count() == 0)
+            {
+                return null;
+            }
+            else
+            {
+                return await _watchListContext.WatchLists
+                    .Include(l => l.WatchListItems)
+                    .Where(l => l.UserId == userId).FirstOrDefaultAsync();
+            }
         }
 
         public async Task<WatchListItem> GetWatchListItem(int itemId)

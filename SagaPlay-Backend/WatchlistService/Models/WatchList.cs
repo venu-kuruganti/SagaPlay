@@ -5,6 +5,8 @@ namespace WatchlistService.Models
     public class WatchList
     {
         [Key]
+        public int WatchListId { get; set; }
+
         public Guid UserId { get; set; }
 
         public DateTime CreatedOn { get; set; }

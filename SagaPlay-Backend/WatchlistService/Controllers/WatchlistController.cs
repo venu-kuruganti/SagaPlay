@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WatchlistService.DTOs;
 using WatchlistService.Models;
 using WatchlistService.Services;
 
@@ -24,17 +25,17 @@ namespace WatchlistService.Controllers
         }
 
         //Add ContentItem to a watchlist based on UserId
-        [HttpPost("AddWatchListItemToWatchList")]
-        public async Task<IActionResult> AddWatchListItemToWatchList(string userId, int contentItemId)
-        {         
+        [HttpPost("AddToWatchList")]
+        public async Task<IActionResult> AddWatchListItemToWatchList([FromBody] WatchListDTO watchListDTO)
+        {
 
-            if (!string.IsNullOrEmpty(userId))
+            if (!string.IsNullOrEmpty(watchListDTO.UserId))
             {
                 WatchListItem item = new WatchListItem();
-                item.ContentItemId = contentItemId;
+                item.ContentItemId = watchListDTO.ContentItemId;
                 item.AddedOn = DateTime.UtcNow;
 
-                var result = await _WatchListService.AddWatchListItemToWatchList(Guid.Parse(userId), contentItemId);
+                var result = await _WatchListService.AddWatchListItemToWatchList(Guid.Parse(watchListDTO.UserId), watchListDTO.ContentItemId);
 
                 return Ok(result);
             }

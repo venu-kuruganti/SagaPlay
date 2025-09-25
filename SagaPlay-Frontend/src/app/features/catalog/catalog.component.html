@@ -4,31 +4,27 @@
     <div class="row">
         @for (item of items; track $index) {
 
-        <div class="col">
-            <div class="card mx-2 my-2">
-                <img src="{{item.PosterURL}}" class="card-img-top" alt="">
-                <div class="card-body">
-                    <p class="card-title">{{item.Title}} </p>
-                    <p> Release Date : {{item.ReleaseDate}} </p>
-                    <p> MPAA Rating : {{item.Rating}}</p>
-                    <p> Directed By: {{item.Director}} </p>
-                    <p> Genre : {{ item.Genre }}</p>
-                    <hr>
-                    <div>
-                        {{item.PlotSummary}}
-                    </div>
-                    <hr>
-                    <div>
-                        <h5>Main Cast</h5>
-                        <ul class="list-group list-group-flush">
-                            @for (actor of item.MainCast; track $index) {
-                            <li class="list-group-item">
-                                {{actor.Name}} 
-                            </li>
-                            }                           
-                        </ul>
-                    </div>
+        <div class="col m-2">
+            <div class="card">
+                <a href="" target="_blank" data-bs-toggle="tooltip" data-bs-placement="top"
+                    data-bs-content="Click for Details" data-bs-toggle="modal" data-bs-target="#movieModal"
+                    (click)="OpenModal(item.Id)">
+                    <img src="{{item.PosterURL}}" class="card-img-top" alt="">
+                </a>
 
+                <div class="card-header">{{item.Title}} </div>
+                <div class="card-body">
+                    <div class="p-1">
+                        Release Date : {{item.ReleaseDate}}
+                    </div>
+                    <hr>
+                    <div class="p-1">
+                        MPAA Rating : {{item.Rating}}
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button type="button" data-bs-toggle="tooltip" data-bs-placement="top"
+                        title="Add to Watchlist" class="mx-auto" (click)="AddToWatchlist(item.Id)"> <i class="bi bi-plus-square"></i> &nbsp; &nbsp; Add To Watchlist</button>                   
                 </div>
             </div>
         </div>
@@ -37,4 +33,62 @@
     </div>
 
 
+</div>
+
+<div class="modal fade" tabindex="-1" id="movieModal">
+    <div class="modal-dialog modal-fullscreen modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{ selectedItem?.Title }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-4">
+                        <img src="{{selectedItem?.PosterURL}}" class="img img-fluid" height="300" alt="">
+                    </div>
+                    <div class="col-7">
+                        <div class="row mb-1 info">
+                            <div class="col-2 p-1">Director</div>
+                            <div class="col p-1"> {{selectedItem?.Director}} </div>
+                        </div>
+                        <div class="row mb-1 info">
+                            <div class="col-2 p-1">Release Date</div>
+                            <div class="col p-1"> {{selectedItem?.ReleaseDate}} </div>
+                        </div>
+                        <div class="row mb-1 info">
+                            <div class="col-2 p-1">Plot Summary</div>
+                            <div class="col p-1"> {{selectedItem?.PlotSummary}} </div>
+                        </div>
+                        <div class="row mb-1 info">
+                            <div class="col-2 p-1">MPAA Rating</div>
+                            <div class="col p-1"> {{selectedItem?.Rating}} </div>
+                        </div>
+                        <div class="row mb-1 info">
+                            <div class="col-2 p-1">Genre</div>
+                            <div class="col p-1"> {{selectedItem?.Genre}} </div>
+                        </div>
+                        <div class="row mb-1 info">
+                            <div class="col">
+                                <p class="mb-1">Main Cast</p>
+                                <ul class="list-group list-group-flush">
+                                    @for (actor of selectedItem?.MainCast; track $index) {
+                                    <li class="list-group-item">
+                                        {{actor.Name}}
+                                    </li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="mx-auto" data-bs-toggle="tooltip" data-bs-placement="top" title="Add to Watchlist" (click)="AddToWatchlist(selectedItem?.Id!)"> <i
+                        class="bi bi-plus-square"></i> &nbsp; &nbsp; Add To Watchlist </button>               
+            </div>
+        </div>
+    </div>
 </div>

@@ -1,18 +1,88 @@
-.card{
-    width:500px;
-    height:auto;
-    border-style: outset;
-    border-width: 1px;
-    border-color: silver;    
+.card {
+    width: 500px;
+    height: 100%;
+    background-color: #F5E6CC;
+    border: 2px solid #3B6A94;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+    font-family: 'BreeSerif';
+    font-weight: bold;
+    font-size: 14px;
+    color: #5A3E6B;
 }
 
-.main-view{
+.card-header {
+
+    font-size: 16px;
+    font-weight: bold;
+    color: #16324F;
+}
+
+.main-view {
     align-items: stretch;
 }
 
-.highlight-title{
-    background-color: magenta;
-    color:white;
+.highlight-title {
+    background-color: #F6D6B8;
+    color: #2C2C2C;
+    font-family: 'Quicksand', sans-serif;
     font-size: 25px;
     text-align: center;
+    font-weight: bold;
+}
+
+img {
+    display: block;
+    max-width: 500px;
+    height: auto;
+    width: auto;
+}
+
+button {
+    background-color: #16324F;
+    color: white;
+    width: 250px;
+    height: 50px;
+    display: flex;
+    /* turn into flexbox */
+    align-items: center;
+    /* vertical center */
+    justify-content: center;
+    /* horizontal center */
+
+    border: none;
+    /* optional: remove border if not needed */
+    border-radius: 6px;
+    /* optional: make it look a bit softer */
+}
+
+.btn-close {
+    width: 25px;
+    height: 25px;
+    background-color: #2C2C2C;
+    color: white;
+}
+
+
+#movieModal {
+
+    font-family: 'Chewy';
+    font-size: 14px;
+}
+
+#movieModal .modal-content {
+    background-color: #C38C4E;
+
+    /* background-color: #F7E6D0; */
+    /* soft complementary */
+    color: #3A3A3A;
+    /* dark grey text for readability */
+
+}
+
+.info{
+    background-color: #F5E6CC;
+}
+
+.list-group-item{
+    background-color: #F5E6CC;    
 }
