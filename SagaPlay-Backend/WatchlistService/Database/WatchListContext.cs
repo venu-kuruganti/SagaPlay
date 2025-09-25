@@ -16,12 +16,12 @@ namespace WatchlistService.Database
             //Watchlist (1) => WatchListItem (Many) : One to many relationship
             modelBuilder.Entity<WatchList>()
                 .HasMany(w => w.WatchListItems)
-                .WithOne(w => w.WatchList)
-                .HasForeignKey(w => w.UserId);
+                .WithOne(i => i.WatchList)
+                .HasForeignKey(i => i.WatchListId);
 
             //Enforce uniqueness
             modelBuilder.Entity<WatchListItem>()
-                .HasIndex(w => new { w.UserId, w.ContentItemId })
+                .HasIndex(w => new { w.WatchListId, w.ContentItemId })
                 .IsUnique();
 
         }

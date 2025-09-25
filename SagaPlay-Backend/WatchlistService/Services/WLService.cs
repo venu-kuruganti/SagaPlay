@@ -21,18 +21,26 @@ namespace WatchlistService.Services
                 await CreateNewWatchList(UserId);
             }
 
-            WatchListItem item = new WatchListItem();
-            item.ContentItemId = ContentItemId;
-            item.WatchStatus = StatusEnum.Planned;
-            item.AddedOn = DateTime.UtcNow;
-            item.UserId = UserId;
+            WatchListItem? item = watchList!.WatchListItems.Where(w => w.ContentItemId == ContentItemId).FirstOrDefault();
 
-            await _repository.CreateWatchListItem(item);
+            if (item != null)
+            {
+                return false; //Item already in Watchlist so cannot add it again.
+            }
+            else
+            {
+                item = new WatchListItem();
+                item.ContentItemId = ContentItemId;
+                item.WatchStatus = StatusEnum.Planned;
+                item.AddedOn = DateTime.UtcNow;
+                item.WatchListId = watchList!.WatchListId;
 
-            watchList.WatchListItems.Add(item);
+                await _repository.CreateWatchListItem(item);
 
-            return await _repository.UpdateWatchList(watchList);            
+                watchList?.WatchListItems.Add(item);
 
+                return await _repository.UpdateWatchList(watchList!);
+            }
         }
 
         /// <summary>

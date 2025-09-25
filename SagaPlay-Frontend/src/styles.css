@@ -124,6 +124,24 @@
     font-display: swap;
 }
 
+@font-face {
+    font-family: 'Chewy';
+    src: url('../src/assets/fonts/Chewy-Regular.woff2') format('woff2'),
+        url('../src/assets/fonts/Chewy-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'BreeSerif';
+    src: url('../src/assets/fonts/BreeSerif-Regular.woff2') format('woff2'),
+        url('../src/assets/fonts/BreeSerif-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
 
 
 html {
@@ -149,7 +167,7 @@ h2,
 h3,
 h4,
 h5 {
-    color: #818589;
+    color: maroon;
 }
 
 h1 {

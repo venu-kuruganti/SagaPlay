@@ -24,4 +24,8 @@
     <ProjectReference Include="..\SagaPlay.Shared.Contracts\SagaPlay.Shared.Contracts.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DTOs\" />
+  </ItemGroup>
+
 </Project>

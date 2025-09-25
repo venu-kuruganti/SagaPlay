@@ -19,7 +19,16 @@ builder.Services.AddScoped<ICatalogRepository, CatalogRepository>();
 
 builder.Services.AddScoped<IInternalCatalogService, InternalCatalogService>();
 
+builder.Services.AddCors();
+
 var app = builder.Build();
+
+app.UseCors(x =>
+{
+    x.AllowAnyHeader()
+    .AllowAnyMethod()
+    .WithOrigins("http://localhost:4200");
+});
 
 // Configure the HTTP request pipeline.
     app.UseSwagger();
