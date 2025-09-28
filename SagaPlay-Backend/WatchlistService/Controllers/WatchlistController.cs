@@ -17,11 +17,22 @@ namespace WatchlistService.Controllers
         }
 
         //Get Watchlist for a User
-        [HttpGet("GetWatchListOnUserId/${userId}")]
+        [HttpGet("GetWatchListOnUserId")]
         public async Task<IActionResult> GetWatchListOnUserId(string userId)
         {
             var WL = await _WatchListService.GetWatchListOnUserId(Guid.Parse(userId));
-            return Ok(WL);
+            UserWatchListDTO watchListDTO = new UserWatchListDTO
+            {
+                WatchListId = WL.WatchListId,
+                WatchListItems = WL.WatchListItems.Select(s=> new WatchListItemDTO
+                {
+                    WatchListItemId = s.Id,             //THis id is required for removing the item from the watchlist.
+                    ContentItemId = s.ContentItemId,    //This Id is required for fetching the contentitem details.
+                    WatchStatus = s.WatchStatus.ToString()
+                }).ToList()
+            };            
+            
+            return Ok(watchListDTO);
         }
 
         //Add ContentItem to a watchlist based on UserId

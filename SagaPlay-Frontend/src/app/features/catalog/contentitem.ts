@@ -1,5 +1,5 @@
 export interface ContentItem{
-    Id: number;
+    Id: number;    
     Title: string;
     PlotSummary: string;
     ReleaseDate: string;

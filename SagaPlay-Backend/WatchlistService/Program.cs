@@ -27,10 +27,20 @@ builder.Services.AddScoped<IWatchListRepository, WatchListRepository>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddCors();
+
+
 var app = builder.Build();
 
+app.UseCors(x =>
+{
+    x.AllowAnyHeader()
+    .AllowAnyMethod()
+    .WithOrigins("http://localhost:4200");
+});
+
 // Configure the HTTP request pipeline.
-    app.UseSwagger();
+app.UseSwagger();
     app.UseSwaggerUI();
 
 
