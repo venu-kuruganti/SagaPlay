@@ -1,12 +1,10 @@
-<div class="container-fluid home w-75">
-    @if (isLoggedIn) {
-        <div class="welcome-message">
-            Welcome to Saga Play!
-        </div>
-    }
-    @else {
-        <div class="login-message">
-            Welcome! Login to see your content!
-        </div>
-    }
+@if (isLoggedIn) {
+<div class="highlight-title">
+    Welcome to SagaPlay {{userName}}.
 </div>
+}
+@else {
+<div class="highlight-title">
+    Welcome Patron! Login to see your content!
+</div>
+}

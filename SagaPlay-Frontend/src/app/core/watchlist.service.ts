@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { ContentItem } from '../features/catalog/contentitem';
+import { WatchList } from '../features/watchlist/watchlist';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +10,7 @@ import { Observable } from 'rxjs';
 export class WatchlistService {
 
   private httpClient = inject(HttpClient);
-  private baseUrl = "http://localhost:32770/api/Watchlist";
+  private baseUrl = "https://localhost:32771/api/Watchlist";
 
   public AddToWatchList(userId: string, contentItemId: number): Observable<boolean> {
 
@@ -21,6 +23,12 @@ export class WatchlistService {
     return this.httpClient.patch<boolean>(`${this.baseUrl}/${userId}/items/${WatchListItemId}/RemoveWatchListItem`, {});
 
   }
+
+  public GetWatchListOnUserId(userId: string): Observable<WatchList> {
+    return this.httpClient.get<WatchList>(`${this.baseUrl}/GetWatchListOnUserId?userId=${userId}`);
+  }
+
+
 
   constructor() { }
 }

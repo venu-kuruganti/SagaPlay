@@ -15,7 +15,7 @@ export class HomeComponent implements OnInit {
   private userService = inject(UserdetailsService);
   private authService = inject(AuthService);
   private userId: string = "";
-  private userName: string = "";
+  public userName: string = "";
 
   ngOnInit(): void {
 
@@ -30,8 +30,7 @@ export class HomeComponent implements OnInit {
         if (isAuth) {
           this.authService.user$.subscribe(user => {
             this.userName = user?.nickname!;
-            this.userService.getUserIdByUserName(this.userName).subscribe(id => {
-              console.log('userId : ', id);
+            this.userService.getUserIdByUserName(this.userName).subscribe(id => {              
               localStorage.setItem('userId', id); // or sessionStorage.setItem
             });
 

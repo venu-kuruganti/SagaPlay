@@ -1,0 +1,57 @@
+.slide-label {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.carousel-item img {
+    max-height: 500px;
+    width: auto;
+    object-fit: contain;
+    /* keeps aspect ratio, no cropping */
+    margin: 0 25%;
+    /* centers horizontally */
+}
+
+.item-info {
+    height: 100%;
+    /* match parent’s fixed height */
+    max-width: 300px;
+    /* optional: keep it narrow like a page */
+    overflow: hidden;
+    /* keep text from spilling over */
+    background-color: silver;
+    margin-left: 10%;
+}
+
+.item-summary {
+    text-wrap-mode: wrap;
+    text-wrap-style: pretty;
+    width: 250px;
+    text-align: justify;
+}
+
+.carousel-indicators {
+    bottom: -40px;
+    /* push them up above your button */
+}
+
+.remove-watchlist {
+    width: 250px;
+    height: 75px;
+}
+
+.form-check-input {
+    width: 25px;
+    height: 25px;  
+    margin-right:10px;
+}
+
+.form-check-label {
+    font-size: 20px;    
+    font-weight: bold;
+}
+
+.radio-container{
+    background-color: #639FCA;   
+    box-shadow: 3px 1px #A8C9E1;      
+}

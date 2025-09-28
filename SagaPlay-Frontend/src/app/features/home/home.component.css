@@ -4,26 +4,3 @@
     border-width: 2px;
     box-shadow: 25px 25px silver;
 }
-
-.welcome-message {
-    font-family: 'Cinzel Decorative', sans-serif;
-    /* clean, modern */
-    font-weight: 700;
-    /* bold but not chunky */
-    letter-spacing: 3px;
-    font-size: 20px;
-    text-transform: capitalize;
-    border-style: outset;
-    border-width: 2px;
-    box-shadow: 10px 10px darkgray;
-    text-align: center;
-}
-
-.login-message {
-    font-size: 18px;
-    font-weight: bold;
-    border-style: outset;
-    border-width: 2px;
-    box-shadow: 10px 10px darkgray;
-    text-align: center;
-}
