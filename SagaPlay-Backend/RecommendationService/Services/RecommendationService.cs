@@ -17,7 +17,7 @@ namespace RecommendationService.Services
         public async Task<List<ContentItemDTO>> GetRecommendationsAsync()
         {
             //Call catalog service
-            var allContent = await _httpClient.GetFromJsonAsync<List<ContentItemDTO>>( "/api/Catalog/content");
+            var allContent = await _httpClient.GetFromJsonAsync<List<ContentItemDTO>>( "/api/Catalog");
 
             if (allContent==null || !allContent.Any())
             {

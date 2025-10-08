@@ -14,8 +14,8 @@ import { Router } from '@angular/router';
 export class AuthenticationService {
   private http = inject(HttpClient);
   private router = inject(Router);
-//  private registerUrl = 'http://localhost:4000/userservice/register';
-private registerUrl = 'http://localhost:32768/api/user/register';
+  private registerUrl = 'http://localhost:4000/userservice/register';
+//private registerUrl = 'http://localhost:32768/api/user/register';
   private tokenKey = 'auth_token';
   private domain = 'dev-sagaplay.eu.auth0.com'; // e.g. dev-abc123.us.auth0.com
   private clientId = 'g7JHxlUJo0nCGlDmTCnLcH4u269y2Agy';

@@ -9,7 +9,8 @@ import { Observable } from 'rxjs';
 export class CatalogService {
 
   private http:HttpClient = inject(HttpClient);
-  private baseUrl:string = "https://localhost:32769/api/Catalog";
+ // private baseUrl:string = "https://localhost:32769/api/Catalog";
+ private baseUrl:string = "http://localhost:4000/catalogservice"
 
   constructor() { }
   

@@ -10,8 +10,8 @@ import { User, UserProfile, UserPreferences } from '../features/user-profile/use
 export class UserdetailsService {
 
   private httpClient: HttpClient = inject(HttpClient);
-  //private baseUrl: string = "https://localhost:4000/userservice";
-  private baseUrl: string = "http://localhost:32768/api/user";
+  private baseUrl: string = "http://localhost:4000/userservice";
+  //private baseUrl: string = "http://localhost:32768/api/user";
   private userId: string = "";
 
   getUserProfile(userId: string): Observable<User> {

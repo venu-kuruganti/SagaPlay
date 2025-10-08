@@ -19,10 +19,16 @@ builder.Services.AddHttpClient<IRecommendationService, RecommendationService.Ser
     client.BaseAddress = new Uri(options.BaseUrl);    
 });
 
+builder.Services.AddCors();
+
 var app = builder.Build();
 
+app.UseCors(x => x.AllowAnyHeader()
+.AllowAnyMethod()
+.WithOrigins("http://localhost:4200"));
+
 // Configure the HTTP request pipeline.
-    app.UseSwagger();
+app.UseSwagger();
     app.UseSwaggerUI();
 
 
