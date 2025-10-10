@@ -1,10 +1,30 @@
 @if (isLoggedIn) {
 <div class="highlight-title">
-    Welcome to SagaPlay {{userName}}.
+    Welcome to SagaPlay {{fullName}}.
+</div>
+<div class="home">
+    <div class="container-fluid home-children">
+        <p class="home-heading">Recommendations for Today</p>
+        <div class="row">
+            @for (item of recommendations; track $index) {
+            <div class="col m-2">
+                <img src="{{item.PosterURL}}" width="200" height="auto" class="img-thumbnail img-fluid" alt="">
+            </div>
+            }
+        </div>
+    </div>
+    <div class="container-fluid home-children">
+        <div class="clearfix">
+            <div class="home-heading float-start">Items in Watchlist </div>
+            <div class="watchlist-count float-start"> {{watchListCount}} </div>
+        </div>
+
+    </div>
 </div>
 }
 @else {
 <div class="highlight-title">
     Welcome Patron! Login to see your content!
 </div>
+
 }

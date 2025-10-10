@@ -16,14 +16,18 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
 
   // Check if request matches one of the excluded URLs
-  if (excludedUrls.some(url => req.url.includes(url))) { 
+  if (excludedUrls.some(url => req.url.includes(url))) {
     return next(req); // skip the token injection
-  } 
+  }
 
-  return authService.getAccessTokenSilently().pipe(    
+  return authService.getAccessTokenSilently({
+    authorizationParams: {
+      audience: 'https://sagaplay/api'  // ADD THIS
+    }
+  }).pipe(
     take(1),
     switchMap(token => {
-    
+
       if (token) {
         const cloned = req.clone({
           setHeaders: {
@@ -34,7 +38,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
         return next(cloned);
 
       }//end of if 
-      
+
       return next(req);
     })
   );

@@ -10,7 +10,8 @@ import { WatchList } from '../features/watchlist/watchlist';
 export class WatchlistService {
 
   private httpClient = inject(HttpClient);
-  private baseUrl = "https://localhost:32771/api/Watchlist";
+  //private baseUrl = "https://localhost:32771/api/Watchlist";
+  private baseUrl:string = "http://localhost:4000/watchlistservice"
 
   public AddToWatchList(userId: string, contentItemId: number): Observable<boolean> {
 

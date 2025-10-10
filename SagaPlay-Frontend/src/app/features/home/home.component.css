@@ -2,5 +2,42 @@
     padding: 25px;
     border-style: outset;
     border-width: 2px;
-    box-shadow: 25px 25px silver;
+    box-shadow: 5px -5px 10px 2px #f5a623, -5px 5px 10px 2px #f5a623;
+    width:98%;
+    margin:25px;
+    border-radius: 5px;
+}
+
+.home-heading{
+    font-family: 'Merriweather';
+    font-size:20px;
+    font-weight:bold;
+    color:#C3B94E;
+    margin:5px;
+}
+
+.home-children{
+    padding:25px;
+    background-color: #4E58C3;
+    border:2px outset #4E58C3;
+    border-radius: 5px;
+    margin-top: 25px;
+    margin-bottom: 10px;
+    box-shadow: 5px -5px 10px 2px #4E92C3, -5px 5px 10px 2px #4E92C3;
+
+}
+
+.watchlist-count{
+    border:2px solid #7F4EC3;
+    border-radius: 1px;
+    box-shadow: 2px 2px 5px 2px gray;
+    background-color: #C3B94E;    
+    width:40px;
+    height:40px;
+    padding:5px;
+    text-align: center;
+    vertical-align: middle;
+    margin:5px;
+    font-weight: bold;
+    font-size:18px;
 }
