@@ -21,7 +21,9 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   }
 
   return authService.getAccessTokenSilently({
-   
+    authorizationParams: {
+      audience: 'https://sagaplay/api'  // ADD THIS
+    }
   }).pipe(
     take(1),
     switchMap(token => {

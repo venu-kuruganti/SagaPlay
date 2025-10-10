@@ -25,10 +25,10 @@
         }
       ],
       "UpstreamPathTemplate": "/userservice/{everything}",
-      //"AuthenticationOptions": {
-      //  "AuthenticationProviderKey": "Okta",
-      //  "AllowedScopes": []
-      //},
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Okta",
+        "AllowedScopes": []
+      },
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
     },
     {
@@ -41,10 +41,10 @@
         }
       ],
       "UpstreamPathTemplate": "/catalogservice/{everything}",
-      //"AuthenticationOptions": {
-      //  "AuthenticationProviderKey": "Okta",
-      //  "AllowedScopes": []
-      //},
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Okta",
+        "AllowedScopes": []
+      },
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
     },
     {
@@ -57,10 +57,10 @@
         }
       ],
       "UpstreamPathTemplate": "/recommendationservice/{everything}",
-      //"AuthenticationOptions": {
-      //  "AuthenticationProviderKey": "Okta",
-      //  "AllowedScopes": []
-      //},
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Okta",
+        "AllowedScopes": []
+      },
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
     },
     {
@@ -73,10 +73,10 @@
         }
       ],
       "UpstreamPathTemplate": "/watchlistservice/{everything}",
-      //"AuthenticationOptions": {
-      //  "AuthenticationProviderKey": "Okta",
-      //  "AllowedScopes": []
-      //},
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Okta",
+        "AllowedScopes": []
+      },
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
     },
     {
@@ -89,10 +89,10 @@
         }
       ],
       "UpstreamPathTemplate": "/notificationservice/{everything}",
-      //"AuthenticationOptions": {
-      //  "AuthenticationProviderKey": "Okta",
-      //  "AllowedScopes": []
-      //},
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Okta",
+        "AllowedScopes": []
+      },
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
     }
   ]
