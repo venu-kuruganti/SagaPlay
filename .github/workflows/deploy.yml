@@ -75,8 +75,19 @@ jobs:
              )
               for svc in "${!services[@]}"; do
                 echo "Deploying $svc..."
-                az containerapp update \
-                  --name $svc \
-                  --resource-group ${{ secrets.RESOURCE_GROUP }} \
-                  --image ${{ secrets.AZURE_CONTAINER_REGISTRY }}/$svc:latest                
-              done        
+                if az containerapp show --name "$svc" --resource-group ${{ secrets.RESOURCE_GROUP }}  &>/dev/null; then
+                    echo "Updating $svc..."
+                    az containerapp update \
+                      --name "$svc" \
+                      --resource-group ${{ secrets.RESOURCE_GROUP }}  \
+                      --image ${{ secrets.AZURE_CONTAINER_REGISTRY }}/${services[$svc]}:latest
+                 else
+                    echo "Creating $svc..."
+                    az containerapp create \
+                      --name "$svc" \
+                      --resource-group ${{ secrets.RESOURCE_GROUP }}  \                    
+                      --image ${{ secrets.AZURE_CONTAINER_REGISTRY }}/${services[$svc]}:latest \
+                      --target-port 8080 \
+                      --ingress internal
+                  fi                  
+              done
