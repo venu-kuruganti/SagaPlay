@@ -78,5 +78,5 @@ jobs:
                 az containerapp update \
                   --name $svc \
                   --resource-group ${{ secrets.RESOURCE_GROUP }} \
-                  --image ${{ secrets.AZURE_CONTAINER_REGISTRY }}/$svc:latest \                
-              done
+                  --image ${{ secrets.AZURE_CONTAINER_REGISTRY }}/$svc:latest                
+              done        
