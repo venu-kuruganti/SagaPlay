@@ -66,12 +66,12 @@ jobs:
         with:
           inlineScript: |
              declare -A services=(
-              ["user-service"]="SagaPlay-Backend/UserService"
-              ["catalog-service"]="SagaPlay-Backend/CatalogService"
-              ["watchlist-service"]="SagaPlay-Backend/WatchlistService"
-              ["notification-service"]="SagaPlay-Backend/NotificationService"
-              ["recommendation-service"]="SagaPlay-Backend/RecommendationService"
-              ["apigateway-service"]="SagaPlay-Backend/ApiGateway"
+              ["user-service"]="UserService"
+              ["catalog-service"]="CatalogService"
+              ["watchlist-service"]="WatchlistService"
+              ["notification-service"]="NotificationService"
+              ["recommendation-service"]="RecommendationService"
+              ["apigateway-service"]="ApiGateway"
              )
               for svc in "${!services[@]}"; do
                 echo "Deploying $svc..."
