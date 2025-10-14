@@ -61,40 +61,35 @@ namespace WatchListService.Tests
 
             item = new WatchListItem();
             item.Id = 1;
-            item.ContentItemId = 1;
-            item.UserId = USERID;
+            item.ContentItemId = 1;          
             item.AddedOn = DateTime.UtcNow;
             item.WatchStatus = StatusEnum.Planned;
             items.Add(item);
 
             item = new WatchListItem();
             item.Id = 2;
-            item.ContentItemId = 2;
-            item.UserId = USERID;
+            item.ContentItemId = 2;           
             item.AddedOn = DateTime.UtcNow;
             item.WatchStatus = StatusEnum.Watching;
             items.Add(item);
 
             item = new WatchListItem();
             item.Id = 3;
-            item.ContentItemId = 3;
-            item.UserId = USERID;
+            item.ContentItemId = 3;           
             item.AddedOn = DateTime.UtcNow;
             item.WatchStatus = StatusEnum.Completed;
             items.Add(item);
 
             item = new WatchListItem();
             item.Id = 4;
-            item.ContentItemId = 4;
-            item.UserId = USERID;
+            item.ContentItemId = 4;           
             item.AddedOn = DateTime.UtcNow;
             item.WatchStatus = StatusEnum.Watching;
             items.Add(item);
 
             item = new WatchListItem();
             item.Id = 5;
-            item.ContentItemId = 5;
-            item.UserId = USERID;
+            item.ContentItemId = 5;            
             item.AddedOn = DateTime.UtcNow;
             item.WatchStatus = StatusEnum.Planned;
             items.Add(item);
