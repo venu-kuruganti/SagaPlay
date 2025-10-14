@@ -43,20 +43,24 @@ jobs:
         
       - name: Build and push Docker images
         run: |
-           declare -A services=(
-            ["user-service"]="SagaPlay-Backend/UserService"
-            ["catalog-service"]="SagaPlay-Backend/CatalogService"
-            ["watchlist-service"]="SagaPlay-Backend/WatchlistService"
-            ["notification-service"]="SagaPlay-Backend/NotificationService"
-            ["recommendation-service"]="SagaPlay-Backend/RecommendationService"
-            ["api-gateway"]="SagaPlay-Backend/ApiGateway"
-           )
-           for svc in "${!services[@]}"; do
-            echo "Building and pushing $svc..."
-            docker build -t ${{ secrets.AZURE_CONTAINER_REGISTRY }}/$svc:latest ./${services[$svc]}
-            docker push ${{ secrets.AZURE_CONTAINER_REGISTRY }}/$svc:latest
-           done
+          declare -A services=(
+            ["user-service"]="UserService"
+            ["catalog-service"]="CatalogService"
+            ["watchlist-service"]="WatchlistService"
+            ["notification-service"]="NotificationService"
+            ["recommendation-service"]="RecommendationService"
+            ["api-gateway"]="ApiGateway"
+          )
 
+          for svc in "${!services[@]}"; do
+            echo "Building and pushing $svc..."
+            docker build \
+              -f SagaPlay-Backend/${services[$svc]}/Dockerfile \
+              -t ${{ secrets.AZURE_CONTAINER_REGISTRY }}/$svc:latest \
+              ./SagaPlay-Backend
+            docker push ${{ secrets.AZURE_CONTAINER_REGISTRY }}/$svc:latest
+          done
+          
       - name: Deploy to Azure Container Apps
         uses: azure/cli@v2
         with:
