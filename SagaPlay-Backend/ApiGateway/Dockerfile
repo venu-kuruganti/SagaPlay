@@ -11,7 +11,7 @@ EXPOSE 8080
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["ApiGateway/ApiGateway.csproj", "."]
+COPY ["ApiGateway.csproj", "."]
 RUN dotnet restore "./ApiGateway.csproj"
 COPY . .
 WORKDIR "/src/."
