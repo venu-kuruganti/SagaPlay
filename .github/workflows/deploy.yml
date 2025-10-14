@@ -36,6 +36,11 @@ jobs:
       - name: Log in to Azure Container Registry
         run: az acr login --name ${{ secrets.AZURE_CONTAINER_REGISTRY }}
 
+      - name: List repo files
+        run: |
+            pwd
+            ls -R
+        
       - name: Build and push Docker images
         run: |
            declare -A services=(
