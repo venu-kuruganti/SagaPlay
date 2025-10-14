@@ -49,7 +49,7 @@ jobs:
             ["watchlist-service"]="WatchlistService"
             ["notification-service"]="NotificationService"
             ["recommendation-service"]="RecommendationService"
-            ["api-gateway"]="ApiGateway"
+            ["apigateway-service"]="ApiGateway"
           )
 
           for svc in "${!services[@]}"; do
@@ -71,7 +71,7 @@ jobs:
               ["watchlist-service"]="SagaPlay-Backend/WatchlistService"
               ["notification-service"]="SagaPlay-Backend/NotificationService"
               ["recommendation-service"]="SagaPlay-Backend/RecommendationService"
-              ["api-gateway"]="SagaPlay-Backend/ApiGateway"
+              ["apigateway-service"]="SagaPlay-Backend/ApiGateway"
              )
               for svc in "${!services[@]}"; do
                 echo "Deploying $svc..."
