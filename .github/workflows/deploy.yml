@@ -31,8 +31,16 @@ jobs:
 
       - name: Build and push Docker images
         run: |
+          docker build -t ${{ secrets.AZURE_CONTAINER_REGISTRY }}/user-service:latest -f UserService/Dockerfile .
+          docker push ${{ secrets.AZURE_CONTAINER_REGISTRY }}/user-service:latest
           docker build -t ${{ secrets.AZURE_CONTAINER_REGISTRY }}/catalog-service:latest -f CatalogService/Dockerfile .
-          docker push ${{ secrets.AZURE_CONTAINER_REGISTRY }}/catalog-service:latest
+          docker push ${{ secrets.AZURE_CONTAINER_REGISTRY }}/catalog-service:latest         
+          docker build -t ${{ secrets.AZURE_CONTAINER_REGISTRY }}/recommendation-service:latest -f RecommendationService/Dockerfile .
+          docker push ${{ secrets.AZURE_CONTAINER_REGISTRY }}/recommendation-service:latest
+          docker build -t ${{ secrets.AZURE_CONTAINER_REGISTRY }}/watchlist-service:latest -f WatchlistService/Dockerfile .
+          docker push ${{ secrets.AZURE_CONTAINER_REGISTRY }}/watchlist-service:latest
+          docker build -t ${{ secrets.AZURE_CONTAINER_REGISTRY }}/notification-service:latest -f NotificationService/Dockerfile .
+          docker push ${{ secrets.AZURE_CONTAINER_REGISTRY }}/notification-service:latest
 
       - name: Deploy to Azure Container Apps
         uses: azure/cli@v2
