@@ -20,12 +20,12 @@ jobs:
 
       - name: Build the project
         run: |
-          dotnet build ./UserService/UserService.csproj --configuration Release
-          dotnet build ./CatalogService/CatalogService.csproj --configuration Release
-          dotnet build ./WatchlistService/WatchlistService.csproj --configuration Release
-          dotnet build ./RecommendationService/RecommendationService.csproj --configuration Release
-          dotnet build ./NotificationService/NotificationService.csproj --configuration Release
-          dotnet build ./ApiGateway/ApiGateway.csproj --configuration Release
+          dotnet build ./SagaPlay-Backend/UserService/UserService.csproj --configuration Release
+          dotnet build ./SagaPlay-Backend/CatalogService/CatalogService.csproj --configuration Release
+          dotnet build ./SagaPlay-Backend/WatchlistService/WatchlistService.csproj --configuration Release
+          dotnet build ./SagaPlay-Backend/RecommendationService/RecommendationService.csproj --configuration Release
+          dotnet build ./SagaPlay-Backend/NotificationService/NotificationService.csproj --configuration Release
+          dotnet build ./SagaPlay-Backend/ApiGateway/ApiGateway.csproj --configuration Release
 
 
       - name: Log in to Azure
