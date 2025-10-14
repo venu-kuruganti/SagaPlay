@@ -15,7 +15,7 @@ WORKDIR /src
 
 # Copy all projects for restoring, including an dependencies.
 COPY ["CatalogService.csproj", "."]
-COPY ["SagaPlay.Shared.Contracts.csproj", "SagaPlay.Shared.Contracts/"]
+COPY ["./SagaPlay.Shared.Contracts/SagaPlay.Shared.Contracts.csproj", "SagaPlay.Shared.Contracts/"]
 
 #Run dotnet restore
 RUN dotnet restore "./CatalogService.csproj"
