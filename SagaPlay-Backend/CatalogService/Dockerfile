@@ -14,7 +14,7 @@ ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 
 # Copy all projects for restoring, including an dependencies.
-COPY ["CatalogService.csproj", "."]
+COPY ["CatalogService/CatalogService.csproj", "."]
 COPY ["SagaPlay.Shared.Contracts/SagaPlay.Shared.Contracts.csproj", "SagaPlay.Shared.Contracts/"]
 
 #Run dotnet restore
