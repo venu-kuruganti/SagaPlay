@@ -14,17 +14,17 @@ ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 
 # Copy all projects for restoring, including an dependencies.
-COPY ["CatalogService/CatalogService.csproj", "."]
+COPY ["CatalogService/CatalogService.csproj", "CatalogService/"]
 COPY ["SagaPlay.Shared.Contracts/SagaPlay.Shared.Contracts.csproj", "SagaPlay.Shared.Contracts/"]
 
 #Run dotnet restore
-RUN dotnet restore "./CatalogService.csproj"
+RUN dotnet restore "CatalogService/CatalogService.csproj"
 
 #copy everything else
 COPY . .
 
-WORKDIR "/src/."
-RUN dotnet build "./CatalogService.csproj" -c $BUILD_CONFIGURATION -o /app/build
+WORKDIR "/src/CatalogService"
+RUN dotnet build "CatalogService.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # This stage is used to publish the service project to be copied to the final stage
 FROM build AS publish
