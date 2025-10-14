@@ -19,7 +19,14 @@ jobs:
           dotnet-version: '8.0.x'
 
       - name: Build the project
-        run: dotnet build --configuration Release
+        run: |
+          dotnet build ./UserService/UserService.csproj --configuration Release
+          dotnet build ./CatalogService/CatalogService.csproj --configuration Release
+          dotnet build ./WatchlistService/WatchlistService.csproj --configuration Release
+          dotnet build ./RecommendationService/RecommendationService.csproj --configuration Release
+          dotnet build ./NotificationService/NotificationService.csproj --configuration Release
+          dotnet build ./ApiGateway/ApiGateway.csproj --configuration Release
+
 
       - name: Log in to Azure
         uses: azure/login@v2
@@ -31,23 +38,37 @@ jobs:
 
       - name: Build and push Docker images
         run: |
-          docker build -t ${{ secrets.AZURE_CONTAINER_REGISTRY }}/user-service:latest -f UserService/Dockerfile .
-          docker push ${{ secrets.AZURE_CONTAINER_REGISTRY }}/user-service:latest
-          docker build -t ${{ secrets.AZURE_CONTAINER_REGISTRY }}/catalog-service:latest -f CatalogService/Dockerfile .
-          docker push ${{ secrets.AZURE_CONTAINER_REGISTRY }}/catalog-service:latest         
-          docker build -t ${{ secrets.AZURE_CONTAINER_REGISTRY }}/recommendation-service:latest -f RecommendationService/Dockerfile .
-          docker push ${{ secrets.AZURE_CONTAINER_REGISTRY }}/recommendation-service:latest
-          docker build -t ${{ secrets.AZURE_CONTAINER_REGISTRY }}/watchlist-service:latest -f WatchlistService/Dockerfile .
-          docker push ${{ secrets.AZURE_CONTAINER_REGISTRY }}/watchlist-service:latest
-          docker build -t ${{ secrets.AZURE_CONTAINER_REGISTRY }}/notification-service:latest -f NotificationService/Dockerfile .
-          docker push ${{ secrets.AZURE_CONTAINER_REGISTRY }}/notification-service:latest
+           declare -A services=(
+            ["user-service"]="UserService"
+            ["catalog-service"]="CatalogService"
+            ["watchlist-service"]="WatchlistService"
+            ["notification-service"]="NotificationService"
+            ["recommendation-service"]="RecommendationService"
+            ["api-gateway"]="ApiGateway"
+           )
+           for svc in "${!services[@]}"; do
+            echo "Building and pushing $svc..."
+            docker build -t ${{ secrets.AZURE_CONTAINER_REGISTRY }}/$svc:latest ./${services[$svc]}
+            docker push ${{ secrets.AZURE_CONTAINER_REGISTRY }}/$svc:latest
+           done
 
       - name: Deploy to Azure Container Apps
         uses: azure/cli@v2
         with:
           inlineScript: |
-            az containerapp update \
-              --name catalog-service \
-              --resource-group ${{ secrets.RESOURCE_GROUP }} \
-              --image ${{ secrets.AZURE_CONTAINER_REGISTRY }}/catalog-service:latest \
-              --environment ${{ secrets.CONTAINER_APP_ENVIRONMENT }}
+             declare -A services=(
+              ["user-service"]="UserService"
+              ["catalog-service"]="CatalogService"
+              ["watchlist-service"]="WatchlistService"
+              ["notification-service"]="NotificationService"
+              ["recommendation-service"]="RecommendationService"
+              ["api-gateway"]="ApiGateway"
+             )
+              for svc in "${!services[@]}"; do
+                echo "Deploying $svc..."
+                az containerapp update \
+                  --name $svc \
+                  --resource-group ${{ secrets.RESOURCE_GROUP }} \
+                  --image ${{ secrets.AZURE_CONTAINER_REGISTRY }}/$svc:latest \
+                  --environment ${{ secrets.CONTAINER_APP_ENVIRONMENT }}
+              done
