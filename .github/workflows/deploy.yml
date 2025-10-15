@@ -60,7 +60,7 @@ jobs:
         uses: azure/cli@v2
         with:
           inlineScript: |
-              services=("user-service")
+              services=("user-service" "catalog-service" "watchlist-service" "notification-service" "recommendation-service" "apigateway-service")
               
               az acr repository list --name sagaplaybackendregistry --output table
               for svc in "${services[@]}"; do
