@@ -34,12 +34,7 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Log in to Azure Container Registry
-        run: az acr login --name ${{ secrets.AZURE_CONTAINER_REGISTRY }}
-
-      - name: List repo files
-        run: |
-            pwd
-            ls -R
+        run: az acr login --name ${{ secrets.AZURE_CONTAINER_REGISTRY }}     
         
       - name: Build and push Docker images
         run: |
@@ -77,17 +72,9 @@ jobs:
                 echo "Deploying $svc..."
                 if az containerapp show --name "$svc" --resource-group ${{ secrets.RESOURCE_GROUP }}  &>/dev/null; then
                     echo "Updating $svc..."
-                    az containerapp update \
-                      --name "$svc" \
-                      --resource-group ${{ secrets.RESOURCE_GROUP }}  \
-                      --image ${{ secrets.AZURE_CONTAINER_REGISTRY }}/${services[$svc]}:latest
+                    az containerapp update --name "$svc" --resource-group ${{ secrets.RESOURCE_GROUP }} --image ${{ secrets.AZURE_CONTAINER_REGISTRY }}/${services[$svc]}:latest
                  else
                     echo "Creating $svc..."
-                    az containerapp create \
-                      --name "$svc" \
-                      --resource-group ${{ secrets.RESOURCE_GROUP }}  \                    
-                      --image ${{ secrets.AZURE_CONTAINER_REGISTRY }}/${services[$svc]}:latest \
-                      --target-port 8080 \
-                      --ingress internal
+                    az containerapp create --name "$svc" --resource-group ${{ secrets.RESOURCE_GROUP }} --image ${{ secrets.AZURE_CONTAINER_REGISTRY }}/${services[$svc]}:latest --target-port 8080 --ingress internal
                   fi                  
               done
