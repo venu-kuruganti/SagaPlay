@@ -10,7 +10,7 @@ import { environment } from '../../environments/environment.production';
 export class RecommendationService {
 
   private http:HttpClient = inject(HttpClient);
-  private baseUrl:string = `${environment.apiBaseUrl}/${environment.recommendationServicePrefix}`;
+  private baseUrl:string = `${environment.apiBaseUrl}${environment.recommendationServicePrefix}`;
   private contents:ContentItem[] = [];
  
    public GetRecommendations():Observable<ContentItem[]>{

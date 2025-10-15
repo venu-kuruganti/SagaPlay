@@ -11,7 +11,7 @@ export class CatalogService {
 
   private http:HttpClient = inject(HttpClient);
  // private baseUrl:string = "https://localhost:32769/api/Catalog";
- private baseUrl:string = `${environment.apiBaseUrl}/${environment.catalogServicePrefix}`
+ private baseUrl:string = `${environment.apiBaseUrl}${environment.catalogServicePrefix}`
 
   constructor() { }
   

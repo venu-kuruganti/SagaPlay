@@ -11,7 +11,7 @@ import { environment } from '../../environments/environment.production';
 export class UserdetailsService {
 
   private httpClient: HttpClient = inject(HttpClient);
-  private baseUrl: string = `${environment.apiBaseUrl}/${environment.userServicePrefix}`;
+  private baseUrl: string = `${environment.apiBaseUrl}${environment.userServicePrefix}`;
   //private baseUrl: string = "http://localhost:32768/api/user";
   private userId: string = "";
 

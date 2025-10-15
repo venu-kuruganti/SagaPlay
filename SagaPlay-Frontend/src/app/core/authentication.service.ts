@@ -15,7 +15,7 @@ import { environment } from '../../environments/environment.production';
 export class AuthenticationService {
   private http = inject(HttpClient);
   private router = inject(Router);
-  private registerUrl = `${environment.apiBaseUrl}/${environment.userServicePrefix}/register`
+  private registerUrl = `${environment.apiBaseUrl}${environment.userServicePrefix}/register`
 //private registerUrl = 'http://localhost:32768/api/user/register';
   private tokenKey = 'auth_token';
   private domain = 'dev-sagaplay.eu.auth0.com'; // e.g. dev-abc123.us.auth0.com
