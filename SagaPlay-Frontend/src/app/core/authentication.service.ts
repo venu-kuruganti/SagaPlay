@@ -5,7 +5,7 @@ import { Observable, of, switchMap, timer } from 'rxjs';
 import { tap } from 'rxjs';
 import { BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
-import { environment } from '../../environments/environment.development';
+import { environment } from '../../environments/environment';
 
 
 @Injectable({
