@@ -60,7 +60,14 @@ jobs:
         uses: azure/cli@v2
         with:
           inlineScript: |
-              services=("user-service" "catalog-service" "watchlist-service" "notification-service" "recommendation-service" "apigateway-service")
+              declare -A services=(
+            ["user-service"]="UserService"
+            ["catalog-service"]="CatalogService"
+            ["watchlist-service"]="WatchlistService"
+            ["notification-service"]="NotificationService"
+            ["recommendation-service"]="RecommendationService"
+            ["apigateway-service"]="ApiGateway"
+          )
               
               az acr repository list --name sagaplaybackendregistry --output table
               for svc in "${services[@]}"; do
@@ -68,9 +75,9 @@ jobs:
                 
                 if az containerapp show --name "$svc" --resource-group ${{ secrets.RESOURCE_GROUP }}  &>/dev/null; then
                     echo "Updating $svc..."
-                    az containerapp update --name "$svc" --resource-group ${{ secrets.RESOURCE_GROUP }} --image sagaplaybackendregistry.azurecr.io/${services[$svc]}:latest
+                    az containerapp update --name "$svc" --resource-group ${{ secrets.RESOURCE_GROUP }} --image sagaplaybackendregistry.azurecr.io/${$svc}:latest
                  else
                     echo "Creating $svc..."                    
-                    az containerapp create --name "$svc" --resource-group ${{ secrets.RESOURCE_GROUP }} --image sagaplaybackendregistry.azurecr.io/${services[$svc]}:latest --target-port 8080 --ingress external --environment ${{ secrets.CONTAINER_APP_ENVIRONMENT}} --registry-server sagaplaybackendregistry.azurecr.io --registry-username ${{ secrets.ACR_USERNAME }} --registry-password ${{ secrets.ACR_PASSWORD }}
+                    az containerapp create --name "$svc" --resource-group ${{ secrets.RESOURCE_GROUP }} --image sagaplaybackendregistry.azurecr.io/${$svc}:latest --target-port 8080 --ingress external --environment ${{ secrets.CONTAINER_APP_ENVIRONMENT}} --registry-server sagaplaybackendregistry.azurecr.io --registry-username ${{ secrets.ACR_USERNAME }} --registry-password ${{ secrets.ACR_PASSWORD }}
                   fi                  
               done
