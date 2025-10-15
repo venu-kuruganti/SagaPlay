@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ContentItem } from '../features/catalog/contentitem';
 import { WatchList } from '../features/watchlist/watchlist';
+import { environment } from '../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class WatchlistService {
 
   private httpClient = inject(HttpClient);
   //private baseUrl = "https://localhost:32771/api/Watchlist";
-  private baseUrl:string = "http://localhost:4000/watchlistservice"
+  private baseUrl:string = `${environment.apiBaseUrl}/${environment.watchlistServicePrefix}`;
 
   public AddToWatchList(userId: string, contentItemId: number): Observable<boolean> {
 

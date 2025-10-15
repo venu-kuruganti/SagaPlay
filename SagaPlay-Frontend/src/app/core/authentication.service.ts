@@ -5,6 +5,7 @@ import { Observable, of, switchMap, timer } from 'rxjs';
 import { tap } from 'rxjs';
 import { BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
+import { environment } from '../../environments/environment.development';
 
 
 @Injectable({
@@ -14,7 +15,7 @@ import { Router } from '@angular/router';
 export class AuthenticationService {
   private http = inject(HttpClient);
   private router = inject(Router);
-  private registerUrl = 'http://localhost:4000/userservice/register';
+  private registerUrl = `${environment.apiBaseUrl}/${environment.userServicePrefix}/register`
 //private registerUrl = 'http://localhost:32768/api/user/register';
   private tokenKey = 'auth_token';
   private domain = 'dev-sagaplay.eu.auth0.com'; // e.g. dev-abc123.us.auth0.com

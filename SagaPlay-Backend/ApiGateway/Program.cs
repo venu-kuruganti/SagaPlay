@@ -19,6 +19,11 @@ builder.Services
         options.Audience = "https://sagaplay/api"; // replace with yours
     });
 
+// Load environment-specific Ocelot config
+builder.Configuration
+    .AddJsonFile($"ocelot.{builder.Environment.EnvironmentName}.json", optional: false, reloadOnChange: true);
+
+
 builder.Services.AddOcelot(builder.Configuration);
 
 var app = builder.Build();
