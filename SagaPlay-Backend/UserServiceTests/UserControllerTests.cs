@@ -12,6 +12,7 @@ using Xunit;
 using UserService.Services;
 using Moq;
 using UserService.DTOs;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 
 namespace UserServiceTests
 {
@@ -89,7 +90,7 @@ namespace UserServiceTests
         public async Task CallingUpdateProfile_WithProperData_ReturnsOk(string firstname, string lastname, string emailaddress, string dob, string bio, string country, string phone, string profilepicurl)
         {
             //Arrange
-            UserProfile profile = new UserProfile
+            ProfileDTO profile = new ProfileDTO
             {
                 FirstName = firstname,
                 LastName = lastname,
@@ -116,7 +117,7 @@ namespace UserServiceTests
         {
             
             //Arrange
-            UserProfile profile = new UserProfile
+            ProfileDTO profile = new ProfileDTO
             {
                 FirstName = firstname,
                 LastName = lastname,
@@ -234,11 +235,18 @@ namespace UserServiceTests
             UserPreferences preferences = new UserPreferences();
             preferences.UserId = Id;
             preferences.Theme = theme;
+
+            PreferencesDTO preferencesDTO = new PreferencesDTO
+            {
+                UserId = preferences.UserId,
+                Theme = preferences.Theme
+            };
+
             mockUserService.Setup(s => s.SetPreferences(preferences)).ReturnsAsync(preferences);
             controller = new UserController(mockUserService.Object);
 
             //Act
-            var result = await controller.UpdatePreferences(preferences);
+            var result = await controller.UpdatePreferences(preferencesDTO);
 
             //Assert
             result.Should().BeOfType<OkObjectResult>(); 

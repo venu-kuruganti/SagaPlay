@@ -22,22 +22,23 @@ builder.Services.AddSignalR();
 builder.Services.AddScoped<INotifyService, EmailNotifyService>();
 builder.Services.AddScoped<INotifyService, PushNotifyService>();
 builder.Services.AddScoped<INotificationDispatcher, NotificationDispatcher>();
+
+
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>
     {
-        policy
-            .AllowAnyHeader()
-            .AllowAnyMethod()
-            .AllowCredentials()
-            .SetIsOriginAllowed(_ => true); // permissive for dev
+        policy.WithOrigins("https://mango-wave-09826c400.3.azurestaticapps.net", "http://localhost:4200")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
     });
 });
 
 
 
-
 var app = builder.Build();
+
+app.UseCors();
 
 // Configure the HTTP request pipeline.
 //if (app.Environment.IsDevelopment())
@@ -46,13 +47,10 @@ var app = builder.Build();
     app.UseSwaggerUI();
 //}
 
-//app.UseHttpsRedirection();
 
-//app.UseAuthorization();
 
 app.MapControllers();
 
-app.UseCors();
 
 app.MapHub<NotificationHub>("/hubs/notification");
 

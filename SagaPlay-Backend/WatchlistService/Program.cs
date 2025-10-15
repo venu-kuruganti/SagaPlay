@@ -27,17 +27,20 @@ builder.Services.AddScoped<IWatchListRepository, WatchListRepository>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddCors();
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.WithOrigins("https://mango-wave-09826c400.3.azurestaticapps.net", "http://localhost:4200")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
 
 
 var app = builder.Build();
 
-app.UseCors(x =>
-{
-    x.AllowAnyHeader()
-    .AllowAnyMethod()
-    .WithOrigins("http://localhost:4200");
-});
+app.UseCors();
 
 // Configure the HTTP request pipeline.
 app.UseSwagger();
