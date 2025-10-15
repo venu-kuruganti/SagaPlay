@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { forkJoin, map, Observable } from 'rxjs';
 import { User, UserProfile, UserPreferences } from '../features/user-profile/user-profile';
-import { environment } from '../../environments/environment';
+import { environment } from '../../environments/environment.production';
 
 
 @Injectable({
