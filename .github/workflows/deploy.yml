@@ -71,6 +71,6 @@ jobs:
                     az containerapp update --name "$svc" --resource-group ${{ secrets.RESOURCE_GROUP }} --image sagaplaybackendregistry.azurecr.io/${services[$svc]}:latest
                  else
                     echo "Creating $svc..."                    
-                    az containerapp create --name "$svc" --resource-group ${{ secrets.RESOURCE_GROUP }} --image sagaplaybackendregistry.azurecr.io/${services[$svc]}:latest --target-port 8080 --ingress internal --environment ${{ secrets.CONTAINER_APP_ENVIRONMENT}} --registry-server sagaplaybackendregistry.azurecr.io --registry-username sagaplaybackendregistry --registry-password $(az acr credential show --name sagaplaybackendregistry --query "passwords[0].value" -o tsv)
+                    az containerapp create --name "$svc" --resource-group ${{ secrets.RESOURCE_GROUP }} --image sagaplaybackendregistry.azurecr.io/${services[$svc]}:latest --target-port 8080 --ingress internal --environment ${{ secrets.CONTAINER_APP_ENVIRONMENT}} --registry-server sagaplaybackendregistry.azurecr.io --registry-username ${{ secrets.ACR_USERNAME }} --registry-password ${{ secrets.ACR_PASSWORD }}
                   fi                  
               done
