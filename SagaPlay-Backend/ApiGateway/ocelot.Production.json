@@ -1,0 +1,101 @@
+{
+  "GlobalConfiguration": {
+    "BaseUrl": "https://apigateway-service.happysand-26d752fc.southindia.azurecontainerapps.io"
+  },
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/api/user/register",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "https://user-service.happysand-26d752fc.southindia.azurecontainerapps.io",
+          "Port": 8080
+        }
+      ],
+      "UpstreamPathTemplate": "/userservice/register",
+      "UpstreamHttpMethod": [ "POST" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/user/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "https://user-service.happysand-26d752fc.southindia.azurecontainerapps.io",
+          "Port": 8080
+        }
+      ],
+      "UpstreamPathTemplate": "/userservice/{everything}",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Okta",
+        "AllowedScopes": []
+      },
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/catalog/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "https://catalog-service.happysand-26d752fc.southindia.azurecontainerapps.io",
+          "Port": 8080
+        }
+      ],
+      "UpstreamPathTemplate": "/catalogservice/{everything}",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Okta",
+        "AllowedScopes": []
+      },
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/recommendation/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "https://recommendation-service.happysand-26d752fc.southindia.azurecontainerapps.io",
+          "Port": 8080
+        }
+      ],
+      "UpstreamPathTemplate": "/recommendationservice/{everything}",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Okta",
+        "AllowedScopes": []
+      },
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/watchlist/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "https://watchlist-service.happysand-26d752fc.southindia.azurecontainerapps.io",
+          "Port": 8080
+        }
+      ],
+      "UpstreamPathTemplate": "/watchlistservice/{everything}",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Okta",
+        "AllowedScopes": []
+      },
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/notification/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "https://notification-service.happysand-26d752fc.southindia.azurecontainerapps.io",
+          "Port": 8080
+        }
+      ],
+      "UpstreamPathTemplate": "/notificationservice/{everything}",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Okta",
+        "AllowedScopes": []
+      },
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
+    }
+  ]
+}
+
+

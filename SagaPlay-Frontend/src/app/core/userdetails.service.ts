@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { forkJoin, map, Observable } from 'rxjs';
 import { User, UserProfile, UserPreferences } from '../features/user-profile/user-profile';
+import { environment } from '../../environments/environment.development';
 
 
 @Injectable({
@@ -10,7 +11,7 @@ import { User, UserProfile, UserPreferences } from '../features/user-profile/use
 export class UserdetailsService {
 
   private httpClient: HttpClient = inject(HttpClient);
-  private baseUrl: string = "http://localhost:4000/userservice";
+  private baseUrl: string = `${environment.apiBaseUrl}/${environment.userServicePrefix}`;
   //private baseUrl: string = "http://localhost:32768/api/user";
   private userId: string = "";
 
