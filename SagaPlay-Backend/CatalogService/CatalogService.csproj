@@ -10,6 +10,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="DTOs\**" />
+    <Content Remove="DTOs\**" />
+    <EmbeddedResource Remove="DTOs\**" />
+    <None Remove="DTOs\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.19" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.19">
       <PrivateAssets>all</PrivateAssets>
@@ -22,10 +29,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SagaPlay.Shared.Contracts\SagaPlay.Shared.Contracts.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="DTOs\" />
   </ItemGroup>
 
 </Project>

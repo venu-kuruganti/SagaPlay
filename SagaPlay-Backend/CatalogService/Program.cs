@@ -19,29 +19,23 @@ builder.Services.AddScoped<ICatalogRepository, CatalogRepository>();
 
 builder.Services.AddScoped<IInternalCatalogService, InternalCatalogService>();
 
-builder.Services.AddCors();
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.WithOrigins("https://mango-wave-09826c400.3.azurestaticapps.net", "http://localhost:4200")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
 
 var app = builder.Build();
 
-//app.UseCors(x =>
-//{
-//    x.AllowAnyHeader()
-//    .AllowAnyMethod()
-//    .WithOrigins("http://localhost:4200");
-//});
-
-//app.UseCors(x =>
-//{
-//    x.AllowAnyHeader()
-//    .AllowAnyMethod()
-//    .WithOrigins("https://localhost:32769/", "http://localhost:32768/");
-//});
-
-//
+app.UseCors();
 
 // Configure the HTTP request pipeline.
 app.UseSwagger();
-    app.UseSwaggerUI();
+app.UseSwaggerUI();
 
 
 //app.UseHttpsRedirection();
