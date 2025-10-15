@@ -6,8 +6,7 @@ using CatalogService.Models;
 using CatalogService.Services;
 using System.Linq.Expressions;
 using Microsoft.AspNetCore.Mvc;
-using CatalogService.DTOs;
-
+using SagaPlay.Shared.Contracts;
 
 namespace CatalogServiceTests
 {
