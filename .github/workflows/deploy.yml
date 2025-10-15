@@ -75,9 +75,9 @@ jobs:
                 
                 if az containerapp show --name "$svc" --resource-group ${{ secrets.RESOURCE_GROUP }}  &>/dev/null; then
                     echo "Updating $svc..."
-                    az containerapp update --name "$svc" --resource-group ${{ secrets.RESOURCE_GROUP }} --image sagaplaybackendregistry.azurecr.io/${$svc}:latest
+                    az containerapp update --name "$svc" --resource-group ${{ secrets.RESOURCE_GROUP }} --image sagaplaybackendregistry.azurecr.io/${services[$svc]}:latest
                  else
                     echo "Creating $svc..."                    
-                    az containerapp create --name "$svc" --resource-group ${{ secrets.RESOURCE_GROUP }} --image sagaplaybackendregistry.azurecr.io/${$svc}:latest --target-port 8080 --ingress external --environment ${{ secrets.CONTAINER_APP_ENVIRONMENT}} --registry-server sagaplaybackendregistry.azurecr.io --registry-username ${{ secrets.ACR_USERNAME }} --registry-password ${{ secrets.ACR_PASSWORD }}
+                    az containerapp create --name "$svc" --resource-group ${{ secrets.RESOURCE_GROUP }} --image sagaplaybackendregistry.azurecr.io/${services[$svc]}:latest --target-port 8080 --ingress external --environment ${{ secrets.CONTAINER_APP_ENVIRONMENT}} --registry-server sagaplaybackendregistry.azurecr.io --registry-username ${{ secrets.ACR_USERNAME }} --registry-password ${{ secrets.ACR_PASSWORD }}
                   fi                  
               done
