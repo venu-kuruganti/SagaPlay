@@ -4,8 +4,8 @@ export const environment = {
   apiBaseUrl: 'http://localhost:4000',
 
   // optional: per-service prefixes if you use them via gateway routes
-  userServicePrefix: '/user',
-  catalogServicePrefix: '/catalog',
-  recommendationServicePrefix: '/recommendation',
-  watchlistServicePrefix:'/watchlist'
+  userServicePrefix: '/userservice',
+  catalogServicePrefix: '/catalogservice',
+  recommendationServicePrefix: '/recommendationservice',
+  watchlistServicePrefix:'/watchlistservice'
 };
