@@ -31,7 +31,7 @@ WORKDIR /app
 COPY --from=publish /app/publish .
 
 # Copy the Ocelot configs
-COPY ["ApiGateway/ocelot.json", "ApiGateway/ocelot.Production.json", "./"]
+COPY ["ApiGateway/ocelot.json", "ApiGateway/ocelot.Development.json", "./"]
 
 # Default environment (can be overridden)
 ENV ASPNETCORE_ENVIRONMENT=Production
