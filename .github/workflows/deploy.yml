@@ -27,7 +27,6 @@ jobs:
           dotnet build ./SagaPlay-Backend/NotificationService/NotificationService.csproj --configuration Release
           dotnet build ./SagaPlay-Backend/ApiGateway/ApiGateway.csproj --configuration Release
 
-
       - name: Log in to Azure
         uses: azure/login@v2
         with:
@@ -61,23 +60,33 @@ jobs:
         with:
           inlineScript: |
               declare -A services=(
-            ["user-service"]="UserService"
-            ["catalog-service"]="CatalogService"
-            ["watchlist-service"]="WatchlistService"
-            ["notification-service"]="NotificationService"
-            ["recommendation-service"]="RecommendationService"
-            ["apigateway-service"]="ApiGateway"
-          )
+                ["user-service"]="user-service"
+                ["catalog-service"]="catalog-service"
+                ["watchlist-service"]="watchlist-service"
+                ["notification-service"]="notification-service"
+                ["recommendation-service"]="recommendation-service"
+                ["apigateway-service"]="apigateway-service"
+              )                      
               
-              az acr repository list --name sagaplaybackendregistry --output table
               for svc in "${services[@]}"; do
                 echo "Deploying $svc..."
                 
                 if az containerapp show --name "$svc" --resource-group ${{ secrets.RESOURCE_GROUP }}  &>/dev/null; then
                     echo "Updating $svc..."
-                    az containerapp update --name "$svc" --resource-group ${{ secrets.RESOURCE_GROUP }} --image sagaplaybackendregistry.azurecr.io/${services[$svc]}:latest
-                 else
+                    az containerapp update --name "$svc" \
+                    --resource-group ${{ secrets.RESOURCE_GROUP }} \
+                    --image ${{ secrets.AZURE_CONTAINER_REGISTRY }}/${services[$svc]}:latest
+                else
                     echo "Creating $svc..."                    
-                    az containerapp create --name "$svc" --resource-group ${{ secrets.RESOURCE_GROUP }} --image sagaplaybackendregistry.azurecr.io/${services[$svc]}:latest --target-port 8080 --ingress external --environment ${{ secrets.CONTAINER_APP_ENVIRONMENT}} --registry-server sagaplaybackendregistry.azurecr.io --registry-username ${{ secrets.ACR_USERNAME }} --registry-password ${{ secrets.ACR_PASSWORD }}
-                  fi                  
+                    az containerapp create --name "$svc" \
+                    --resource-group ${{ secrets.RESOURCE_GROUP }} \
+                    --image ${{ secrets.AZURE_CONTAINER_REGISTRY }}/${services[$svc]}:latest \
+                    --target-port 8080 \
+                    --ingress external \
+                    --environment ${{ secrets.CONTAINER_APP_ENVIRONMENT}} \
+                    --registry-server sagaplaybackendregistry.azurecr.io \
+                    --registry-username ${{ secrets.ACR_USERNAME }} \
+                    --registry-password ${{ secrets.ACR_PASSWORD }}
+                fi                  
+                  
               done
