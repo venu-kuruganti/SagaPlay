@@ -5,8 +5,19 @@ using Ocelot.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Configuration.AddJsonFile("ocelot.json", optional: false, reloadOnChange: true);
+// Load environment-specific Ocelot config
+var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
+var config = new ConfigurationBuilder()
+    .AddJsonFile("ocelot.json", optional: false, reloadOnChange: true)
+    .AddJsonFile($"ocelot.{environment}.json", optional: true, reloadOnChange: true)
+    .Build();
+
+builder.Configuration.AddConfiguration(config);
+
+builder.Services.AddOcelot(builder.Configuration);
+
+//Add Okta authentication to handle JWTs
 builder.Services
     .AddAuthentication("Okta")
     .AddJwtBearer("Okta", options =>
@@ -19,20 +30,12 @@ builder.Services
         options.Audience = "https://sagaplay/api"; // replace with yours
     });
 
-// Load environment-specific Ocelot config
-builder.Configuration
-    .AddJsonFile($"ocelot.{builder.Environment.EnvironmentName}.json", optional: false, reloadOnChange: true);
-
-
-builder.Services.AddOcelot(builder.Configuration);
-
 var app = builder.Build();
 
 app.UseAuthentication();
 app.UseAuthorization();
 
 await app.UseOcelot();
-
 
 app.Run();
 
