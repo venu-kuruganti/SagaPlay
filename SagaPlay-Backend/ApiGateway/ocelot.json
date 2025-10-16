@@ -5,11 +5,11 @@
   "Routes": [
     {
       "DownstreamPathTemplate": "/api/user/register",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "https://user-service.happysand-26d752fc.southindia.azurecontainerapps.io",
-          "Port": 8080
+          "Host": "user-service.happysand-26d752fc.southindia.azurecontainerapps.io",
+          "Port": 443
         }
       ],
       "UpstreamPathTemplate": "/userservice/register",
@@ -17,11 +17,11 @@
     },
     {
       "DownstreamPathTemplate": "/api/user/{everything}",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "https://user-service.happysand-26d752fc.southindia.azurecontainerapps.io",
-          "Port": 8080
+          "Host": "user-service.happysand-26d752fc.southindia.azurecontainerapps.io",
+          "Port": 443
         }
       ],
       "UpstreamPathTemplate": "/userservice/{everything}",
@@ -33,11 +33,11 @@
     },
     {
       "DownstreamPathTemplate": "/api/catalog/{everything}",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "https://catalog-service.happysand-26d752fc.southindia.azurecontainerapps.io",
-          "Port": 8080
+          "Host": "catalog-service.happysand-26d752fc.southindia.azurecontainerapps.io",
+          "Port": 443
         }
       ],
       "UpstreamPathTemplate": "/catalogservice/{everything}",
@@ -49,11 +49,11 @@
     },
     {
       "DownstreamPathTemplate": "/api/recommendation/{everything}",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "https://recommendation-service.happysand-26d752fc.southindia.azurecontainerapps.io",
-          "Port": 8080
+          "Host": "recommendation-service.happysand-26d752fc.southindia.azurecontainerapps.io",
+          "Port": 443
         }
       ],
       "UpstreamPathTemplate": "/recommendationservice/{everything}",
@@ -65,11 +65,11 @@
     },
     {
       "DownstreamPathTemplate": "/api/watchlist/{everything}",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "https://watchlist-service.happysand-26d752fc.southindia.azurecontainerapps.io",
-          "Port": 8080
+          "Host": "watchlist-service.happysand-26d752fc.southindia.azurecontainerapps.io",
+          "Port": 443
         }
       ],
       "UpstreamPathTemplate": "/watchlistservice/{everything}",
@@ -81,11 +81,11 @@
     },
     {
       "DownstreamPathTemplate": "/api/notification/{everything}",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "https://notification-service.happysand-26d752fc.southindia.azurecontainerapps.io",
-          "Port": 8080
+          "Host": "notification-service.happysand-26d752fc.southindia.azurecontainerapps.io",
+          "Port": 443
         }
       ],
       "UpstreamPathTemplate": "/notificationservice/{everything}",
