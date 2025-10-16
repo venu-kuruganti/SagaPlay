@@ -38,12 +38,12 @@ jobs:
       - name: Build and push Docker images
         run: |
           declare -A services=(
+            ["apigateway-service"]="ApiGateway"
             ["user-service"]="UserService"
             ["catalog-service"]="CatalogService"
             ["watchlist-service"]="WatchlistService"
             ["notification-service"]="NotificationService"
-            ["recommendation-service"]="RecommendationService"
-            ["apigateway-service"]="ApiGateway"
+            ["recommendation-service"]="RecommendationService"           
           )
 
           for svc in "${!services[@]}"; do
@@ -60,12 +60,12 @@ jobs:
         with:
           inlineScript: |
               declare -A services=(
+                ["apigateway-service"]="apigateway-service"
                 ["user-service"]="user-service"
                 ["catalog-service"]="catalog-service"
                 ["watchlist-service"]="watchlist-service"
                 ["notification-service"]="notification-service"
-                ["recommendation-service"]="recommendation-service"
-                ["apigateway-service"]="apigateway-service"
+                ["recommendation-service"]="recommendation-service"                
               )                      
               
               for svc in "${services[@]}"; do
@@ -84,7 +84,7 @@ jobs:
                     --target-port 8080 \
                     --ingress external \
                     --environment ${{ secrets.CONTAINER_APP_ENVIRONMENT}} \
-                    --registry-server sagaplaybackendregistry.azurecr.io \
+                    --registry-server ${{ secrets.AZURE_CONTAINER_REGISTRY }} \
                     --registry-username ${{ secrets.ACR_USERNAME }} \
                     --registry-password ${{ secrets.ACR_PASSWORD }}
                 fi                  
