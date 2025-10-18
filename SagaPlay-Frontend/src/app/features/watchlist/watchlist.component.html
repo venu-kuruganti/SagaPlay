@@ -3,91 +3,102 @@
 </div>
 <div class="container-fluid">
 
-    <!--Toggle switch for toggling between views-->
-    <div class="container p-2 mb-2 radio-container">
-        <div class="clearfix">
-            <div class="form-check form-check-inline w-25 float-start">
-                <input class="form-check-input" type="radio" name="viewtypeRadioOptions" id="rdoCarousel"
-                    value="carousel" checked="true" (change)="onchange('carousel')">
-                <label class="form-check-label" for="rdoCarousel">Carousel</label>
-            </div>
-            <div class="form-check form-check-inline w-25 float-end">
-                <input class="form-check-input" type="radio" name="viewtypeRadioOptions" id="rdoGrid" value="grid"
-                    (change)="onchange('grid')">
-                <label class="form-check-label" for="rdoGrid">Grid</label>
+    @if (items && items.length > 0) {
+        <!--Toggle switch for toggling between views-->
+        <div class="container p-2 mb-2 radio-container">
+            <div class="clearfix">
+                <div class="form-check form-check-inline w-25 float-start">
+                    <input class="form-check-input" type="radio" name="viewtypeRadioOptions" id="rdoCarousel"
+                        value="carousel" checked="true" (change)="onchange('carousel')">
+                    <label class="form-check-label" for="rdoCarousel">Carousel</label>
+                </div>
+                <div class="form-check form-check-inline w-25 float-end">
+                    <input class="form-check-input" type="radio" name="viewtypeRadioOptions" id="rdoGrid" value="grid"
+                        (change)="onchange('grid')">
+                    <label class="form-check-label" for="rdoGrid">Grid</label>
+                </div>
             </div>
         </div>
-    </div>
 
-    @if (!figureFlag) {
-    <div class="container-fluid p-2" id="carouselDiv">
-        <div id="contentitemsCarousel" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-indicators mt-3">
-                @for (item of items; track $index) {
-                <button type="button" data-bs-target="#contentitemsCarousel" [attr.data-bs-slide-to]="$index"
-                    [class.active]="$index === 0" [attr.aria-current]="$index === 0 ? 'true' : null"
-                    [attr.aria-label]="'Slide ' + ($index + 1)">
+        @if (!figureFlag) {
+        <div class="container-fluid p-2" id="carouselDiv">
+            <div id="contentitemsCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-indicators mt-3">
+                    @for (item of items; track $index) {
+                    <button type="button" data-bs-target="#contentitemsCarousel" [attr.data-bs-slide-to]="$index"
+                        [class.active]="$index === 0" [attr.aria-current]="$index === 0 ? 'true' : null"
+                        [attr.aria-label]="'Slide ' + ($index + 1)">
+                    </button>
+                    }
+                </div>
+                <div class="carousel-inner">
+                    @for (item of items; track $index) {
+                    <div class="carousel-item" [class.active]="$index === 0">
+                        <div class="d-flex align-items-stretch mx-auto" style="height:500px; max-width:800px;">
+
+                            <!--Poster-->
+                            <div class="flex-shrink-0">
+                                <img src="{{item.Item.PosterURL}}" class="d-block img-fluid">
+                            </div>
+
+                            <!--Item info-->
+                            <div class="p-3 item-info flex-grow-1" id="itemInfo">
+                                <p class="slide-label fw-bold">{{ item.Item.Title }}</p>
+                                <p class="item-summary">{{ item.Item.PlotSummary }}</p>
+                            </div>
+                        </div>
+                        <div class="p-2 d-flex d-inline-block mt-4">
+                            <button class="mx-auto remove-watchlist"
+                                (click)="removeFromWatchlist(item.WatchListItemId)">Remove from Watchlist</button>
+                        </div>
+                    </div>
+                    }
+
+                </div>
+
+                <button class="carousel-control-prev" type="button" data-bs-target="#contentitemsCarousel"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
                 </button>
-                }
+                <button class="carousel-control-next" type="button" data-bs-target="#contentitemsCarousel"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
             </div>
-            <div class="carousel-inner">
+
+        </div>
+        }
+        @else{
+        <div class="container-fluid" id="gridDiv">
+
+            <div class="row">
                 @for (item of items; track $index) {
-                <div class="carousel-item" [class.active]="$index === 0">
-                    <div class="d-flex align-items-stretch mx-auto" style="height:500px; max-width:800px;">
-
-                        <!--Poster-->
-                        <div class="flex-shrink-0">
-                            <img src="{{item.Item.PosterURL}}" class="d-block img-fluid">
-                        </div>
-
-                        <!--Item info-->
-                        <div class="p-3 item-info flex-grow-1" id="itemInfo">
-                            <p class="slide-label fw-bold">{{ item.Item.Title }}</p>
-                            <p class="item-summary">{{ item.Item.PlotSummary }}</p>
-                        </div>
-                    </div>
-                    <div class="p-2 d-flex d-inline-block mt-4">
-                        <button class="mx-auto remove-watchlist" (click)="removeFromWatchlist(item.WatchListItemId)" >Remove from Watchlist</button>
+                <div class="col-3 m-2">
+                    <figure class="figure">
+                        <img src="{{item.Item.PosterURL}}" alt="" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption text-center">
+                            {{item.Item.Title}}
+                        </figcaption>
+                    </figure>
+                    <div class="d-flex mt-1">
+                        <button class="mx-auto remove-watchlist" (click)="removeFromWatchlist(item.WatchListItemId)">Remove
+                            from Watchlist</button>
                     </div>
                 </div>
                 }
-
             </div>
 
-            <button class="carousel-control-prev" type="button" data-bs-target="#contentitemsCarousel"
-                data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#contentitemsCarousel"
-                data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
         </div>
-
-    </div>
+        }
     }
-    @else{
-    <div class="container-fluid" id="gridDiv">
-
-        <div class="row">
-            @for (item of items; track $index) {
-            <div class="col-3 m-2">
-                <figure class="figure">
-                    <img src="{{item.Item.PosterURL}}" alt="" class="figure-img img-fluid rounded">
-                    <figcaption class="figure-caption text-center">
-                        {{item.Item.Title}}
-                    </figcaption>
-                </figure>
-                <div class="d-flex mt-1">
-                    <button class="mx-auto remove-watchlist" (click)="removeFromWatchlist(item.WatchListItemId)" >Remove from Watchlist</button>
-                </div>
-            </div>
-            }
-        </div>
-
-    </div>
+    @else {
+        <span>
+            <b>
+                No Items In Watchlist. Add some items from Catalog...
+            </b>
+        </span>
     }
 
 </div>

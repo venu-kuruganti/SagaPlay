@@ -65,26 +65,24 @@ export class WatchlistComponent implements OnInit {
       next: (wlist) => {
         this.watchList = wlist;
 
-        //Now populate items to show on front end.
-        wlist.WatchListItems.forEach(element => {
-          let item: ContentItem | undefined;
-          let wlitemid: number = element.WatchListItemId;
+        if (wlist && wlist.WatchListItems && wlist.WatchListItems.length > 0) {
+          //Now populate items to show on front end.
+          wlist.WatchListItems.forEach(element => {
+            let item: ContentItem | undefined;
+            let wlitemid: number = element.WatchListItemId;
 
-          this.catalogService.getContentById(element.ContentItemId).subscribe({
-            next: (result) => {
-              item = result;
-              this.items.push(
-                {
-                  Item: item!,
-                  WatchListItemId: wlitemid
-                });
-            }
-          });
-
-
-
-        });//End of foreach
-
+            this.catalogService.getContentById(element.ContentItemId).subscribe({
+              next: (result) => {
+                item = result;
+                this.items.push(
+                  {
+                    Item: item!,
+                    WatchListItemId: wlitemid
+                  });
+              }
+            });
+          });//End of foreach
+        }//End of if checker
       }//next
     });
   }

@@ -21,17 +21,27 @@ namespace WatchlistService.Controllers
         public async Task<IActionResult> GetWatchListOnUserId(string userId)
         {
             var WL = await _WatchListService.GetWatchListOnUserId(Guid.Parse(userId));
-            UserWatchListDTO watchListDTO = new UserWatchListDTO
+            UserWatchListDTO watchListDTO;
+
+            if (WL != null)
             {
-                WatchListId = WL.WatchListId,
-                WatchListItems = WL.WatchListItems.Select(s=> new WatchListItemDTO
+                watchListDTO = new UserWatchListDTO
                 {
-                    WatchListItemId = s.Id,             //THis id is required for removing the item from the watchlist.
-                    ContentItemId = s.ContentItemId,    //This Id is required for fetching the contentitem details.
-                    WatchStatus = s.WatchStatus.ToString()
-                }).ToList()
-            };            
-            
+                    WatchListId = WL.WatchListId,
+                    WatchListItems = WL.WatchListItems.Select(s => new WatchListItemDTO
+                    {
+                        WatchListItemId = s.Id,             //THis id is required for removing the item from the watchlist.
+                        ContentItemId = s.ContentItemId,    //This Id is required for fetching the contentitem details.
+                        WatchStatus = s.WatchStatus.ToString()
+                    }).ToList()
+                };
+            }
+            else
+            {
+                watchListDTO = new UserWatchListDTO();
+            }
+
+
             return Ok(watchListDTO);
         }
 

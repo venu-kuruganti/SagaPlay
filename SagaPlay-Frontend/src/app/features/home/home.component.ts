@@ -88,7 +88,12 @@ export class HomeComponent implements OnInit {
   private getWatchListCount(): void {
 
     this.watchListService.GetWatchListOnUserId(this.userId).subscribe(watchlist => {
-      this.watchListCount = watchlist.WatchListItems.length;
+      if (watchlist.WatchListItems) {
+        this.watchListCount = watchlist.WatchListItems.length;
+      }
+      else {
+        this.watchListCount = 0;
+      }
     });
   }
 
