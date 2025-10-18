@@ -18,7 +18,7 @@ namespace UserService.DTOs
         public string EmailAddress { get; set; }
 
         [JsonPropertyName("DateofBirth")]
-        public DateTime DateofBirth { get; set; }
+        public string DateofBirth { get; set; }
 
         [JsonPropertyName("Bio")]
         public string Bio { get; set; }

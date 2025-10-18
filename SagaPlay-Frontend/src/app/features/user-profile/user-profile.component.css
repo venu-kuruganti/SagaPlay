@@ -5,7 +5,9 @@
 
 .form-label {
     width: 200px;
-    margin-right: 50px;
+    margin-right: 40px;
+    color:#8B0000;
+    font-weight: bold;
 }
 
 .user-data {
@@ -16,13 +18,13 @@
 
 .form-select {
     height: 50px;
-    width: 250px;
+    width: 500px;
     background-color: #E8B7C0;
     color: black;
 }
 
 .form-control {
-    width: 250px;
+    width: 500px;
     height: 50px;
     background-color: #E8B7C0;
     color: black;
@@ -38,15 +40,30 @@ select>option {
 .user-profile {
     margin-top: 25px;
     margin-bottom: 25px;
+    padding: 25px;
+    background-color: #FFFFF0;
+    width:700px;
+    height:600px;
+    overflow: auto;    
 }
 
 .user-preferences {
     margin-top: 25px;
     margin-bottom: 25px;
+    padding:25px;
+    background-color: #FFFFF0;
+    width:700px;
+    height:600px;
+    overflow:hidden;
 }
 
 .section-title {
     font-family: 'Source Sans 3';
     font-weight: bold;
     font-size: 18px;
+    color:#483D8B;
+    text-align:center;
+    border-bottom: 1px solid #483D8B;
+    padding:5px;
+    margin-bottom: 25px;
 }
