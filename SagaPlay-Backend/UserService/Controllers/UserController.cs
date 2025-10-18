@@ -66,7 +66,7 @@ namespace UserService.Controllers
                 EmailAddress = profile.EmailAddress,
                 ProfilePictureUrl = profile.ProfilePictureUrl,
                 Bio = profile.Bio,
-                DateofBirth = DateTime.Parse(profile.DateofBirth.ToString()),
+                DateofBirth = profile.DateofBirth.ToShortDateString(),
                 Country = profile.Country,
                 PhoneNumber = profile.PhoneNumber
             };
@@ -98,7 +98,7 @@ namespace UserService.Controllers
                 userProfile.ProfilePictureUrl = profile.ProfilePictureUrl;
                 userProfile.PhoneNumber = profile.PhoneNumber;
                 userProfile.Country = profile.Country;
-                userProfile.DateofBirth =  profile.DateofBirth.ToUniversalTime();               
+                userProfile.DateofBirth = DateTime.Parse(profile.DateofBirth).ToUniversalTime();
 
                 var updatedUserProfile = await _userService.UpdateProfile(userProfile);
 

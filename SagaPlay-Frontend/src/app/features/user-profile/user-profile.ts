@@ -8,7 +8,7 @@ export interface UserProfile {
     FirstName: string;
     LastName: string;
     EmailAddress: string;
-    DateOfBirth: string;
+    DateofBirth: string;
     Bio: string;
     ProfilePictureUrl: string;
     Country: string;
