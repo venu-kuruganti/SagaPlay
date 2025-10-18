@@ -18,10 +18,22 @@ namespace WatchlistService.Services
 
             if (watchList == null)
             {
-                await CreateNewWatchList(UserId);
+                watchList = new WatchList();
+                watchList.UserId = UserId;
+                watchList.CreatedOn = DateTime.UtcNow;
+                watchList.UpdatedOn = DateTime.UtcNow;
+                watchList.WatchListItems = new List<WatchListItem>();
+
+                await _repository.CreateWatchList(watchList);
             }
 
-            WatchListItem? item = watchList!.WatchListItems.Where(w => w.ContentItemId == ContentItemId).FirstOrDefault();
+            WatchListItem? item = null;
+
+            if (watchList!.WatchListItems!=null)
+            {
+                item = watchList!.WatchListItems.Where(w => w.ContentItemId == ContentItemId).FirstOrDefault();
+            }           
+
 
             if (item != null)
             {
@@ -87,5 +99,7 @@ namespace WatchlistService.Services
 
             return await _repository.UpdateWatchList(watchList);
         }
+
+       
     }
 }
