@@ -17,7 +17,7 @@ namespace WatchlistService.Controllers
         }
 
         //Get Watchlist for a User
-        [HttpGet("GetWatchListOnUserId")]
+        [HttpGet("GetWatchListOnUserId/{userId}")]
         public async Task<IActionResult> GetWatchListOnUserId(string userId)
         {
             var WL = await _WatchListService.GetWatchListOnUserId(Guid.Parse(userId));
@@ -82,7 +82,7 @@ namespace WatchlistService.Controllers
         }
 
         //Remove watchlist item from watchlist
-        [HttpPatch("{userId}/items/{WatchListItemId}/RemoveWatchListItem")]
+        [HttpGet("RemoveWatchListItem")]
         public async Task<IActionResult> RemoveWatchListItem(string userId, int WatchListItemId)
         {
             bool result = false;

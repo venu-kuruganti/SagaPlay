@@ -11,8 +11,8 @@ import { environment } from '../../environments/environment.production';
 export class WatchlistService {
 
   private httpClient = inject(HttpClient);
-  // private baseUrl = "https://localhost:32769/api/Watchlist";
-  private baseUrl:string = `${environment.apiBaseUrl}${environment.watchlistServicePrefix}`;
+   private baseUrl = "http://localhost:32768/api/Watchlist";
+  //private baseUrl:string = `${environment.apiBaseUrl}${environment.watchlistServicePrefix}`;
 
   public AddToWatchList(userId: string, contentItemId: number): Observable<boolean> {
 
@@ -22,12 +22,12 @@ export class WatchlistService {
 
   public RemoveFromWatchList(userId: string, WatchListItemId: number): Observable<boolean> {
 
-    return this.httpClient.patch<boolean>(`${this.baseUrl}/${userId}/items/${WatchListItemId}/RemoveWatchListItem`, {});
+    return this.httpClient.get<boolean>(`${this.baseUrl}/RemoveWatchListItem?userId=${userId}&WatchListItemId=${WatchListItemId}`, {});
 
   }
 
   public GetWatchListOnUserId(userId: string): Observable<WatchList> {
-    return this.httpClient.get<WatchList>(`${this.baseUrl}/GetWatchListOnUserId?userId=${userId}`);
+    return this.httpClient.get<WatchList>(`${this.baseUrl}/GetWatchListOnUserId/${userId}`);
   }
 
 
