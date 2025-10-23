@@ -11,8 +11,8 @@ import { environment } from '../../environments/environment.production';
 export class WatchlistService {
 
   private httpClient = inject(HttpClient);
-   private baseUrl = "http://localhost:32768/api/Watchlist";
-  //private baseUrl:string = `${environment.apiBaseUrl}${environment.watchlistServicePrefix}`;
+   //private baseUrl = "http://localhost:32768/api/Watchlist";
+  private baseUrl:string = `${environment.apiBaseUrl}${environment.watchlistServicePrefix}`;
 
   public AddToWatchList(userId: string, contentItemId: number): Observable<boolean> {
 
